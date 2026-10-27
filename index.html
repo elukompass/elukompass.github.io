@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kompass · Floreo</title>
+<meta name="description" content="Mis kursil Su elu on? 8 küsimust, 1 minut. Näed oma kompassi ja saad Deep Dive'i.">
+<meta property="og:title" content="Kompass · Floreo">
+<meta property="og:description" content="8 küsimust, 1 minut. Näe, kus sa praegu oma elus asud.">
+<meta name="theme-color" content="#06141f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700&family=Orbitron:wght@800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1: #041019; --bg2: #0b2a3a; --ink: #eaf6f8; --muted: #c3d6dd; --teal: #3fd6c6; --teal-2: #1aa3a0;
+    --gold: #ffc861; --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font: 500 17px/1.5 "Manrope", system-ui, sans-serif; color: var(--ink);
+    background: radial-gradient(120% 80% at 50% 0%, var(--bg2), var(--bg1) 70%) fixed; background-color: var(--bg1);
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 560px; margin: 0 auto; padding: 28px 16px 18px; min-height: 100vh; display: flex; flex-direction: column; }
+  h1, h2 { font-family: "Marcellus", serif; font-weight: 400; letter-spacing: 0.02em; margin: 0 0 12px; }
+  h1 { font-size: 34px; line-height: 1.15; }
+  h2 { font-size: 26px; line-height: 1.2; }
+  p { margin: 0 0 14px; color: var(--muted); }
+  .brand { font: 700 12px/1 "Manrope"; letter-spacing: 0.28em; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+  .brand svg { width: 22px; height: 22px; }
+  .screen { display: none; flex: 1; flex-direction: column; animation: fade .35s ease; }
+  .screen.on { display: flex; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin: 10px 0 18px; }
+  .btn { appearance: none; border: 0; border-radius: 999px; padding: 16px 22px; font: 700 17px "Manrope"; cursor: pointer;
+    background: linear-gradient(135deg, var(--teal), var(--teal-2)); color: #04161d; width: 100%; margin-top: auto; }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .btn.siht { background: #0A1222; color: #6FE7DC; border: 1px solid rgba(111,231,220,0.55); border-radius: 10px; font: 800 17px "Orbitron", sans-serif; letter-spacing: 0.22em; box-shadow: 0 0 18px rgba(111,231,220,0.18); }
+  .btn.siht:hover { border-color: #6FE7DC; box-shadow: 0 0 24px rgba(111,231,220,0.35); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); margin-top: 10px; }
+  .choices { display: grid; gap: 12px; margin: 8px 0 20px; }
+  .choice { appearance: none; text-align: left; padding: 18px 20px; border-radius: 16px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font: 600 18px "Manrope"; cursor: pointer; }
+  .choice[aria-pressed="true"] { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(63,214,198,.35) inset; }
+  .progress { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 22px; }
+  .progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--gold)); transition: width .3s; }
+  .step { font: 700 12px "Manrope"; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .score { font: 400 64px/1 "Marcellus"; color: var(--gold); text-align: center; margin: 18px 0 6px; }
+  input[type=range] { width: 100%; accent-color: var(--teal); height: 36px; }
+  .ends { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  .ends span:last-child { text-align: right; }
+  .row { display: flex; gap: 10px; }
+  .row .btn { margin-top: 0; }
+  svg.wheel { width: 100%; height: auto; display: block; margin: 0 auto 6px; max-width: 420px; }
+  .low { border-left: 3px solid var(--gold); padding: 4px 0 4px 14px; margin: 12px 0; }
+  .low b { color: var(--ink); font-family: "Marcellus"; font-size: 20px; font-weight: 400; }
+  ol.ring { padding-left: 20px; margin: 0; color: var(--ink); }
+  ol.ring li { margin: 8px 0; }
+  ol.ring li span { color: var(--muted); }
+  .field { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--ink); font: 500 16px "Manrope"; margin: 6px 0 10px; }
+  .small { font-size: 13px; color: var(--muted); }
+  .sign { font-family: "Marcellus"; color: var(--ink); font-size: 18px; margin-top: 6px; }
+  audio { width: 100%; margin: 6px 0 14px; }
+  a { color: var(--teal); }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--muted); margin: 4px 0 14px; cursor: pointer; }
+  .consent input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--teal); }
+  .privacy { margin-top: 12px; font-size: 13px; color: var(--muted); }
+  .privacy summary { cursor: pointer; color: var(--teal); }
+  .privacy p { font-size: 13px; margin: 8px 0 0; }
+  .privacy b { color: var(--ink); font-weight: 600; }
+  .brand { flex-direction: row; gap: 14px; cursor: pointer; font: 400 22px/1 "Marcellus", serif; letter-spacing: 0.32em; color: #FFE9A8; margin-bottom: 26px; }
+  .brand svg.kompass { width: 52px; height: 52px; filter: drop-shadow(0 0 12px rgba(255, 200, 100, 0.5)); }
+  .kompass .k-rose { transform-origin: 50px 50px; animation: kSway 4s ease-in-out infinite; }
+  .kompass .k-ring { transform-origin: 50px 50px; animation: kSpin 24s linear infinite; }
+  @keyframes kSway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+  @keyframes kSpin { to { transform: rotate(360deg); } }
+  .foot { text-align: center; margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .sea { position: fixed; inset: 0; z-index: -1; background: #041019 url(assets/sea.jpg) 55% center / cover no-repeat; }
+  .sea video { width: 100%; height: 100%; object-fit: cover; object-position: 55% center; display: block; }
+  .sea::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,16,25,0.55) 0%, rgba(4,16,25,0.78) 45%, rgba(4,16,25,0.92) 100%); }
+  @media (prefers-reduced-motion: reduce) { .sea video { display: none; } }
+  .card { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  /* Headings in HELM's Cormorant Garamond, KOMPASS in Cinzel */
+  h1, h2 { font-family: "Cormorant Garamond", "Marcellus", serif; font-weight: 600; letter-spacing: 0.01em; }
+  h1 { font-size: 42px; line-height: 1.08; }
+  h2 { font-size: 32px; line-height: 1.12; }
+  .brand span { font-family: "Cinzel", "Marcellus", serif; font-weight: 600; font-size: 24px; letter-spacing: 0.28em; }
+  #s-start > p:not(.under) { font: italic 500 22px/1.35 "Cormorant Garamond", serif; color: #cfe3e8; }
+  /* Colours: warm gold-white headings, brighter body text, soft shadow over the sea */
+  h1, h2 { background: linear-gradient(180deg, #FFF8E7 0%, #FFE3A3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.45)); }
+  #s-start > p:not(.under) { color: #EAF2F6; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+  .card p { color: #DCE8EC; }
+  .card b { color: #FFE3A3 !important; }
+  .under { margin: 34px 0 0; color: #EAF2F6; font-size: 15px; }
+  .under b { color: #FFE3A3; }
+  .under.small { margin-top: 6px; font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+  #s-start h1 { font-size: clamp(26px, 6.4vw, 36px); text-wrap: balance; }
+  #s-start .btn.siht { margin-top: clamp(48px, 14vh, 140px); }
+  /* Footer like HELM: Floreo in Marcellus, motto in gold-to-sea italic; start page shows Floreo only */
+  .foot { display: flex; flex-direction: column; align-items: center; gap: 4px; line-height: 1.15; border-top: 0; margin-top: auto; padding-top: 56px; }
+  .foot-ship { font: 400 21px "Marcellus", serif; letter-spacing: 0.2em; color: #EAF4FF; }
+  .foot-line { font: italic 600 15px "Cormorant Garamond", serif; background: linear-gradient(90deg, #FFD9A0, #FFB86B 45%, #7FE8FF); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .foot.start .foot-line { display: none; }
+  .foot-ship { display: inline-flex; align-items: center; gap: 10px; }
+  .helm-mini { width: 26px; height: 26px; animation: kSpin 40s linear infinite; }
+  /* Subtitle + line under the button in Marcellus, matching KOMPASS and Floreo */
+  #s-start > p:not(.under) { font: 400 clamp(14px, 3.4vw, 16px)/1.4 "Marcellus", serif !important; letter-spacing: 0.02em; color: #EAF2F6; }
+  .under { font: 400 16px/1.4 "Marcellus", serif; letter-spacing: 0.02em; }
+  .under b { font-weight: 400; }
+  /* Focus question, halfway screen, calculating screen, host card */
+  .calc { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .calc .calc-k { width: 120px; height: 120px; margin-bottom: 18px; filter: drop-shadow(0 0 18px rgba(255,200,100,0.55)); }
+  .calc .calc-k .k-rose { animation: kSpin 0.9s linear infinite; }
+  .calc-steps { list-style: none; padding: 0; margin: 8px 0 0; font: 400 16px "Marcellus", serif; color: var(--muted); }
+  .calc-steps li { opacity: 0; transform: translateY(4px); transition: all .35s; margin: 6px 0; }
+  .calc-steps li.on { opacity: 1; transform: none; }
+  .calc-steps li.on::before { content: "✓ "; color: var(--teal); }
+  .host { display: flex; gap: 16px; align-items: center; text-align: left; }
+  .host .face { width: 88px; height: 88px; border-radius: 50%; overflow: hidden; flex: none; border: 2px solid rgba(255,200,100,0.7); box-shadow: 0 0 14px rgba(255,200,100,0.35); }
+  .host .face { background: radial-gradient(circle at 50% 40%, #1d4a5e, #0a1a2a); }
+  .host .face img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; transform: scale(1.12); display: block; }
+  .host b { color: #FFE3A3; }
+  #r-focus { font-size: 16px; line-height: 1.4; color: var(--ink); }
+  #s-half .card b { color: #FFE3A3; }
+  /* One type system on every screen: Marcellus for text and choices, Orbitron (SIHT style) for buttons */
+  .screen > p, .screen .card p { font-family: "Marcellus", serif; letter-spacing: 0.02em; }
+  .screen > p:not(.under) { font-size: 16px; color: #EAF2F6; }
+  .choice { font: 400 19px "Marcellus", serif; letter-spacing: 0.02em; }
+  .btn:not(.ghost) { background: #0A1222; color: #6FE7DC; border: 1px solid rgba(111,231,220,0.55); border-radius: 10px; font: 800 16px "Orbitron", sans-serif; letter-spacing: 0.2em; text-transform: uppercase; box-shadow: 0 0 18px rgba(111,231,220,0.18); }
+  .btn.ghost { font: 400 16px "Marcellus", serif; border-radius: 10px; }
+  /* Lines under the headings: crisp white with a soft teal neon glow */
+  .screen > p:not(.under), #s-start > p:not(.under) { color: #FFFFFF !important; -webkit-font-smoothing: antialiased; text-shadow: 0 0 1px rgba(255,255,255,0.9), 0 0 8px rgba(111,231,220,0.55), 0 0 18px rgba(111,231,220,0.25); }
+  .emo { background: none; -webkit-text-fill-color: initial; color: initial; filter: none; }
+  /* Locked audio player (opens after email) */
+  .player { display: flex; align-items: center; gap: 12px; margin: 12px 0 4px; padding: 12px 14px; border-radius: 999px; background: rgba(0,0,0,0.35); border: 1px solid var(--line); }
+  .player .play { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,200,100,0.15); border: 1px solid rgba(255,200,100,0.6); font-size: 15px; flex: none; }
+  .player .track { flex: 1; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
+  .player .track i { display: block; width: 8%; height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); }
+  .player .time { font: 400 13px "Marcellus", serif; color: var(--muted); }
+  #r-ring-card .field, #r-ring-card .consent { text-align: left; }
+  /* Bottom sheet for the email */
+  .sheet { position: fixed; inset: 0; z-index: 20; background: rgba(2,8,14,0.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: flex; align-items: flex-end; justify-content: center; }
+  .sheet-panel { position: relative; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; background: linear-gradient(180deg, #0d2433, #06141f); border: 1px solid var(--line); border-bottom: 0; border-radius: 22px 22px 0 0; padding: 26px 18px 22px; animation: up .3s ease; }
+  @keyframes up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .sheet-x { position: absolute; top: 10px; right: 12px; background: none; border: 0; color: var(--muted); font-size: 28px; cursor: pointer; }
+  .sheet .field, .sheet .consent { text-align: left; }
+  #r-lock { cursor: pointer; }
+  /* Card headlines: same gold Cormorant as the page headings, one size smaller */
+  .card-h { font: 600 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, #FFE3A3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #r-group b, #r-course b { color: #FFE3A3; }
+  #r-course s { color: var(--muted); }
+  .vsl { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.45); border: 1px solid var(--line); display: grid; place-items: center; align-content: center; gap: 6px; }
+  .vsl span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #04161d; background: linear-gradient(135deg, var(--teal), var(--gold)); }
+  .vsl small { font: 400 13px "Marcellus", serif; color: var(--muted); }
+  .vsl iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  @media (max-width: 420px) { .host .face { width: 64px; height: 64px; } .host { gap: 12px; } }
+  /* Email sheet: fewer sizes, one calm reading line */
+  .sheet-sub { font: 400 16px "Marcellus", serif; color: #EAF2F6; margin: 0 0 14px; }
+  .sheet .consent { font: 400 12.5px/1.4 "Marcellus", serif; color: #DCE8EC; align-items: center; }
+  .sheet .field { font: 400 16px "Marcellus", serif; }
+  .hidden { display: none !important; }
+  /* Centred layout on every screen; lists, consent and privacy text stay left for easy reading */
+  main { text-align: center; }
+  .brand { justify-content: center; }
+  .choice { text-align: center; }
+  ol.ring, .low, .consent, .privacy p { text-align: left; }
+  .legal { max-width: 560px; width: calc(100% - 32px); max-height: 80vh; border: 0; border-radius: 16px; padding: 22px 20px; background: #0E2236; color: #DCE8EC; text-align: left; }
+  .legal::backdrop { background: rgba(5,12,22,.7); }
+  .legal h2 { font-size: 20px; margin: 4px 0 10px; } .legal p { font-size: 14px; line-height: 1.5; margin: 0 0 10px; }
+  .legal section + section { margin-top: 18px; }
+  /* Comet draws the video above the ::after overlay: a real dim layer on top */
+  .sea-dim { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(4,16,25,0.55) 0%, rgba(4,16,25,0.78) 45%, rgba(4,16,25,0.92) 100%); }
+  .sea::after { display: none; }
+  .sea { z-index: 0; }
+  main { position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
+<main>
+  <div class="brand" id="home" role="link" tabindex="0" title="Algusesse"><svg class="kompass" aria-hidden="true" viewBox="0 0 100 100">
+              <defs>
+                <radialGradient id="kBrass" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.45" stop-color="#E2B54E"/><stop offset="1" stop-color="#7A5214"/></radialGradient>
+                <radialGradient id="kFace" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A4E7A"/><stop offset="0.6" stop-color="#16324F"/><stop offset="1" stop-color="#0A1A2E"/></radialGradient>
+                <linearGradient id="kGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#B8862E"/></linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="48" fill="url(#kBrass)"/><circle cx="50" cy="50" r="42" fill="url(#kFace)" stroke="#5A3D10" stroke-width="1"/>
+              <g class="k-ring" fill="none" stroke="#E2C27A" stroke-width="0.6" opacity="0.8">
+                <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 2"/><circle cx="50" cy="50" r="16"/>
+                <circle cx="50" cy="42" r="8"/><circle cx="57" cy="46" r="8"/><circle cx="57" cy="54" r="8"/><circle cx="50" cy="58" r="8"/><circle cx="43" cy="54" r="8"/><circle cx="43" cy="46" r="8"/>
+              </g>
+              <g class="k-rose">
+                <path d="M50 10 L54 46 L50 50 L46 46Z M50 90 L54 54 L50 50 L46 54Z M10 50 L46 46 L50 50 L46 54Z M90 50 L54 46 L50 50 L54 54Z" fill="url(#kGold)" stroke="#6B4A12" stroke-width="0.5"/>
+                <path d="M50 22 L52 48 L50 50 L48 48Z M78 50 L52 52 L50 50 L52 48Z M50 78 L48 52 L50 50 L52 52Z M22 50 L48 48 L50 50 L48 52Z" fill="#9FD4FF" opacity="0.55" transform="rotate(45 50 50)"/>
+                <path d="M50 10 L54 46 L50 50Z" fill="#E5483D"/>
+              </g>
+              <g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g>
+              <circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/>
+              <ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/>
+            </svg><span>Kompass</span></div>
+
+  <!-- 0 · start -->
+  <section class="screen on" id="s-start">
+    <h1>Mis kursil Su elu on?</h1>
+    <p>8 küsimust · 60 sekundit = Sinu elukompass</p>
+    <button class="btn siht" data-go="s-sex">ALUSTA</button>
+    <p class="under">Lõpus ootab Sind <b>Deep Dive</b></p>
+  </section>
+
+  <!-- 1 · mees / naine -->
+  <section class="screen" id="s-sex">
+    <h2>Oled Sa mees või naine?</h2>
+    <p>Nii saan vastata õige häälega.</p>
+    <div class="choices">
+      <button class="choice" data-sex="naine" aria-pressed="false">🧜‍♀️ Naine</button>
+      <button class="choice" data-sex="mees" aria-pressed="false">🏄‍♂️ Mees</button>
+    </div>
+  </section>
+
+  <!-- 1b · focus: what matters most (commits + personalises the result) -->
+  <section class="screen" id="s-focus">
+    <h2>Mis on Sulle praegu kõige olulisem?</h2>
+    <p>Vali üks. Selle järgi kohandame Sinu tulemuse.</p>
+    <div class="choices">
+      <button class="choice" data-focus="keha">💪 Tugev ja energiline keha</button>
+      <button class="choice" data-focus="vaim">🧘 Rahu ja selgus peas</button>
+      <button class="choice" data-focus="raha">💼 Töö ja raha, mis toidavad</button>
+      <button class="choice" data-focus="suhted">❤️ Soojad ja sügavad suhted</button>
+    </div>
+  </section>
+
+  <!-- 2b · halfway: proof between questions -->
+  <section class="screen" id="s-half">
+    <h2>Oled poolel teel <span class="emo">🌊</span></h2>
+    <div class="card"><p style="margin:0">Hea progress, 4 küsimust veel.</p><p style="margin:10px 0 0">Rohkem kui <b>2 600 eestlast</b> on Kaidi ja Hendriku abiga selgemale kursile asunud.</p><p style="margin:10px 0 0">Esimesi muutusi tuntakse tavaliselt juba <b>7 päevaga</b>.</p></div>
+    <button class="btn" id="half-next">Jätkan</button>
+  </section>
+
+  <!-- 2c · calculating -->
+  <section class="screen" id="s-calc">
+    <div class="calc"><svg class="kompass calc-k" aria-hidden="true" viewBox="0 0 100 100">
+              <defs>
+                <radialGradient id="kBrass" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.45" stop-color="#E2B54E"/><stop offset="1" stop-color="#7A5214"/></radialGradient>
+                <radialGradient id="kFace" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A4E7A"/><stop offset="0.6" stop-color="#16324F"/><stop offset="1" stop-color="#0A1A2E"/></radialGradient>
+                <linearGradient id="kGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#B8862E"/></linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="48" fill="url(#kBrass)"/><circle cx="50" cy="50" r="42" fill="url(#kFace)" stroke="#5A3D10" stroke-width="1"/>
+              <g class="k-ring" fill="none" stroke="#E2C27A" stroke-width="0.6" opacity="0.8">
+                <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 2"/><circle cx="50" cy="50" r="16"/>
+                <circle cx="50" cy="42" r="8"/><circle cx="57" cy="46" r="8"/><circle cx="57" cy="54" r="8"/><circle cx="50" cy="58" r="8"/><circle cx="43" cy="54" r="8"/><circle cx="43" cy="46" r="8"/>
+              </g>
+              <g class="k-rose">
+                <path d="M50 10 L54 46 L50 50 L46 46Z M50 90 L54 54 L50 50 L46 54Z M10 50 L46 46 L50 50 L46 54Z M90 50 L54 46 L50 50 L54 54Z" fill="url(#kGold)" stroke="#6B4A12" stroke-width="0.5"/>
+                <path d="M50 22 L52 48 L50 50 L48 48Z M78 50 L52 52 L50 50 L52 48Z M50 78 L48 52 L50 50 L52 52Z M22 50 L48 48 L50 50 L48 52Z" fill="#9FD4FF" opacity="0.55" transform="rotate(45 50 50)"/>
+                <path d="M50 10 L54 46 L50 50Z" fill="#E5483D"/>
+              </g>
+              <g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g>
+              <circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/>
+              <ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/>
+            </svg>
+      <h2>Arvutan Sinu kompassi…</h2>
+      <ul class="calc-steps"><li>Loen Su vastuseid</li><li>Leian madalaima punkti</li><li>Valin Sinu Deep Dive'i</li></ul>
+    </div>
+  </section>
+
+  <!-- 2 · question (reused) -->
+  <section class="screen" id="s-q">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="step" id="q-step"></div>
+    <h2 id="q-title"></h2>
+    <p id="q-text"></p>
+    <div class="score" id="q-score">5</div>
+    <input type="range" min="1" max="10" step="1" value="5" id="q-range" aria-describedby="q-text">
+    <div class="ends"><span id="q-lo"></span><span id="q-hi"></span></div>
+    <div class="row">
+      <button class="btn ghost" id="q-back" style="width:auto;padding:16px 20px">←</button>
+      <button class="btn" id="q-next">Edasi</button>
+    </div>
+  </section>
+
+  <!-- 3 · result -->
+  <section class="screen" id="s-result">
+    <h2 id="r-title">Siin Su elulaev praegu paikneb</h2>
+    <div class="step">Sinu kompass</div>
+    <svg class="wheel" id="wheel" viewBox="-50 -10 500 420" role="img" aria-label="Sinu elu kompass"></svg>
+    <p class="small" id="r-wheel-line" style="text-align:center">Mida ühtlasem ratas, seda sujuvamalt elumerel sõidad.</p>
+
+    <div class="card host">
+      <div class="face"><img id="r-face" src="assets/hendrik-captain.png" alt=""></div>
+      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" style="margin:0">Koge Deep Dive'i iga päev ja tunned muutuseid juba <b>5–7 päevaga</b>.</p></div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-h">Siit algab Sinu uus kurss</h3>
+      <div id="r-low"></div>
+    </div>
+
+    <div class="card" id="r-ring-card">
+      <h3 class="card-h">Sinu Deep Dive · 9 min</h3>
+      <p id="r-ring-intro"></p>
+      <div class="player" id="r-lock" aria-hidden="true">
+        <span class="play">🔒</span>
+        <span class="track"><i></i></span>
+        <span class="time">9:00</span>
+      </div>
+      <button class="btn" id="r-unlock" style="margin-top:10px">Ava kogemus</button>
+    </div>
+
+    <button class="btn ghost" id="r-again">Alusta uuesti</button>
+  </section>
+
+  <!-- 4 · after the email: the Deep Dive plays right away, then mini course + group -->
+  <section class="screen" id="s-ring">
+    <h2>Sinu Deep Dive</h2>
+    <p id="r-open-msg"></p>
+    <div class="card">
+      <audio id="r-audio" controls preload="auto" class="hidden"></audio>
+      <p class="small" id="r-audio-wait" style="margin:0">Audio on valmimas. Saadame selle Sulle ka e-postile.</p>
+    </div>
+    <div class="card" id="r-course">
+      <h3 class="card-h">Tahad minna sügavamale?</h3>
+      <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
+      <p style="margin:14px 0 6px" id="r-mc-name"></p>
+      <p class="small" style="margin:0 0 6px">90 minutit suurt pilti ja lihtsad igapäevased rituaalid, mida saad kohe kasutada.</p>
+      <p style="margin:0 0 12px" id="r-mc-price"></p>
+      <a class="btn" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Soovin seda</a>
+    </div>
+    <div class="card" id="r-group">
+      <h3 class="card-h">Astu RUUMi</h3>
+      <p style="margin-bottom:12px">Liitu meie tasuta kogukonnaga <b>RUUM</b> ja näe, kes on juba pardal.<br>Iga nädal ootab Sind seal uus Deep Dive.</p>
+      <a class="btn" id="r-group-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Liitu grupiga</a>
+    </div>
+  </section>
+  <footer class="foot start" id="foot"><b class="foot-ship"><svg class="helm-mini" viewBox="-52 -52 104 104" aria-hidden="true"><g stroke="#A0682B" stroke-width="3" stroke-linecap="round"><line x1="27.7" y1="11.5" x2="40.7" y2="16.8"/><line x1="11.5" y1="27.7" x2="16.8" y2="40.7"/><line x1="-11.5" y1="27.7" x2="-16.8" y2="40.7"/><line x1="-27.7" y1="11.5" x2="-40.7" y2="16.8"/><line x1="-27.7" y1="-11.5" x2="-40.7" y2="-16.8"/><line x1="-11.5" y1="-27.7" x2="-16.8" y2="-40.7"/><line x1="11.5" y1="-27.7" x2="16.8" y2="-40.7"/><line x1="27.7" y1="-11.5" x2="40.7" y2="-16.8"/></g><g fill="#C58A45"><circle cx="42.5" cy="17.6" r="3.6"/><circle cx="17.6" cy="42.5" r="3.6"/><circle cx="-17.6" cy="42.5" r="3.6"/><circle cx="-42.5" cy="17.6" r="3.6"/><circle cx="-42.5" cy="-17.6" r="3.6"/><circle cx="-17.6" cy="-42.5" r="3.6"/><circle cx="17.6" cy="-42.5" r="3.6"/><circle cx="42.5" cy="-17.6" r="3.6"/></g><circle r="34" fill="rgba(10,26,46,0.55)" stroke="#B9813F" stroke-width="4.5"/><circle r="29.5" fill="none" stroke="#6FB8FF" stroke-width="1.6"/><circle r="22" fill="none" stroke="#E5483D" stroke-width="1.3"/><g fill="none" stroke="#7FE8FF" stroke-width="1"><circle cx="0" cy="0" r="8"/><circle cx="8.0" cy="0.0" r="8"/><circle cx="4.0" cy="6.9" r="8"/><circle cx="-4.0" cy="6.9" r="8"/><circle cx="-8.0" cy="0.0" r="8"/><circle cx="-4.0" cy="-6.9" r="8"/><circle cx="4.0" cy="-6.9" r="8"/></g><path d="M-0.0,-26.0 L-4.0,-24.0 L-6.0,-22.0 L-4.9,-20.0 L-1.4,-18.0 L2.8,-16.0 L5.6,-14.0 L5.6,-12.0 L2.8,-10.0 L-1.4,-8.0 L-4.9,-6.0 L-6.0,-4.0 L-4.0,-2.0 L0.0,0.0 L4.0,2.0 L6.0,4.0 L4.9,6.0 L1.4,8.0 L-2.8,10.0 L-5.6,12.0 L-5.6,14.0 L-2.8,16.0 L1.4,18.0 L4.9,20.0 L6.0,22.0 L4.0,24.0 L0.0,26.0" fill="none" stroke="#FFC861" stroke-width="1.4"/><path d="M0.0,-26.0 L4.0,-24.0 L6.0,-22.0 L4.9,-20.0 L1.4,-18.0 L-2.8,-16.0 L-5.6,-14.0 L-5.6,-12.0 L-2.8,-10.0 L1.4,-8.0 L4.9,-6.0 L6.0,-4.0 L4.0,-2.0 L0.0,0.0 L-4.0,2.0 L-6.0,4.0 L-4.9,6.0 L-1.4,8.0 L2.8,10.0 L5.6,12.0 L5.6,14.0 L2.8,16.0 L-1.4,18.0 L-4.9,20.0 L-6.0,22.0 L-4.0,24.0 L-0.0,26.0" fill="none" stroke="#FFC861" stroke-width="1.4"/><circle r="2.6" fill="#B48CFF"/></svg>Floreo</b><span class="foot-line">Peatu. Astu pardale.</span><span class="foot-line" style="opacity:.7;font-size:.8em"><a href="#" class="legal-link" data-legal="pp" style="color:inherit;text-decoration:none">Privaatsus</a> · <a href="#" class="legal-link" data-legal="mt" style="color:inherit;text-decoration:none">Müügitingimused</a></span></footer>
+  <!-- Email sheet: opens from the locked player, the button, or once when they reach the bottom -->
+  <div class="sheet hidden" id="r-sheet" role="dialog" aria-modal="true" aria-labelledby="r-sheet-title">
+    <div class="sheet-panel" id="r-gate">
+      <button class="sheet-x" id="r-sheet-x" aria-label="Sulge">×</button>
+        <h2 id="r-sheet-title" style="margin-bottom:6px">Ava oma Deep Dive</h2>
+        <p class="sheet-sub">Kogemus avaneb kohe.</p>
+        <input class="field" id="r-name" placeholder="Nimi" autocomplete="name">
+        <input class="field" id="r-email" type="email" placeholder="E-post" autocomplete="email">
+        <input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <label class="consent"><input type="checkbox" id="r-consent"><span>Nõustun saama materjali ja veel kasulikke nippe. Saan alati loobuda.</span></label>
+        <button class="btn" id="r-send" style="margin-top:4px">Ava kogemus</button>
+        <p class="small" id="r-sent" style="margin:10px 0 0"></p>
+      <details class="privacy">
+        <summary>Privaatsus</summary>
+        <p>Andmed kogub <b>Alpha Company OÜ</b> (registrikood 14812204) (LAEV). Kogume su nime, e-posti ja kompassi vastused, et saata sulle tulemus, Deep Dive ja LAEVi kirju. Andmed hoitakse turvaliselt meie Google'i kontol ja neid ei müüda ega jagata kellegi teisega.</p>
+        <p>Ilma e-postita salvestame ainult anonüümsed vastused (ilma nimeta), et näha, kuidas inimestel läheb.</p>
+        <p>Hoiame andmeid seni, kuni sa loobud. Loobumiseks, andmete vaatamiseks või kustutamiseks kirjuta <a href="mailto:h.oviir@gmail.com">h.oviir@gmail.com</a> või vasta ükskõik millisele meie kirjale.</p>
+      </details>
+      <details class="privacy">
+        <summary>Raha tagasi garantii</summary>
+        <p>Sul on <b>14 päeva</b> ostust, et otsustada. Kui toode Sulle ei sobi, kirjuta selle aja jooksul aadressile <a href="mailto:h.oviir@gmail.com">h.oviir@gmail.com</a> ja Sa saad kogu summa tagasi, põhjust ei pea ütlema.</p>
+        <p>Tagasimakse tehakse samale maksekanalile <b>10 tööpäeva</b> jooksul Sinu avalduse saamisest. Garantii kehtib kõigile LAEVi programmidele ja minikursustele.</p>
+      </details>
+      </div>
+  </div>
+  <dialog id="legal" class="legal">
+    <button class="sheet-x" id="legal-x" aria-label="Sulge">×</button>
+    <section id="legal-pp">
+      <h2>Privaatsus</h2>
+      <p>Andmed kogub <b>Alpha Company OÜ</b> (registrikood 14812204), Mõisamaa tee 3, Aruküla, Raasiku vald, Harjumaa, h.oviir@gmail.com.</p>
+      <p>Kogume Sinu nime, e-posti ja kompassi vastused, et saata Sulle tulemus, Deep Dive ja LAEVi kirju. Ilma e-postita salvestame ainult anonüümsed vastused. Maksed vahendab Stripe. Andmeid hoitakse turvaliselt meie Google'i kontol ning neid ei müüda ega jagata kellegi teisega.</p>
+      <p>Hoiame andmeid seni, kuni Sa loobud. Loobumiseks, andmete vaatamiseks või kustutamiseks kirjuta h.oviir@gmail.com või vasta ükskõik millisele meie kirjale. Sul on õigus pöörduda ka Andmekaitse Inspektsiooni poole.</p>
+    </section>
+    <section id="legal-mt">
+      <h2>Müügitingimused</h2>
+      <p><b>Müüja:</b> Alpha Company OÜ (registrikood 14812204), h.oviir@gmail.com.</p>
+      <p><b>Toode:</b> digitaalsed programmid ja kursused (video, audio, harjutused), millele pääsed ligi veebis. Sisu ja hind on kirjas enne ostu.</p>
+      <p><b>Ostes kinnitad, et</b> oled vähemalt 18-aastane ja mõistad, et tegu on enesearengu sisuga, mitte meditsiiniteenuse ega raviga. Terviseküsimuste korral pea enne alustamist nõu arstiga. Vastutad ise oma tervise, treeningu ja toitumise eest.</p>
+      <p><b>Raha tagasi garantii:</b> Sul on 14 päeva ostukuupäevast, et otsustada. Kui toode Sulle ei sobi, kirjuta h.oviir@gmail.com ja Sa saad kogu summa tagasi, põhjust ei pea ütlema. Tagasimakse tehakse samale maksekanalile 10 tööpäeva jooksul.</p>
+      <p><b>Autoriõigus:</b> sisu on mõeldud ainult Sinu isiklikuks kasutamiseks.</p>
+      <p><b>Vastutus</b> piirdub tasutud summaga, välja arvatud tahtluse või raske hooletuse korral. See ei piira tarbija seaduslikke õigusi. Kohaldub Eesti õigus.</p>
+    </section>
+  </dialog>
+</main>
+
+<script>
+  // ── Settings (fill in when ready) ─────────────────────────────────────────────
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbwgVImP4LwfO_2kTUywR4LyMVxK4iRhv5be5SV4QPVM96ydyvFx3qoU5AXUpHcmq2e10w/exec";   // Google Apps Script web-app URL; results are appended to the "LAEV Kompass · tulemused" sheet
+  const AUDIO = { naine: "", mees: "" };   // Deep Dive audio links (Kaidi for women, Hendrik for men)
+  const DM = { naine: "https://ig.me/m/kaidikarilaid", mees: "https://ig.me/m/hendrikoviir" };
+  // 4 masterclasses (90 min, recorded + simple practices) = the 4 Deep Dive'i. Men's version by Hendrik, women's by Kaidi.
+  // Fill per area: vsl (video link per voice) + pay (47 € Stripe link). Areas without a pay link aren't offered yet (Keha goes live first).
+  const MC = {
+    keha:   { name: "Keha",        vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    vaim:   { name: "Vaim",        vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    raha:   { name: "Raha ja töö", vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    suhted: { name: "Suhted",      vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+  };
+  // 2 masterclasses for 69 € (2nd at −50%) when focus and lowest area differ. One Stripe link; which two goes in client_reference_id.
+  const BUNDLE = { price: "59 €", pay: "https://buy.stripe.com/fZueVddFOcIleKP9Ya2kw09" };
+  // Focus question: options in his/her own words [button label, phrase used on the result page]
+  const FOCUS = {
+    mees:  { keha: ["💪 Tugev ja energiline keha", "tugev ja energiline keha"], vaim: ["🧘 Rahu ja selgus peas", "rahu ja selgus peas"],
+             raha: ["💼 Töö ja raha, mis toidavad", "töö ja raha, mis toidavad"], suhted: ["❤️ Soojad ja sügavad suhted", "soojad ja sügavad suhted"] },
+    naine: { keha: ["🌸 Hea tunne oma kehas", "hea tunne oma kehas"], vaim: ["✨ Sisemine rahu ja ühendus iseendaga", "sisemine rahu ja ühendus iseendaga"],
+             raha: ["🌿 Töö, mis toidab hinge ja annab vabaduse", "töö, mis toidab hinge ja annab vabaduse"], suhted: ["💞 Armastus ja lähedus", "armastus ja lähedus"] }
+  };
+  const paintFocus = () => { const F = FOCUS[st.sex] || FOCUS.mees;
+    document.querySelectorAll("[data-focus]").forEach(b => { b.textContent = F[b.dataset.focus][0]; b.setAttribute("aria-pressed", b.dataset.focus === st.focus); }); };   // Karjäär shares the money masterclass
+  const GROUP = "https://www.facebook.com/groups/ruuum";   // free Facebook group link ("RUUM", both men + women, 27.10); the card shows after the Deep Dive unlocks
+
+  // ── The 8 areas · ring = which Deep Dive the area belongs to ──────────────
+  const Q = [
+    { k: "keha", short: "Keha",     name: "Keha ja tervis",  text: "Kui hästi tunned end oma kehas? Energia, uni, vorm.", lo: "kurnatud", hi: "elujõuline", ring: "keha" },
+    { k: "vaim", short: "Vaim",     name: "Vaimne heaolu",   text: "Kui rahulik ja selge on su sisemaailm?", lo: "pidev rahutus", hi: "sügav rahu", ring: "vaim" },
+    { k: "keskkond", short: "Keskkond", name: "Keskkond",        text: "Kui hästi toetab sind su kodu ja inimesed su ümber?", lo: "hoiab mind lukus", hi: "toetab täielikult", ring: "suhted" },
+    { k: "karjaar", short: "Karjäär",  name: "Karjäär",         text: "Kui palju teed tööd, mis sind päriselt kõnetab?", lo: "olen vales kohas", hi: "see on minu kutsumus", ring: "raha" },
+    { k: "raha", short: "Raha",     name: "Raha",            text: "Kui vabalt tunned end raha suhtes?", lo: "pidev mure", hi: "turvalisus ja vabadus", ring: "raha" },
+    { k: "suhted", short: "Suhted",   name: "Suhted",          text: "Kui sügavad ja toetavad on su suhted lähedaste ja sõpradega?", lo: "tunnen end üksi", hi: "olen hoitud", ring: "suhted" },
+    { k: "kaaslane", short: "Kaaslane", name: "Kaaslane",        text: "Kui täisväärtuslik on su paarisuhe või suhe armastusega?", lo: "valus või puudu", hi: "täis armastust", ring: "suhted" },
+    { k: "room", short: "Rõõm",     name: "Rõõm ja hobid",   text: "Kui palju on su elus rõõmu, mängu ja aega asjadeks, mida armastad?", lo: "rõõm on kadunud", hi: "elan täiel rinnal", ring: "vaim" }
+  ];
+  const RING = {
+    keha:   { title: "Keha", five: "Üks väike valik kehale: vesi, 10 min jalutuskäiku või varajasem uni täna." },
+    vaim:   { title: "Vaim", five: "Üks väike valik hingele: 5 minutit vaikust, ilma telefonita, ainult sina." },
+    raha:   { title: "Raha ja töö", five: "Üks väike valik: üks samm, mis viib sind lähemale tööle ja rahale, mida tõesti tahad." },
+    suhted: { title: "Suhted", five: "Üks väike valik: kellele saad täna öelda ühe aussa lause?" }
+  };
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  const params = new URLSearchParams(location.search);
+  // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
+  const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || "direct" };
+  const $ = id => document.getElementById(id);
+  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); window.scrollTo(0, 0); };
+
+  document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { if (!st.sex) show("s-sex"); else if (!st.focus) { paintFocus(); show("s-focus"); } else { paintQ(); show("s-q"); } });
+  document.querySelectorAll("[data-sex]").forEach(b => b.onclick = () => {
+    st.sex = b.dataset.sex; document.querySelectorAll("[data-sex]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    setTimeout(() => { paintFocus(); show("s-focus"); }, 250); });
+  document.querySelectorAll("[data-focus]").forEach(b => b.onclick = () => {
+    st.focus = b.dataset.focus; document.querySelectorAll("[data-focus]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    setTimeout(() => { st.i = 0; paintQ(); show("s-q"); }, 250); });
+
+  function paintQ() {
+    const q = Q[st.i];
+    $("q-step").textContent = `${st.i + 1} / ${Q.length}`;
+    $("q-title").textContent = q.name; $("q-text").textContent = q.text;
+    $("q-lo").textContent = "1 · " + q.lo; $("q-hi").textContent = q.hi + " · 10";
+    $("q-range").value = st.scores[st.i]; $("q-score").textContent = st.scores[st.i];
+    $("bar").style.width = (st.i / Q.length * 100) + "%";
+    $("q-next").textContent = st.i === Q.length - 1 ? "Näita mu kompassi 🧭" : "Edasi";
+  }
+  $("q-range").oninput = e => { st.scores[st.i] = +e.target.value; $("q-score").textContent = e.target.value; };
+  $("q-back").onclick = () => { if (st.i === 0) { paintFocus(); show("s-focus"); } else { st.i--; paintQ(); } };
+  $("q-next").onclick = () => {
+    if (st.i === 3 && !st.half) { st.half = true; show("s-half"); return; }
+    if (st.i < Q.length - 1) { st.i++; paintQ(); } else { calc(); } };
+  $("half-next").onclick = () => { st.i++; paintQ(); show("s-q"); };
+  // "Arvutan Sinu kompassi…": three steps tick in, then the result
+  function calc() {
+    const li = [...document.querySelectorAll(".calc-steps li")]; li.forEach(x => x.classList.remove("on"));
+    show("s-calc"); li.forEach((x, n) => setTimeout(() => x.classList.add("on"), 700 + n * 1200));
+    setTimeout(result, 4600); }
+
+  // ── Result ─────────────────────────────────────────────────────────────────
+  function wheel(scores) {
+    const c = 200, R = 125, n = scores.length, pt = (i, r) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [c + r * Math.cos(a), c + r * Math.sin(a)]; };
+    let g = "";
+    for (let lvl = 2; lvl <= 10; lvl += 2) g += `<polygon points="${scores.map((_, i) => pt(i, R * lvl / 10).join(",")).join(" ")}" fill="none" stroke="rgba(255,255,255,${lvl === 10 ? .22 : .08})"/>`;
+    scores.forEach((_, i) => { const [x, y] = pt(i, R); g += `<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.08)"/>`; });
+    const poly = scores.map((s, i) => pt(i, R * s / 10).join(",")).join(" ");
+    g += `<polygon points="${poly}" fill="rgba(63,214,198,.28)" stroke="#3fd6c6" stroke-width="2.5" stroke-linejoin="round"/>`;
+    const min = Math.min(...scores);
+    scores.forEach((s, i) => { const [x, y] = pt(i, R * s / 10); g += `<circle cx="${x}" cy="${y}" r="${s === min ? 6 : 4}" fill="${s === min ? "#ffc861" : "#3fd6c6"}" stroke="#041019" stroke-width="2"/>`; });
+    scores.forEach((s, i) => { const [x, y] = pt(i, R + 30); const anchor = Math.abs(x - c) < 10 ? "middle" : x > c ? "start" : "end";
+      g += `<text x="${x}" y="${y}" fill="${s === min ? "#ffc861" : "#cfe3e8"}" font-family="Manrope" font-size="13" font-weight="600" text-anchor="${anchor}" dominant-baseline="middle">${Q[i].short} ${s}</text>`; });
+    return g;
+  }
+
+  function result() {
+    $("bar").style.width = "100%";
+    $("wheel").innerHTML = wheel(st.scores);
+    // Lowest score wins. Ties: their exact focus area first, then (Captain's rule)
+    // men: vaim, keha, karjäär, raha · women: keha, kodu, suhted, kaaslane, karjäär, raha.
+    // Fully balanced wheel (all equal): focus first, then a vaim + keha mix.
+    const M = st.sex === "mees";
+    const balanced = Math.max(...st.scores) === Math.min(...st.scores);
+    const PRIO = balanced
+      ? (M ? ["vaim", "keha", "karjaar", "raha", "suhted", "kaaslane", "keskkond", "room"] : ["keha", "vaim", "keskkond", "suhted", "kaaslane", "karjaar", "raha", "room"])
+      : (M ? ["vaim", "keha", "karjaar", "raha", "suhted", "kaaslane", "keskkond", "room"] : ["keha", "keskkond", "suhted", "kaaslane", "karjaar", "raha", "vaim", "room"]);
+    const rank = i => (st.focus && Q[i].k === st.focus ? -100 : 0) + PRIO.indexOf(Q[i].k);
+    const order = st.scores.map((s, i) => [s, i]).sort((a, b) => a[0] - b[0] || rank(a[1]) - rank(b[1]));
+    const low = order.slice(0, 2).map(([s, i]) => Q[i]);
+    const W = st.sex === "naine";
+    const POW = W ? "kõige rohkem hoolt ja tähelepanu ootab praegu valdkond" : "kõige rohkem jõudu on peidus valdkonnas";
+    const LOW1 = W ? "Siin ootab Sind kõige rohkem kasvu. Väike hoolitsus siin teeb kogu Su elu kergemaks." : "Siin on kõige rohkem jõudu peidus. Väike muutus siin liigutab kogu laeva.";
+    $("r-low").innerHTML = low.map((q, n) => `<div class="low"><b>${q.name} · ${st.scores[Q.indexOf(q)]}/10</b><br><span class="small">${n === 0 ? LOW1 : "Teine koht, kuhu tasub tähelepanu tuua."}</span></div>`).join("");
+    const ring = RING[low[0].ring];
+    $("r-ring-intro").textContent = `Teema: „${ring.title}”. Võta 9 minutit iseendale.`;
+    const host = st.sex === "mees" ? "Hendrik" : "Kaidi";
+    $("r-wheel-line").textContent = st.sex === "naine" ? "Mida tasakaalukam on Sinu ratas, seda kergemalt elu Sinus voolab." : "Mida ühtlasem ratas, seda sujuvamalt elumerel sõidad.";
+    $("r-face").src = st.sex === "mees" ? "assets/hendrik-captain.png" : "assets/kaidi-queen.jpg";
+    const F = st.focus && RING[st.focus];
+    const FL = Object.fromEntries(Object.entries(FOCUS[st.sex] || FOCUS.mees).map(([k, v]) => [k, v[1]]));
+    $("r-focus").innerHTML = !F ? `Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`
+      : st.focus === low[0].ring ? `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass kinnitab: just siit algab Sinu kurss.`
+      : `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`;
+    $("r-group-btn").href = GROUP || "#";
+    // Offer: lowest area's masterclass; plus the focus one at −50% when they differ (69 € for both)
+    const payOf = k => { const p = MC[k] && MC[k].pay; return p && typeof p === "object" ? p[st.sex] : p; };
+    const ready = k => !!payOf(k);
+    let main = low[0].ring; if (!ready(main)) main = Object.keys(MC).find(ready) || main;
+    // The 2nd one may not be recorded yet: we sell it and record it LIVE once someone buys
+    const second = st.focus && st.focus !== main && MC[st.focus] ? st.focus : "";
+    const nm = k => `<b>Meistriklass · ${MC[k].name}</b>`;
+    if (second) {
+      $("r-mc-name").innerHTML = `${nm(st.focus)} <span class="small">(Sinu valik${ready(st.focus) ? "" : " · toimub LIVE, kutse tuleb e-postile"})</span><br>${nm(main)} <span class="small">(Sinu kompassi madalaim punkt)</span>`;
+      $("r-mc-price").innerHTML = `<s>78 €</s> <b>${BUNDLE.price}</b> · teine meistriklass −50%`;
+      $("r-course-btn").href = BUNDLE.pay ? BUNDLE.pay + "?client_reference_id=" + st.focus + "_" + main : "#";
+      $("r-course-btn").textContent = "Soovin neid";
+    } else {
+      $("r-mc-name").innerHTML = nm(main);
+      $("r-mc-price").innerHTML = "<b>39 €</b>";
+      $("r-course-btn").href = payOf(main) || "#";
+      $("r-course-btn").textContent = "Soovin seda";
+    }
+    const v = MC[main] && MC[main].vsl[st.sex];
+    if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    st.mc = second ? st.focus + "+" + main : main;
+    send();
+    show("s-result");
+  }
+
+  function payload() {
+    const o = { ts: new Date().toISOString(), sex: st.sex, name: st.name, email: st.email, consent: st.consent, src: st.src, focus: st.focus || "", offer: st.mc || "" };
+    Q.forEach((q, i) => o[q.k] = st.scores[i]);
+    o.lowest = Q[st.scores.indexOf(Math.min(...st.scores))].name;
+    const hp = document.getElementById("r-website"); if (hp && hp.value) o.website = hp.value;   // bots fill it; the receiver drops those
+    return o;
+  }
+  function send() {
+    if (!ENDPOINT) return;
+    try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload()) }); } catch (e) {}
+  }
+  $("r-send").onclick = () => {
+    st.name = $("r-name").value.trim(); st.email = $("r-email").value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(st.email)) { $("r-sent").textContent = "Palun kontrolli e-posti aadressi."; return; }
+    if (!$("r-consent").checked) { $("r-sent").textContent = "Palun kinnita nõusolek, et saaksin sulle kirjutada."; return; }
+    st.consent = new Date().toISOString();
+    send();
+    // Unlock: the audio plays here and is also sent by email
+    closeSheet(); show("s-ring");
+    const audio = AUDIO[st.sex];
+    if (audio) { $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 9 minutit."; }
+    else $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Leia vaikne koht ja anna endale need 9 minutit.";
+  };
+  // Email sheet
+  const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
+  const closeSheet = () => $("r-sheet").classList.add("hidden");
+  $("r-unlock").onclick = openSheet; $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
+  $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
+  new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
+  // Logo → back to the start screen (fresh test)
+  const home = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); show("s-start"); };
+  $("home").onclick = home;
+  $("home").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); home(); } };
+  $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
+  // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
+  if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = "Hendrik"; result();
+    st.email = "preview"; $("r-open-msg").textContent = "Aitäh, " + st.name + "! 🌊 Leia vaikne koht ja anna endale need 9 minutit."; show("s-ring"); }
+  document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
+    const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
+  document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
+</script>
+</body>
+</html>
