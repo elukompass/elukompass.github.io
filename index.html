@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kompass · Floreo</title>
-<meta name="description" content="Mis kursil Su elu on? 8 küsimust, 1 minut. Näed oma kompassi ja saad Deep Dive'i.">
+<meta name="description" content="Mis kursil Su elu on? 8 küsimust, 1 minut. Näed oma elukompassi ja saad isikliku häälsõnumi.">
 <meta property="og:title" content="Kompass · Floreo">
 <meta property="og:description" content="8 küsimust, 1 minut. Näe, kus sa praegu oma elus asud.">
 <meta name="theme-color" content="#06141f">
@@ -260,7 +260,7 @@
               <ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/>
             </svg>
       <h2>Arvutan Sinu kompassi…</h2>
-      <ul class="calc-steps"><li>Loen Su vastuseid</li><li>Leian madalaima punkti</li><li>Valin Sinu Deep Dive'i</li></ul>
+      <ul class="calc-steps"><li>Loen Su vastuseid</li><li>Leian madalaima punkti</li><li>Valin Sinu häälsõnumi</li></ul>
     </div>
   </section>
 
@@ -288,7 +288,7 @@
 
     <div class="card host">
       <div class="face"><img id="r-face" src="assets/hendrik-captain.png" alt=""></div>
-      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" style="margin:0">Koge Deep Dive'i iga päev ja tunned muutuseid juba <b>5–7 päevaga</b>.</p></div>
+      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" style="margin:0">Tee häälsõnumi praktikat iga päev ja tunned muutuseid juba <b>5–7 päevaga</b>.</p></div>
     </div>
 
     <div class="card">
@@ -297,14 +297,14 @@
     </div>
 
     <div class="card" id="r-ring-card">
-      <h3 class="card-h">Sinu Deep Dive · 9 min</h3>
+      <h3 class="card-h">Sinu isiklik häälsõnum · 3 min</h3>
       <p id="r-ring-intro"></p>
       <div class="player" id="r-lock" aria-hidden="true">
         <span class="play">🔒</span>
         <span class="track"><i></i></span>
-        <span class="time">9:00</span>
+        <span class="time">3:00</span>
       </div>
-      <button class="btn" id="r-unlock" style="margin-top:10px">Ava kogemus</button>
+      <button class="btn" id="r-unlock" style="margin-top:10px">Kuula kohe</button>
     </div>
 
     <button class="btn ghost" id="r-again">Alusta uuesti</button>
@@ -312,7 +312,7 @@
 
   <!-- 4 · after the email: the Deep Dive plays right away, then mini course + group -->
   <section class="screen" id="s-ring">
-    <h2>Sinu Deep Dive</h2>
+    <h2>Sinu isiklik häälsõnum</h2>
     <p id="r-open-msg"></p>
     <div class="card">
       <audio id="r-audio" controls preload="auto" class="hidden"></audio>
@@ -337,17 +337,17 @@
   <div class="sheet hidden" id="r-sheet" role="dialog" aria-modal="true" aria-labelledby="r-sheet-title">
     <div class="sheet-panel" id="r-gate">
       <button class="sheet-x" id="r-sheet-x" aria-label="Sulge">×</button>
-        <h2 id="r-sheet-title" style="margin-bottom:6px">Ava oma Deep Dive</h2>
-        <p class="sheet-sub">Kogemus avaneb kohe.</p>
+        <h2 id="r-sheet-title" style="margin-bottom:6px">Ava oma häälsõnum</h2>
+        <p class="sheet-sub">Häälsõnum avaneb kohe.</p>
         <input class="field" id="r-name" placeholder="Nimi" autocomplete="name">
         <input class="field" id="r-email" type="email" placeholder="E-post" autocomplete="email">
         <input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <label class="consent"><input type="checkbox" id="r-consent"><span>Nõustun saama materjali ja veel kasulikke nippe. Saan alati loobuda.</span></label>
-        <button class="btn" id="r-send" style="margin-top:4px">Ava kogemus</button>
+        <button class="btn" id="r-send" style="margin-top:4px">Kuula kohe</button>
         <p class="small" id="r-sent" style="margin:10px 0 0"></p>
       <details class="privacy">
         <summary>Privaatsus</summary>
-        <p>Andmed kogub <b>Alpha Company OÜ</b> (registrikood 14812204) (LAEV). Kogume su nime, e-posti ja kompassi vastused, et saata sulle tulemus, Deep Dive ja LAEVi kirju. Andmed hoitakse turvaliselt meie Google'i kontol ja neid ei müüda ega jagata kellegi teisega.</p>
+        <p>Andmed kogub <b>Alpha Company OÜ</b> (registrikood 14812204) (LAEV). Kogume su nime, e-posti ja kompassi vastused, et saata sulle tulemus, häälsõnum ja LAEVi kirju. Andmed hoitakse turvaliselt meie Google'i kontol ja neid ei müüda ega jagata kellegi teisega.</p>
         <p>Ilma e-postita salvestame ainult anonüümsed vastused (ilma nimeta), et näha, kuidas inimestel läheb.</p>
         <p>Hoiame andmeid seni, kuni sa loobud. Loobumiseks, andmete vaatamiseks või kustutamiseks kirjuta <a href="mailto:h.oviir@gmail.com">h.oviir@gmail.com</a> või vasta ükskõik millisele meie kirjale.</p>
       </details>
@@ -363,7 +363,7 @@
     <section id="legal-pp">
       <h2>Privaatsus</h2>
       <p>Andmed kogub <b>Alpha Company OÜ</b> (registrikood 14812204), Mõisamaa tee 3, Aruküla, Raasiku vald, Harjumaa, h.oviir@gmail.com.</p>
-      <p>Kogume Sinu nime, e-posti ja kompassi vastused, et saata Sulle tulemus, Deep Dive ja LAEVi kirju. Ilma e-postita salvestame ainult anonüümsed vastused. Maksed vahendab Stripe. Andmeid hoitakse turvaliselt meie Google'i kontol ning neid ei müüda ega jagata kellegi teisega.</p>
+      <p>Kogume Sinu nime, e-posti ja kompassi vastused, et saata Sulle tulemus, häälsõnum ja LAEVi kirju. Ilma e-postita salvestame ainult anonüümsed vastused. Maksed vahendab Stripe. Andmeid hoitakse turvaliselt meie Google'i kontol ning neid ei müüda ega jagata kellegi teisega.</p>
       <p>Hoiame andmeid seni, kuni Sa loobud. Loobumiseks, andmete vaatamiseks või kustutamiseks kirjuta h.oviir@gmail.com või vasta ükskõik millisele meie kirjale. Sul on õigus pöörduda ka Andmekaitse Inspektsiooni poole.</p>
     </section>
     <section id="legal-mt">
@@ -492,7 +492,7 @@
     const LOW1 = W ? "Siin ootab Sind kõige rohkem kasvu. Väike hoolitsus siin teeb kogu Su elu kergemaks." : "Siin on kõige rohkem jõudu peidus. Väike muutus siin liigutab kogu laeva.";
     $("r-low").innerHTML = low.map((q, n) => `<div class="low"><b>${q.name} · ${st.scores[Q.indexOf(q)]}/10</b><br><span class="small">${n === 0 ? LOW1 : "Teine koht, kuhu tasub tähelepanu tuua."}</span></div>`).join("");
     const ring = RING[low[0].ring];
-    $("r-ring-intro").textContent = `Teema: „${ring.title}”. Võta 9 minutit iseendale.`;
+    $("r-ring-intro").textContent = `Teema: „${ring.title}”. Võta 3 minutit iseendale.`;
     const host = st.sex === "mees" ? "Hendrik" : "Kaidi";
     $("r-wheel-line").textContent = st.sex === "naine" ? "Mida tasakaalukam on Sinu ratas, seda kergemalt elu Sinus voolab." : "Mida ühtlasem ratas, seda sujuvamalt elumerel sõidad.";
     $("r-face").src = st.sex === "mees" ? "assets/hendrik-captain.png" : "assets/kaidi-queen.jpg";
@@ -547,8 +547,8 @@
     // Unlock: the audio plays here and is also sent by email
     closeSheet(); show("s-ring");
     const audio = AUDIO[st.sex];
-    if (audio) { $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 9 minutit."; }
-    else $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Leia vaikne koht ja anna endale need 9 minutit.";
+    if (audio) { $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 3 minutit."; }
+    else $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Leia vaikne koht ja anna endale need 3 minutit.";
   };
   // Email sheet
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
@@ -563,7 +563,7 @@
   $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
   if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = "Hendrik"; result();
-    st.email = "preview"; $("r-open-msg").textContent = "Aitäh, " + st.name + "! 🌊 Leia vaikne koht ja anna endale need 9 minutit."; show("s-ring"); }
+    st.email = "preview"; $("r-open-msg").textContent = "Aitäh, " + st.name + "! 🌊 Leia vaikne koht ja anna endale need 3 minutit."; show("s-ring"); }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
   document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
