@@ -174,6 +174,8 @@
   .sea::after { display: none; }
   .sea { z-index: 0; }
   main { position: relative; z-index: 1; }
+  /* Until opt-in: the wheel shows, the reading cards are blurred */
+  #s-result.gated .card:not(#r-ring-card) { filter: blur(7px); pointer-events: none; user-select: none; }
 </style>
 </head>
 <body>
@@ -280,7 +282,7 @@
   </section>
 
   <!-- 3 · result -->
-  <section class="screen" id="s-result">
+  <section class="screen gated" id="s-result">
     <h2 id="r-title">Siin Su elulaev praegu paikneb</h2>
     <div class="step">Sinu kompass</div>
     <svg class="wheel" id="wheel" viewBox="-50 -10 500 420" role="img" aria-label="Sinu elu kompass"></svg>
@@ -314,6 +316,7 @@
   <section class="screen" id="s-ring">
     <h2>Sinu häälsõnum</h2>
     <p id="r-open-msg"></p>
+    <button class="btn ghost" id="r-see" style="margin-bottom:12px">Vaata oma kompassi</button>
     <div class="card">
       <audio id="r-audio" controls preload="auto" class="hidden"></audio>
       <p class="small" id="r-audio-wait" style="margin:0">Audio on valmimas. Saadame selle Sulle ka e-postile.</p>
@@ -337,13 +340,13 @@
   <div class="sheet hidden" id="r-sheet" role="dialog" aria-modal="true" aria-labelledby="r-sheet-title">
     <div class="sheet-panel" id="r-gate">
       <button class="sheet-x" id="r-sheet-x" aria-label="Sulge">×</button>
-        <h2 id="r-sheet-title" style="margin-bottom:6px">Ava oma häälsõnum</h2>
-        <p class="sheet-sub">Häälsõnum avaneb kohe.</p>
+        <h2 id="r-sheet-title" style="margin-bottom:6px">Ava oma täielik kompass</h2>
+        <p class="sheet-sub">Madalaim punkt, Sinu fookus ja häälsõnum. Avaneb kohe.</p>
         <input class="field" id="r-name" placeholder="Nimi" autocomplete="name">
         <input class="field" id="r-email" type="email" placeholder="E-post" autocomplete="email">
         <input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <label class="consent"><input type="checkbox" id="r-consent"><span>Nõustun saama materjali ja veel kasulikke nippe. Saan alati loobuda.</span></label>
-        <button class="btn" id="r-send" style="margin-top:4px">Kuula kohe</button>
+        <button class="btn" id="r-send" style="margin-top:4px">Ava kompass</button>
         <p class="small" id="r-sent" style="margin:10px 0 0"></p>
       <details class="privacy">
         <summary>Privaatsus</summary>
@@ -525,6 +528,7 @@
     st.mc = second ? st.focus + "+" + main : main;
     send();
     show("s-result");
+    if (!st.email) setTimeout(() => { if ($("s-result").classList.contains("on")) openSheet(); }, 2500);
   }
 
   function payload() {
@@ -545,7 +549,7 @@
     st.consent = new Date().toISOString();
     send();
     // Unlock: the audio plays here and is also sent by email
-    closeSheet(); show("s-ring");
+    closeSheet(); $("s-result").classList.remove("gated"); show("s-ring");
     const audio = AUDIO[st.sex];
     if (audio) { $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 3 minutit."; }
     else $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Leia vaikne koht ja anna endale need 3 minutit.";
@@ -553,7 +557,8 @@
   // Email sheet
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
   const closeSheet = () => $("r-sheet").classList.add("hidden");
-  $("r-unlock").onclick = openSheet; $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
+  $("r-see").onclick = () => show("s-result");
+  $("r-unlock").onclick = () => st.email ? show("s-ring") : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
   // Logo → back to the start screen (fresh test)
