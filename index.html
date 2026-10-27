@@ -425,7 +425,7 @@
   // ── State ──────────────────────────────────────────────────────────────────
   const params = new URLSearchParams(location.search);
   // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
-  const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || "direct" };
+  const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
   const $ = id => document.getElementById(id);
   const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); window.scrollTo(0, 0); };
 
