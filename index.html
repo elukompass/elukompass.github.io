@@ -551,7 +551,11 @@
     st.consent = new Date().toISOString();
     send();
     // Unlock: the audio plays here and is also sent by email
-    closeSheet(); $("s-result").classList.remove("gated"); show("s-ring");
+    closeSheet(); $("s-result").classList.remove("gated"); window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  // Step 2: the voice note screen (from "Kuula häälsõnumit" after opt-in)
+  function openRing() {
+    show("s-ring");
     const audio = AUDIO[st.sex];
     if (audio) { $("r-course").classList.add("wait-audio");
       const heard = () => { const a = $("r-audio"); if (a.ended || (a.duration && a.currentTime / a.duration > 0.9)) $("r-course").classList.remove("wait-audio"); };
@@ -563,7 +567,7 @@
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
   const closeSheet = () => $("r-sheet").classList.add("hidden");
   $("r-see").onclick = () => show("s-result");
-  $("r-unlock").onclick = () => st.email ? show("s-ring") : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
+  $("r-unlock").onclick = () => st.email ? openRing() : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
   // Logo → back to the start screen (fresh test)
