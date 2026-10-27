@@ -326,12 +326,12 @@
     <p id="r-open-msg"></p>
     <button class="btn" id="r-listen" style="display:block;width:auto;min-width:260px;margin:0 auto 16px;padding:16px 48px">Asun kuulama</button>
     <div class="card hidden" id="r-course">
-      <h3 class="card-h">Tahad minna sügavamale?</h3>
+      <h3 class="card-h" id="r-mc-head"></h3>
+      <p style="margin:0 0 14px" id="r-mc-sub"></p>
       <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
-      <p style="margin:14px 0 6px" id="r-mc-name"></p>
-      <p class="small" style="margin:0 0 6px">90 minutit suurt pilti ja lihtsad igapäevased rituaalid, mida saad kohe kasutada.</p>
-      <p style="margin:0 0 12px" id="r-mc-price"></p>
-      <a class="btn" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Soovin seda</a>
+      <ul id="r-mc-list" style="list-style:none;padding:0;margin:14px 0 12px;text-align:left"></ul>
+      <p style="margin:0 0 12px"><b>39 €</b> · 14 päeva raha tagasi</p>
+      <a class="btn" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Jah, alustan TÄNA</a>
     </div>
     <div class="card" id="r-group">
       <h3 class="card-h">Astu RUUMi</h3>
@@ -399,8 +399,18 @@
     raha:   { name: "Raha ja töö", vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
     suhted: { name: "Suhted",      vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
   };
-  // 2 masterclasses for 69 € (2nd at −50%) when focus and lowest area differ. One Stripe link; which two goes in client_reference_id.
-  const BUNDLE = { price: "59 €", pay: "https://buy.stripe.com/fZueVddFOcIleKP9Ya2kw09" };
+  // Offer card bullets per area: [bold feature, benefit]
+  const MK = "Meistriklass</b> (90-minutiline koolitus)<b>";
+  const OFFER = {
+    keha:   [[MK, ", et mõistaksid, miks Su keha ei muutu, ja ehitaksid jõu, mis kannab Sind päris elus"],
+             ["Treeningkava ja lihtsad retseptid", ", et tunneksid kehas muutust juba esimesel nädalal"]],
+    vaim:   [[MK, ", et lõpetaksid enda tagaplaanile jätmise ja vabaneksid piiravate uskumuste alt"],
+             ["Meditatsioonid ja hingamisharjutused", ", et leiaksid rahu iga päev mõne minutiga"]],
+    raha:   [[MK, ", et näeksid, kuidas Su harjumused ja mõtteviis Su raha kinni hoiavad"],
+             ["Kalkulaatorid ja manifesteerimise tööriistad", ", et näeksid selgelt, kuhu Su raha läheb ja kuhu Sa liigud"]],
+    suhted: [[MK, ", et mõistaksid, kus Sa oled oma elus kaitses, ja õpiksid oma südant avama"],
+             ["Sisemaailma harjutused", ", et astuksid iseenda väesse ja taasühenduksid teistega"]],
+  };
   // Focus question: options in his/her own words [button label, phrase used on the result page]
   const FOCUS = {
     mees:  { keha: ["💪 Tugev ja energiline keha", "tugev ja energiline keha"], vaim: ["🧘 Rahu ja selgus peas", "rahu ja selgus peas"],
@@ -510,27 +520,20 @@
       : st.focus === low[0].ring ? `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass kinnitab: just siit algab Sinu kurss.`
       : `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`;
     $("r-group-btn").href = GROUP || "#";
-    // Offer: lowest area's masterclass; plus the focus one at −50% when they differ (69 € for both)
+    // Offer: one masterclass for the lowest area, 39 €
     const payOf = k => { const p = MC[k] && MC[k].pay; return p && typeof p === "object" ? p[st.sex] : p; };
     const ready = k => !!payOf(k);
     let main = low[0].ring; if (!ready(main)) main = Object.keys(MC).find(ready) || main;
-    // The 2nd one may not be recorded yet: we sell it and record it LIVE once someone buys
-    const second = st.focus && st.focus !== main && MC[st.focus] ? st.focus : "";
-    const nm = k => `<b>Meistriklass · ${MC[k].name}</b>`;
-    if (second) {
-      $("r-mc-name").innerHTML = `${nm(st.focus)} <span class="small">(Sinu valik${ready(st.focus) ? "" : " · toimub LIVE, kutse tuleb e-postile"})</span><br>${nm(main)} <span class="small">(Sinu kompassi madalaim punkt)</span>`;
-      $("r-mc-price").innerHTML = `<s>78 €</s> <b>${BUNDLE.price}</b> · teine meistriklass −50%`;
-      $("r-course-btn").href = BUNDLE.pay ? BUNDLE.pay + "?client_reference_id=" + st.focus + "_" + main : "#";
-      $("r-course-btn").textContent = "Soovin neid";
-    } else {
-      $("r-mc-name").innerHTML = nm(main);
-      $("r-mc-price").innerHTML = "<b>39 €</b>";
-      $("r-course-btn").href = payOf(main) || "#";
-      $("r-course-btn").textContent = "Soovin seda";
-    }
+    const head = st.sex === "naine"
+      ? ["Rahu RUUM – tagasi iseendasse", "Ela sisemises rahus ja kerguses juba 7 päevaga."]
+      : ["Jõu ja Edu RUUM – selgus", "Liigu selge suuna ja jõuga juba 7 päevaga."];
+    $("r-mc-head").textContent = head[0];
+    $("r-mc-sub").textContent = head[1];
+    $("r-mc-list").innerHTML = (OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px">✓ <b>${b}</b>${t}</li>`).join("");
+    $("r-course-btn").href = payOf(main) || "#";
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-    st.mc = second ? st.focus + "+" + main : main;
+    st.mc = main;
     send();
     show("s-result");
     if (!st.email) setTimeout(() => { if ($("s-result").classList.contains("on")) openSheet(); }, 2500);
