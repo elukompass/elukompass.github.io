@@ -178,6 +178,8 @@
   #s-result.gated .card:not(#r-ring-card) { filter: blur(7px); pointer-events: none; user-select: none; }
   /* VSL moved to the day-2 follow-up + RUUM pinned post (Captain 28.10) */
   #r-vsl { display: none; }
+  /* Price + buy button appear once the voice note is (almost) heard */
+  #r-course.wait-audio .after-audio { display: none; }
 </style>
 </head>
 <body>
@@ -326,8 +328,8 @@
       <p class="small" id="r-audio-wait" style="margin:0 0 6px">Audio on valmimas. Saadame selle Sulle ka e-postile.</p>
       <p style="margin:14px 0 6px" id="r-mc-name"></p>
       <p class="small" style="margin:0 0 6px">90 minutit suurt pilti ja lihtsad igapäevased rituaalid, mida saad kohe kasutada.</p>
-      <p style="margin:0 0 12px" id="r-mc-price"></p>
-      <a class="btn" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Soovin seda</a>
+      <p style="margin:0 0 12px" id="r-mc-price" class="after-audio"></p>
+      <a class="btn after-audio" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Soovin seda</a>
     </div>
     <div class="card" id="r-group">
       <h3 class="card-h">Astu RUUMi</h3>
@@ -551,7 +553,10 @@
     // Unlock: the audio plays here and is also sent by email
     closeSheet(); $("s-result").classList.remove("gated"); show("s-ring");
     const audio = AUDIO[st.sex];
-    if (audio) { $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 3 minutit."; }
+    if (audio) { $("r-course").classList.add("wait-audio");
+      const heard = () => { const a = $("r-audio"); if (a.ended || (a.duration && a.currentTime / a.duration > 0.9)) $("r-course").classList.remove("wait-audio"); };
+      $("r-audio").ontimeupdate = heard; $("r-audio").onended = heard;
+      $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 3 minutit."; }
     else $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Leia vaikne koht ja anna endale need 3 minutit.";
   };
   // Email sheet
