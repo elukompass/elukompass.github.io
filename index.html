@@ -318,22 +318,25 @@
 
   <!-- 4 · after the email: the Deep Dive plays right away, then mini course + group -->
   <section class="screen" id="s-ring">
-    <h2>Sinu häälsõnum</h2>
-    <p id="r-open-msg"></p>
-    <button class="btn ghost" id="r-see" style="margin-bottom:12px">Vaata oma kompassi</button>
-    <div class="card" id="r-course">
-      <h3 class="card-h">Tahad minna sügavamale?</h3>
-      <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
+    <h2>Häälsõnum: Sinu elukompassi lugemine</h2>
+    <div class="card">
       <audio id="r-audio" controls preload="auto" class="hidden" style="width:100%"></audio>
       <div class="vsl" id="r-audio-wait"><small>🎧 Häälsõnum · 3 min</small></div>
+    </div>
+    <p id="r-open-msg"></p>
+    <button class="btn" id="r-listen" style="margin-bottom:16px">Asun kuulama</button>
+    <div class="card hidden" id="r-course">
+      <h3 class="card-h">Tahad minna sügavamale?</h3>
+      <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
       <p style="margin:14px 0 6px" id="r-mc-name"></p>
       <p class="small" style="margin:0 0 6px">90 minutit suurt pilti ja lihtsad igapäevased rituaalid, mida saad kohe kasutada.</p>
-      <p style="margin:0 0 12px" id="r-mc-price" class="after-audio"></p>
-      <a class="btn after-audio" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Soovin seda</a>
+      <p style="margin:0 0 12px" id="r-mc-price"></p>
+      <a class="btn" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Soovin seda</a>
     </div>
     <div class="card" id="r-group">
       <h3 class="card-h">Astu RUUMi</h3>
-      <p style="margin-bottom:12px">Meie tasuta kogukond edumeelsetest eestlastest.<br>Iga nädal ootab Sind seal uus deep dive.</p>
+      <div class="vsl"><small>🌊 RUUM · pilt tuleb peagi</small></div>
+      <p style="margin:12px 0">Meie tasuta kogukond edumeelsetest eestlastest.<br>Iga nädal ootab Sind seal uus deep dive.</p>
       <a class="btn" id="r-group-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Liitu grupiga</a>
     </div>
   </section>
@@ -556,17 +559,19 @@
   // Step 2: the voice note screen (from "Kuula häälsõnumit" after opt-in)
   function openRing() {
     show("s-ring");
-    const audio = AUDIO[st.sex];
-    if (audio) { $("r-course").classList.add("wait-audio");
-      const heard = () => { const a = $("r-audio"); if (a.ended || (a.duration && a.currentTime / a.duration > 0.9)) $("r-course").classList.remove("wait-audio"); };
-      $("r-audio").ontimeupdate = heard; $("r-audio").onended = heard;
-      $("r-audio").src = audio; $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Vajuta play ja anna endale need 3 minutit."; }
-    else $("r-open-msg").textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + "! 🌊 Leia vaikne koht ja anna endale need 3 minutit.";
-  };
+    const m = $("r-open-msg"); m.textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + ","; m.appendChild(document.createElement("br")); m.append("Võta nüüd 3 minutit iseenda jaoks.");
+    const audio = AUDIO[st.sex], offer = () => $("r-course").classList.remove("hidden");
+    if (audio) {
+      const a = $("r-audio"); a.src = audio;
+      a.ontimeupdate = a.onended = () => { if (a.ended || (a.duration && a.currentTime / a.duration > 0.9)) offer(); };
+    }
+    // "Asun kuulama": plays the voice note; until the recordings exist it just opens the offer
+    $("r-listen").onclick = () => { if (!audio) return offer();
+      $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-listen").classList.add("hidden"); };
+  }
   // Email sheet
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
   const closeSheet = () => $("r-sheet").classList.add("hidden");
-  $("r-see").onclick = () => show("s-result");
   $("r-unlock").onclick = () => st.email ? openRing() : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
@@ -577,7 +582,7 @@
   $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
   if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = "Hendrik"; result();
-    st.email = "preview"; $("r-open-msg").textContent = "Aitäh, " + st.name + "! 🌊 Leia vaikne koht ja anna endale need 3 minutit."; show("s-ring"); }
+    st.email = "preview"; openRing(); }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
   document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
