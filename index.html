@@ -529,7 +529,7 @@
       : ["Jõu ja Edu RUUM – selgus", "Liigu selge suuna ja jõuga juba 7 päevaga."];
     $("r-mc-head").textContent = head[0];
     $("r-mc-sub").textContent = head[1];
-    $("r-mc-list").innerHTML = (OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px">✓ <b>${b}</b>${t}</li>`).join("");
+    $("r-mc-list").innerHTML = (OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
