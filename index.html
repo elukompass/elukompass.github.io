@@ -562,7 +562,8 @@
     const NO_IMG = ["raha-n", "suhted-n"];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
     $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 55%"   // helm plus waves and horizon
-      : main === "vaim" && st.sex === "naine" ? "42% center" : "";                          // Kaidi on the rock
+      : main === "vaim" && st.sex === "naine" ? "42% center"                                 // Kaidi on the rock
+      : main === "vaim" ? "center 48%" : "";                                                  // Hendrik's face
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
