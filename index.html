@@ -654,6 +654,9 @@
     const m = $("r-open-msg"); m.textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + ","; m.appendChild(document.createElement("br")); m.append(st.sex === "naine"
       ? (st.mc === "keha" || st.mc === "raha" ? "See on Sinu pöördepunkt. Head kuulamist." : "Palun võta mõned minutid enda jaoks.")
       : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : "Võta 3 minutit, ole valmis uueks tasemeks."));
+    const MIN = { naine: { keha: 5, vaim: 4, raha: 4, suhted: 4 }, mees: { keha: 6, vaim: 10, raha: 9, suhted: 8 } };   // VM length, rounded
+    const min = (MIN[st.sex] || {})[st.mc];
+    $("r-audio-wait").querySelector("small").textContent = "🎧 Elukompassi lugem" + (min ? ` · ${min} min` : "");
     const audio = (AUDIO[st.sex] || {})[st.mc], offer = () => $("r-course").classList.remove("hidden");
     if (audio) {
       const a = $("r-audio"); a.src = audio;
