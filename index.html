@@ -154,7 +154,7 @@
   #r-group b, #r-course b { color: #FFE3A3; }
   #r-course s { color: var(--muted); }
   /* End-goal photo per area + gender as a banner on top of the offer card */
-  .mc-banner { display: block; width: calc(100% + 40px); aspect-ratio: 3 / 2; height: auto; max-height: 250px; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
+  .mc-banner { display: block; width: calc(100% + 40px); aspect-ratio: 16 / 9; height: auto; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
   .vsl { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.45); border: 1px solid var(--line); display: grid; place-items: center; align-content: center; gap: 6px; }
   .vsl span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #04161d; background: linear-gradient(135deg, var(--teal), var(--gold)); }
   .vsl small { font: 400 13px "Marcellus", serif; color: var(--muted); }
@@ -558,17 +558,13 @@
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
-    const IMGV = "0512";   // bump when a photo is swapped (beats browser + CDN cache)
+    const IMGV = "0520";   // bump when a photo is swapped (beats browser + CDN cache)
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg?v=${IMGV}`;
     const NO_IMG = [];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
-    $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center center"   // whole photo on a blurred 3:2 frame
-      : main === "vaim" && st.sex === "naine" ? "42% center"                                 // Kaidi on the rock
-      : main === "keha" && st.sex !== "naine" ? "center center"                                // B&W studio, pre-framed 3:2
-      : main === "vaim" ? "center center"                                                       // Hendrik's face
-      : main === "raha" && st.sex === "naine" ? "center 30%"                                 // Kaidi with flowers
-      : main === "suhted" && st.sex !== "naine" ? "center center"                           // summer crew, pre-cropped 3:2
-      : main === "suhted" ? "center center" : "";                                             // Kaidi hugging, pre-cropped 3:2
+    // Most photos are pre-cropped to 16:9 in assets/bg; these need a focus point
+    const POS = { "keha-m": "center top", "keha-n": "center 35%", "vaim-n": "42% center", "raha-n": "center 30%" };
+    $("r-mc-img").style.objectPosition = POS[`${main}-${st.sex === "naine" ? "n" : "m"}`] || "center center";
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
