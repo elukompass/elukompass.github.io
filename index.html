@@ -558,14 +558,14 @@
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
-    const IMGV = "0506";   // bump when a photo is swapped (beats browser + CDN cache)
+    const IMGV = "0512";   // bump when a photo is swapped (beats browser + CDN cache)
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg?v=${IMGV}`;
     const NO_IMG = [];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
     $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center center"   // whole photo on a blurred 3:2 frame
       : main === "vaim" && st.sex === "naine" ? "42% center"                                 // Kaidi on the rock
       : main === "keha" && st.sex !== "naine" ? "center center"                                // B&W studio, pre-framed 3:2
-      : main === "vaim" ? "center 34%"                                                       // Hendrik's face
+      : main === "vaim" ? "center center"                                                       // Hendrik's face
       : main === "raha" && st.sex === "naine" ? "center 30%"                                 // Kaidi with flowers
       : main === "suhted" && st.sex !== "naine" ? "center center"                           // summer crew, pre-cropped 3:2
       : main === "suhted" ? "center center" : "";                                             // Kaidi hugging, pre-cropped 3:2
