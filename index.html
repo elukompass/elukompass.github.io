@@ -197,7 +197,7 @@
   .vsl { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.45); border: 1px solid var(--line); display: grid; place-items: center; align-content: center; gap: 6px; }
   .vsl span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #04161d; background: linear-gradient(135deg, var(--teal), var(--gold)); }
   .vsl small { font: 400 13px "Marcellus", serif; color: var(--muted); }
-  .vsl iframe, .vsl video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .vsl iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   @media (max-width: 420px) { .host .face { width: 64px; height: 64px; } .host { gap: 12px; } }
   /* Email sheet: fewer sizes, one calm reading line */
   .sheet-sub { font: 400 16px "Marcellus", serif; color: #EAF2F6; margin: 0 0 14px; }
@@ -366,7 +366,7 @@
   <section class="screen" id="s-ring">
     <h2>Sinu elukompassi lugem</h2>
     <div class="card">
-      <audio id="r-audio" controls preload="auto" class="hidden" style="width:100%"></audio>
+      <video id="r-audio" controls playsinline preload="metadata" class="hidden" style="width:100%;aspect-ratio:16/9;border-radius:14px;background:#000"></video>
       <div class="vsl" id="r-audio-wait"><small>🎧 Elukompassi lugem · 3 min</small></div>
     </div>
     <p id="r-open-msg"></p>
@@ -437,15 +437,19 @@
 <script>
   // ── Settings (fill in when ready) ─────────────────────────────────────────────
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbxghp74yds9C-usLte2sfuxYAmyj5MFaXgKIzpnUQIgNbsroeBwC9472OW0nLfNYp_7Uw/exec";   // Google Apps Script web-app URL; results are appended to the "LAEV Kompass · tulemused" sheet
-  const AUDIO = { naine: "", mees: "" };   // Deep Dive audio links (Kaidi for women, Hendrik for men)
+  // Voice note per area (mp4 = voice + photo thumbnail): Kaidi for women, Hendrik for men
+  const AUDIO = {
+    naine: { keha: "assets/vm/keha-n.mp4", vaim: "assets/vm/vaim-n.mp4", raha: "assets/vm/raha-n.mp4", suhted: "assets/vm/suhted-n.mp4" },
+    mees:  { keha: "assets/vm/keha-m.mp4", vaim: "assets/vm/vaim-m.mp4", raha: "assets/vm/raha-m.mp4", suhted: "assets/vm/suhted-m.mp4" },
+  };
   const DM = { naine: "https://ig.me/m/kaidikarilaid", mees: "https://ig.me/m/hendrikoviir" };
   // 4 masterclasses (90 min, recorded + simple practices) = the 4 Deep Dive'i. Men's version by Hendrik, women's by Kaidi.
   // Fill per area: vsl (video link per voice) + pay (47 € Stripe link). Areas without a pay link aren't offered yet (Keha goes live first).
   const MC = {
-    keha:   { name: "Keha",        vsl: { mees: "assets/vm/keha-m.mp4", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
-    vaim:   { name: "Vaim",        vsl: { mees: "assets/vm/vaim-m.mp4", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
-    raha:   { name: "Raha ja töö", vsl: { mees: "assets/vm/raha-m.mp4", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
-    suhted: { name: "Suhted",      vsl: { mees: "assets/vm/suhted-m.mp4", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    keha:   { name: "Keha",        vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    vaim:   { name: "Vaim",        vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    raha:   { name: "Raha ja töö", vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
+    suhted: { name: "Suhted",      vsl: { mees: "", naine: "" }, pay: { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" } },
   };
   // Offer card bullets per area: [bold feature, benefit]
   const MK = "Meistriklass</b> (veebis)<b>";
@@ -617,9 +621,7 @@
     const POS = { "keha-m": "center top", "vaim-n": "42% center", "raha-n": "center 30%" };
     $("r-mc-img").style.objectPosition = POS[`${main}-${st.sex === "naine" ? "n" : "m"}`] || "center center";
     const v = MC[main] && MC[main].vsl[st.sex];
-    // VM per area shows only where it exists (men live 28.10; women follow)
-    if (v) { $("r-vsl").innerHTML = /\.mp4$/.test(v) ? `<video src="${v}" controls playsinline preload="metadata"></video>` : `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`; $("r-vsl").style.display = "grid"; }
-    else $("r-vsl").style.display = "";
+    if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
     send();
     show("s-result");
@@ -652,7 +654,7 @@
     const m = $("r-open-msg"); m.textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + ","; m.appendChild(document.createElement("br")); m.append(st.sex === "naine"
       ? (st.mc === "keha" || st.mc === "raha" ? "See on Sinu pöördepunkt. Head kuulamist." : "Palun võta mõned minutid enda jaoks.")
       : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : "Võta 3 minutit, ole valmis uueks tasemeks."));
-    const audio = AUDIO[st.sex], offer = () => $("r-course").classList.remove("hidden");
+    const audio = (AUDIO[st.sex] || {})[st.mc], offer = () => $("r-course").classList.remove("hidden");
     if (audio) {
       const a = $("r-audio"); a.src = audio;
       a.ontimeupdate = a.onended = () => { if (a.ended || (a.duration && a.currentTime / a.duration > 0.9)) offer(); };
