@@ -49,6 +49,7 @@
   .brand svg { width: 22px; height: 22px; }
   .screen { display: none; flex: 1; flex-direction: column; animation: fade .35s ease; }
   .screen.on { display: flex; }
+  @media (min-width: 700px) { .screen > .btn, .screen > .row { margin-top: 26px !important; } }   /* desktop: continue buttons sit right under the content, not at the bottom */
   @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin: 10px 0 18px; }
   .btn { appearance: none; border: 0; border-radius: 999px; padding: 16px 22px; font: 700 17px "Manrope"; cursor: pointer;
