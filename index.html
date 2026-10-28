@@ -232,6 +232,20 @@
   #r-vsl { display: none; }
   /* Price + buy button appear once the voice note is (almost) heard */
   #r-course.wait-audio .after-audio { display: none; }
+  /* VM: small 4:5 thumbnail; tap opens the focus view */
+  #r-audio-wait { cursor: pointer; background-size: cover; background-position: center; }
+  .vm-player { display: flex; align-items: center; gap: 14px; width: 100%; max-width: 460px; margin: 0 auto; }
+  .vm-player.hidden { display: none; }
+  .vm-player .pp { flex: none; width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer; font-size: 20px; color: #04161d; background: linear-gradient(135deg, var(--teal), var(--gold)); }
+  .vm-player .bar { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.18); cursor: pointer; position: relative; }
+  .vm-player .bar i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 3px; background: var(--gold); }
+  .vm-player .t { flex: none; min-width: 42px; font: 400 13px "Marcellus", serif; color: var(--muted); text-align: right; }
+  #r-audio-wait small { color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  .focus { position: fixed; inset: 0; z-index: 60; background: rgba(4,10,16,.97); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; }
+  .focus.hidden { display: none; }
+  .focus img { width: min(90vw, 560px); max-height: 52vh; object-fit: cover; border-radius: 18px; box-shadow: 0 0 60px rgba(120,170,255,.18); }
+  .focus .vm-player { width: min(86vw, 460px); }
+  .focus .sheet-x { position: absolute; top: 14px; right: 14px; }
 </style>
 </head>
 <body>
@@ -372,8 +386,8 @@
   <section class="screen" id="s-ring">
     <h2>Sinu elukompassi lugem</h2>
     <div class="card">
-      <video id="r-audio" controls playsinline preload="metadata" class="hidden" style="width:100%;aspect-ratio:16/9;border-radius:14px;background:#000"></video>
-      <div class="vsl" id="r-audio-wait" style="cursor:pointer"><small style="color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8)">🎧 Elukompassi lugem · 3 min</small></div>
+      <div class="vsl" id="r-audio-wait"><span>▶</span><small>🎧 Elukompassi lugem · 3 min</small></div>
+      <div class="vm-player hidden" id="r-player"><button class="pp" aria-label="Kuula">▶</button><div class="bar"><i></i></div><span class="t">0:00</span></div>
     </div>
     <p id="r-open-msg"></p>
     <button class="btn" id="r-listen" style="display:block;width:auto;min-width:260px;margin:26px auto 26px;padding:16px 48px">Asun kuulama</button>
@@ -394,6 +408,13 @@
       <a class="btn" id="r-group-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Liitu grupiga</a>
     </div>
   </section>
+  <div class="focus hidden" id="vm-focus" role="dialog" aria-modal="true" aria-label="Elukompassi lugem">
+    <button class="sheet-x" id="vm-focus-x" aria-label="Sulge">×</button>
+    <img id="vm-focus-img" alt="">
+    <h3 class="card-h" id="vm-focus-head" style="margin:22px 0 14px">Sinu elukompassi lugem</h3>
+    <audio id="r-audio" preload="metadata"></audio>
+    <div class="vm-player"><button class="pp" aria-label="Kuula">▶</button><div class="bar"><i></i></div><span class="t">0:00</span></div>
+  </div>
   <footer class="foot start" id="foot"><b class="foot-ship"><svg class="helm-mini" viewBox="-52 -52 104 104" aria-hidden="true"><g stroke="#A0682B" stroke-width="3" stroke-linecap="round"><line x1="27.7" y1="11.5" x2="40.7" y2="16.8"/><line x1="11.5" y1="27.7" x2="16.8" y2="40.7"/><line x1="-11.5" y1="27.7" x2="-16.8" y2="40.7"/><line x1="-27.7" y1="11.5" x2="-40.7" y2="16.8"/><line x1="-27.7" y1="-11.5" x2="-40.7" y2="-16.8"/><line x1="-11.5" y1="-27.7" x2="-16.8" y2="-40.7"/><line x1="11.5" y1="-27.7" x2="16.8" y2="-40.7"/><line x1="27.7" y1="-11.5" x2="40.7" y2="-16.8"/></g><g fill="#C58A45"><circle cx="42.5" cy="17.6" r="3.6"/><circle cx="17.6" cy="42.5" r="3.6"/><circle cx="-17.6" cy="42.5" r="3.6"/><circle cx="-42.5" cy="17.6" r="3.6"/><circle cx="-42.5" cy="-17.6" r="3.6"/><circle cx="-17.6" cy="-42.5" r="3.6"/><circle cx="17.6" cy="-42.5" r="3.6"/><circle cx="42.5" cy="-17.6" r="3.6"/></g><circle r="34" fill="rgba(10,26,46,0.55)" stroke="#B9813F" stroke-width="4.5"/><circle r="29.5" fill="none" stroke="#6FB8FF" stroke-width="1.6"/><circle r="22" fill="none" stroke="#E5483D" stroke-width="1.3"/><g fill="none" stroke="#7FE8FF" stroke-width="1"><circle cx="0" cy="0" r="8"/><circle cx="8.0" cy="0.0" r="8"/><circle cx="4.0" cy="6.9" r="8"/><circle cx="-4.0" cy="6.9" r="8"/><circle cx="-8.0" cy="0.0" r="8"/><circle cx="-4.0" cy="-6.9" r="8"/><circle cx="4.0" cy="-6.9" r="8"/></g><path d="M-0.0,-26.0 L-4.0,-24.0 L-6.0,-22.0 L-4.9,-20.0 L-1.4,-18.0 L2.8,-16.0 L5.6,-14.0 L5.6,-12.0 L2.8,-10.0 L-1.4,-8.0 L-4.9,-6.0 L-6.0,-4.0 L-4.0,-2.0 L0.0,0.0 L4.0,2.0 L6.0,4.0 L4.9,6.0 L1.4,8.0 L-2.8,10.0 L-5.6,12.0 L-5.6,14.0 L-2.8,16.0 L1.4,18.0 L4.9,20.0 L6.0,22.0 L4.0,24.0 L0.0,26.0" fill="none" stroke="#FFC861" stroke-width="1.4"/><path d="M0.0,-26.0 L4.0,-24.0 L6.0,-22.0 L4.9,-20.0 L1.4,-18.0 L-2.8,-16.0 L-5.6,-14.0 L-5.6,-12.0 L-2.8,-10.0 L1.4,-8.0 L4.9,-6.0 L6.0,-4.0 L4.0,-2.0 L0.0,0.0 L-4.0,2.0 L-6.0,4.0 L-4.9,6.0 L-1.4,8.0 L2.8,10.0 L5.6,12.0 L5.6,14.0 L2.8,16.0 L-1.4,18.0 L-4.9,20.0 L-6.0,22.0 L-4.0,24.0 L-0.0,26.0" fill="none" stroke="#FFC861" stroke-width="1.4"/><circle r="2.6" fill="#B48CFF"/></svg>Floreo</b><span class="foot-line">Peatu. Astu pardale.</span><span class="foot-line" style="opacity:.45;font-size:.68em;font-weight:300;color:#fff;-webkit-text-fill-color:#fff;letter-spacing:.04em"><a href="#" class="legal-link" data-legal="pp" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px">Privaatsus</a> · <a href="#" class="legal-link" data-legal="mt" style="color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px">Müügitingimused</a></span></footer>
   <!-- Email sheet: opens from the locked player, the button, or once when they reach the bottom -->
   <div class="sheet hidden" id="r-sheet" role="dialog" aria-modal="true" aria-labelledby="r-sheet-title">
@@ -445,8 +466,8 @@
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbxghp74yds9C-usLte2sfuxYAmyj5MFaXgKIzpnUQIgNbsroeBwC9472OW0nLfNYp_7Uw/exec";   // Google Apps Script web-app URL; results are appended to the "LAEV Kompass · tulemused" sheet
   // Voice note per area (mp4 = voice + photo thumbnail): Kaidi for women, Hendrik for men
   const AUDIO = {
-    naine: { keha: "assets/vm/keha-n.mp4", vaim: "assets/vm/vaim-n.mp4", raha: "assets/vm/raha-n.mp4", suhted: "assets/vm/suhted-n.mp4" },
-    mees:  { keha: "assets/vm/keha-m.mp4", vaim: "assets/vm/vaim-m.mp4", raha: "assets/vm/raha-m.mp4", suhted: "assets/vm/suhted-m.mp4" },
+    naine: { keha: "assets/vm/keha-n.m4a", vaim: "assets/vm/vaim-n.m4a", raha: "assets/vm/raha-n.m4a", suhted: "assets/vm/suhted-n.m4a" },
+    mees:  { keha: "assets/vm/keha-m.m4a", vaim: "assets/vm/vaim-m.m4a", raha: "assets/vm/raha-m.m4a", suhted: "assets/vm/suhted-m.m4a" },
   };
   const MIN = { naine: { keha: 5, vaim: 4, raha: 4, suhted: 4 }, mees: { keha: 6, vaim: 10, raha: 9, suhted: 8 } };   // VM length in minutes, rounded
   const DM = { naine: "https://ig.me/m/kaidikarilaid", mees: "https://ig.me/m/hendrikoviir" };
@@ -627,6 +648,7 @@
     // Most photos are pre-cropped to 16:9 in assets/bg; these need a focus point
     const POS = { "keha-m": "center top", "vaim-n": "42% center", "raha-n": "center 30%" };
     $("r-mc-img").style.objectPosition = POS[`${main}-${st.sex === "naine" ? "n" : "m"}`] || "center center";
+    st.photo = bg; st.photoPos = $("r-mc-img").style.objectPosition;
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
@@ -663,23 +685,43 @@
       : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : `Võta ${(MIN[st.sex] || {})[st.mc] || 3} minutit, ole valmis uueks tasemeks.`));
     const min = (MIN[st.sex] || {})[st.mc];
     $("r-audio-wait").querySelector("small").textContent = "🎧 Elukompassi lugem" + (min ? ` · ${min} min` : "");
-    // Thumbnail = the VM's own photo frame (assets/vm/<area>-<m|n>.jpg)
-    const thumb = st.mc && `assets/vm/${st.mc}-${st.sex === "naine" ? "n" : "m"}.jpg`;
-    $("r-audio-wait").style.background = thumb ? `linear-gradient(rgba(4,10,16,.15), rgba(4,10,16,.55)), url(${thumb}) center/cover` : "";
-    $("r-audio").poster = thumb || "";
+    // One photo per page: the product photo is the VM thumbnail until they listen, then it moves to the product box
+    const thumb = st.photo;
+    $("r-audio-wait").style.backgroundImage = thumb ? `linear-gradient(rgba(4,10,16,0) 45%, rgba(4,10,16,.75)), url(${thumb})` : "";
+    $("r-audio-wait").style.backgroundPosition = st.photoPos || "center";
+    $("vm-focus-img").src = thumb || ""; $("vm-focus-img").style.objectPosition = st.photoPos || "center";
+    $("vm-focus-head").textContent = (st.sex === "naine" ? "Kaidi" : "Hendrik") + " · Sinu elukompassi lugem";
+    // Lock screen shows the photo + title while it plays
+    if (thumb && "mediaSession" in navigator) navigator.mediaSession.metadata = new MediaMetadata({ title: "Sinu elukompassi lugem", artist: st.sex === "naine" ? "Kaidi · Floreo" : "Hendrik · Floreo", artwork: [{ src: new URL(thumb, location.href).href, type: "image/jpeg" }] });
     const audio = (AUDIO[st.sex] || {})[st.mc], offer = () => $("r-course").classList.remove("hidden");
+    // After listening (or closing the focus view): thumbnail → simple player, photo → product box
+    const settle = () => { $("vm-focus").classList.add("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-player").classList.remove("hidden"); offer(); };
+    st.settle = settle;
     if (audio) {
       const a = $("r-audio"); a.src = audio;
-      a.ontimeupdate = a.onended = () => { if (a.ended || (a.duration && a.currentTime / a.duration > 0.9)) offer(); };
+      a.ontimeupdate = () => { paint(); if (a.duration && a.currentTime / a.duration > 0.9) offer(); };
+      a.onplay = a.onpause = a.onloadedmetadata = paint;
+      a.onended = () => { paint(); setTimeout(() => { settle(); $("r-course").scrollIntoView({ behavior: "smooth" }); }, 1200); };
     }
-    // "Asun kuulama": plays the voice note; until the recordings exist it just opens the offer
-    $("r-listen").onclick = () => { if (!audio) return offer();
-      $("r-audio").classList.remove("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-audio").play().catch(() => {}); $("r-listen").classList.add("hidden"); };
+    // "Asun kuulama": opens the focus view and plays; the button goes away
+    $("r-listen").onclick = () => { $("r-listen").classList.add("hidden"); if (!audio) return offer();
+      $("vm-focus").classList.remove("hidden"); $("r-audio").play().catch(() => {}); };
   }
   // Email sheet
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
   const closeSheet = () => $("r-sheet").classList.add("hidden");
   $("r-audio-wait").onclick = () => $("r-listen").onclick && $("r-listen").onclick();
+  $("vm-focus-x").onclick = () => st.settle && st.settle();   // closing keeps it playing
+  // Simple player (focus view + upper box share the one <audio>)
+  const fmt = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+  function paint() { const a = $("r-audio"), d = a.duration || 0;
+    document.querySelectorAll(".vm-player").forEach(p => { p.querySelector(".pp").textContent = a.paused ? "▶" : "❚❚";
+      p.querySelector(".bar i").style.width = d ? `${a.currentTime / d * 100}%` : "0";
+      p.querySelector(".t").textContent = d ? fmt(a.paused && !a.currentTime ? d : d - a.currentTime) : "0:00"; }); }
+  document.querySelectorAll(".vm-player").forEach(p => {
+    p.querySelector(".pp").onclick = () => { const a = $("r-audio"); a.paused ? a.play().catch(() => {}) : a.pause(); };
+    p.querySelector(".bar").onclick = e => { const a = $("r-audio"), r = e.currentTarget.getBoundingClientRect(); if (a.duration) a.currentTime = (e.clientX - r.left) / r.width * a.duration; };
+  });
   $("r-unlock").onclick = () => st.email ? openRing() : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
@@ -690,8 +732,7 @@
   $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
   if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = st.sex === "naine" ? "Kaidi" : "Hendrik"; document.body.classList.toggle("naine", st.sex === "naine"); result();
-    // Preview: the offer box appears after "Asun kuulama" (live it waits for 90% of the VM)
-    st.email = "preview"; openRing(); if (params.get("a")) { const go = $("r-listen").onclick; $("r-listen").onclick = () => { go(); $("r-course").classList.remove("hidden"); }; } setTimeout(() => window.scrollTo(0, 0), 50); }
+    st.email = "preview"; openRing(); setTimeout(() => window.scrollTo(0, 0), 50); }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
   document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
