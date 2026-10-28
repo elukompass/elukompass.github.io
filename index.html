@@ -641,7 +641,7 @@
   function openRing() {
     show("s-ring");
     const m = $("r-open-msg"); m.textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + ","; m.appendChild(document.createElement("br")); m.append(st.sex === "naine"
-      ? (st.mc === "keha" || st.mc === "raha" ? "See on Sinu pöördepunkt. Head kuulamist." : "Palun võta nüüd mõned minutid enda jaoks.")
+      ? (st.mc === "keha" || st.mc === "raha" ? "See on Sinu pöördepunkt. Head kuulamist." : "Palun võta mõned minutid enda jaoks.")
       : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : "Võta 3 minutit, ole valmis uueks tasemeks."));
     const audio = AUDIO[st.sex], offer = () => $("r-course").classList.remove("hidden");
     if (audio) {
