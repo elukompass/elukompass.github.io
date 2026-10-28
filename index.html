@@ -448,6 +448,7 @@
     naine: { keha: "assets/vm/keha-n.mp4", vaim: "assets/vm/vaim-n.mp4", raha: "assets/vm/raha-n.mp4", suhted: "assets/vm/suhted-n.mp4" },
     mees:  { keha: "assets/vm/keha-m.mp4", vaim: "assets/vm/vaim-m.mp4", raha: "assets/vm/raha-m.mp4", suhted: "assets/vm/suhted-m.mp4" },
   };
+  const MIN = { naine: { keha: 5, vaim: 4, raha: 4, suhted: 4 }, mees: { keha: 6, vaim: 10, raha: 9, suhted: 8 } };   // VM length in minutes, rounded
   const DM = { naine: "https://ig.me/m/kaidikarilaid", mees: "https://ig.me/m/hendrikoviir" };
   // 4 masterclasses (90 min, recorded + simple practices) = the 4 Deep Dive'i. Men's version by Hendrik, women's by Kaidi.
   // Fill per area: vsl (video link per voice) + pay (47 € Stripe link). Areas without a pay link aren't offered yet (Keha goes live first).
@@ -588,7 +589,7 @@
     const LOW1 = W ? "Siin ootab Sind kõige rohkem kasvu. Väike hoolitsus siin teeb kogu Su elu kergemaks." : "Siin on kõige rohkem jõudu peidus. Väike muutus siin liigutab kogu laeva.";
     $("r-low").innerHTML = low.map((q, n) => `<div class="low"><b>${q.name} · ${st.scores[Q.indexOf(q)]}/10</b><br><span class="small">${n === 0 ? LOW1 : "Teine koht, kuhu tasub tähelepanu tuua."}</span></div>`).join("");
     const ring = RING[low[0].ring];
-    $("r-ring-intro").textContent = `Teema: „${ring.title}”. Võta 3 minutit iseendale.`;
+    $("r-ring-intro").textContent = `Teema: „${ring.title}”. Võta ${(MIN[st.sex] || {})[low[0].ring] || 3} minutit iseendale.`;
     const host = st.sex === "mees" ? "Hendrik" : "Kaidi";
     $("r-wheel-line").textContent = st.sex === "naine" ? "Mida tasakaalukam on Sinu ratas, seda kergemalt elu Sinus voolab." : "Mida ühtlasem ratas, seda sujuvamalt elumerel sõidad.";
     $("r-face").src = st.sex === "mees" ? "assets/hendrik-captain.png" : "assets/kaidi-queen.jpg";
@@ -659,8 +660,7 @@
     show("s-ring");
     const m = $("r-open-msg"); m.textContent = "Aitäh, " + (st.name.split(" ")[0] || "kallis") + ","; m.appendChild(document.createElement("br")); m.append(st.sex === "naine"
       ? (st.mc === "keha" || st.mc === "raha" ? "See on Sinu pöördepunkt. Head kuulamist." : "Palun võta mõned minutid enda jaoks.")
-      : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : "Võta 3 minutit, ole valmis uueks tasemeks."));
-    const MIN = { naine: { keha: 5, vaim: 4, raha: 4, suhted: 4 }, mees: { keha: 6, vaim: 10, raha: 9, suhted: 8 } };   // VM length, rounded
+      : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : `Võta ${(MIN[st.sex] || {})[st.mc] || 3} minutit, ole valmis uueks tasemeks.`));
     const min = (MIN[st.sex] || {})[st.mc];
     $("r-audio-wait").querySelector("small").textContent = "🎧 Elukompassi lugem" + (min ? ` · ${min} min` : "");
     // Thumbnail = the VM's own photo frame (assets/vm/<area>-<m|n>.jpg)
