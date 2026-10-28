@@ -19,12 +19,17 @@
     --gold: #ffc861; --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14);
   }
   body.naine { --warm: #FFA24A; --gold: #F7922F; }
-  /* Women: satin orange like Kaidi's dress — light sheen on top, deep glowing orange below */
+  /* Women: Bali sunset — gold sheen to orange to coral */
   body.naine { --warm: #FF9A2E; }
   body.naine h1, body.naine h2, body.naine .card-h, body.naine .brand span {
-    background: linear-gradient(180deg, #FFE7C4 0%, #FFB35A 38%, #FF8A1A 72%, #F26B0F 100%);
+    background: linear-gradient(180deg, #FFE9B8 0%, #FFC266 28%, #FF9442 58%, #F2685A 100%);   /* Bali sunset */
     -webkit-background-clip: text; background-clip: text; color: transparent;
     filter: drop-shadow(0 0 10px rgba(255, 138, 26, 0.35)); }
+  /* Men: black letters with gold edges */
+  body:not(.naine) h1, body:not(.naine) h2, body:not(.naine) .card-h, body:not(.naine) .brand span {
+    background: none; color: #0A0E13; -webkit-text-fill-color: #0A0E13; -webkit-text-stroke: 1.2px #E9B44C;
+    filter: drop-shadow(0 0 6px rgba(233, 180, 76, 0.45)); }
+  body:not(.naine) #r-mc-sub { color: #0A0E13; -webkit-text-stroke: 0.6px #E9B44C; filter: drop-shadow(0 0 4px rgba(233, 180, 76, 0.4)); }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
