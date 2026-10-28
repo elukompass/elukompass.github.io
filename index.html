@@ -37,6 +37,7 @@
     background: linear-gradient(135deg, var(--teal), var(--teal-2)); color: #04161d; width: 100%; margin-top: auto; }
   .btn:disabled { opacity: .4; cursor: default; }
   .btn.siht { background: #0A1222; color: #6FE7DC; border: 1px solid rgba(111,231,220,0.55); border-radius: 10px; font: 800 17px "Orbitron", sans-serif; letter-spacing: 0.22em; box-shadow: 0 0 18px rgba(111,231,220,0.18); }
+  .btn .ot { font-family: "Manrope", sans-serif; font-weight: 800; letter-spacing: 0; }   /* Orbitron has no Õ glyph */
   .btn.siht:hover { border-color: #6FE7DC; box-shadow: 0 0 24px rgba(111,231,220,0.35); }
   .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); margin-top: 10px; }
   .choices { display: grid; gap: 12px; margin: 8px 0 20px; }
@@ -455,6 +456,8 @@
   };
 
   // ── State ──────────────────────────────────────────────────────────────────
+  // Orbitron has no Õ/õ: draw that one letter in Manrope inside buttons
+  document.querySelectorAll(".btn").forEach(el => { if (/[õÕ]/.test(el.textContent) && !el.children.length) el.innerHTML = el.textContent.replace(/[õÕ]/g, m => `<span class="ot">${m}</span>`); });
   const params = new URLSearchParams(location.search);
   const PREVIEW = location.hash === "#paasterongas" || location.hash === "#deepdive";
   // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
