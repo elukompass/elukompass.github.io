@@ -620,10 +620,10 @@
       : st.focus === low[0].ring ? `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass kinnitab: just siit algab Sinu kurss.`
       : `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`;
     $("r-group-btn").href = GROUP || "#";
-    // Offer: one masterclass for the lowest area, 39 €
+    // Offer: sell what they want (their own focus), give what they need (the lowest area is named in the result and lives inside the course), 39 €
     const payOf = k => { const p = MC[k] && MC[k].pay; return p && typeof p === "object" ? p[st.sex] : p; };
     const ready = k => !!payOf(k);
-    let main = low[0].ring; if (!ready(main)) main = Object.keys(MC).find(ready) || main;
+    let main = (st.focus && MC[st.focus]) ? st.focus : low[0].ring; if (!ready(main)) main = Object.keys(MC).find(ready) || main;
     if (PREVIEW && MC[params.get("a")]) main = params.get("a");   // preview: ?a=keha|vaim|raha|suhted
     const head = st.sex === "naine"
       ? ["Rahu RUUM", "Ela sisemises rahus ja kerguses juba 7 päevaga."]
