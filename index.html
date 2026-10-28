@@ -240,7 +240,7 @@
   .vm-player .bar { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.18); cursor: pointer; position: relative; }
   .vm-player .bar i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 3px; background: var(--gold); }
   .vm-player .t { flex: none; min-width: 42px; font: 400 13px "Marcellus", serif; color: var(--muted); text-align: right; }
-  #r-audio-wait small { color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  #r-audio-wait small { color: #fff; font: 600 19px Futura, "Avenir Next", system-ui, sans-serif; letter-spacing: .04em; text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 18px rgba(0,0,0,.7); margin-top: 4px; }
   .focus { position: fixed; inset: 0; z-index: 60; background: rgba(4,10,16,.97); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; }
   .focus.hidden { display: none; }
   .focus img { width: min(90vw, 560px); max-height: 52vh; object-fit: cover; border-radius: 18px; box-shadow: 0 0 60px rgba(120,170,255,.18); }
@@ -386,7 +386,7 @@
   <section class="screen" id="s-ring">
     <h2>Sinu elukompassi lugem</h2>
     <div class="card">
-      <div class="vsl" id="r-audio-wait"><span>▶</span><small>🎧 Elukompassi lugem · 3 min</small></div>
+      <div class="vsl" id="r-audio-wait"><span>▶</span><small></small></div>
       <div class="vm-player hidden" id="r-player"><button class="pp" aria-label="Kuula">▶</button><div class="bar"><i></i></div><span class="t">0:00</span></div>
     </div>
     <p id="r-open-msg"></p>
@@ -684,7 +684,7 @@
       ? (st.mc === "keha" || st.mc === "raha" ? "See on Sinu pöördepunkt. Head kuulamist." : "Palun võta mõned minutid enda jaoks.")
       : (st.mc === "vaim" || st.mc === "suhted" ? "Võta paar minutit iseenda jaoks." : `Võta ${(MIN[st.sex] || {})[st.mc] || 3} minutit, ole valmis uueks tasemeks.`));
     const min = (MIN[st.sex] || {})[st.mc];
-    $("r-audio-wait").querySelector("small").textContent = "🎧 Elukompassi lugem" + (min ? ` · ${min} min` : "");
+    $("r-audio-wait").querySelector("small").textContent = min ? `${min} minutit` : "";
     // One photo per page: the product photo is the VM thumbnail until they listen, then it moves to the product box
     const thumb = st.photo;
     $("r-audio-wait").style.backgroundImage = thumb ? `linear-gradient(rgba(4,10,16,0) 45%, rgba(4,10,16,.75)), url(${thumb})` : "";
