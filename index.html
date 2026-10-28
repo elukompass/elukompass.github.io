@@ -19,7 +19,7 @@
     --gold: #ffc861; --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14);
   }
   body.naine { --warm: #FFA24A; --gold: #F7922F; }
-  body.reply .brand span { display: none; }   /* result pages: logo only, the headline already names it */
+  body.reply .brand span { display: none; }   /* after the start page: logo only */
   /* Women: Bali sunset — gold sheen to orange to coral */
   body.naine { --warm: #FF9A2E; }
   body.naine h1, body.naine h2, body.naine .card-h, body.naine .brand span {
@@ -103,7 +103,7 @@
   /* Headings in HELM's Cormorant Garamond, KOMPASS in Cinzel */
   h1, h2 { font-family: "Cormorant Garamond", "Marcellus", serif; font-weight: 700; letter-spacing: 0.01em; }
   h1 { font-size: 42px; line-height: 1.08; }
-  h2 { font-size: 36px; line-height: 1.12; }
+  h2 { font-size: clamp(25px, 8.4vw, 36px); line-height: 1.12; }   /* scales down on narrow phones so short headlines stay on one line */
   .brand span { font-family: "Cinzel", "Marcellus", serif; font-weight: 600; font-size: 21px; letter-spacing: 0.2em; }   /* same size as Floreo in the footer */
   #s-start > p:not(.under) { font: italic 500 22px/1.35 "Cormorant Garamond", serif; color: #cfe3e8; }
   /* Colours: warm gold-white headings, brighter body text, soft shadow over the sea */
@@ -503,7 +503,7 @@
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
   document.body.classList.toggle("naine", st.sex === "naine");
   const $ = id => document.getElementById(id);
-  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); document.body.classList.toggle("reply", id === "s-result" || id === "s-ring"); window.scrollTo(0, 0); };
+  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); document.body.classList.toggle("reply", id !== "s-start"); /* KOMPASS word only on the start page */ window.scrollTo(0, 0); };
 
   document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { if (!st.sex) show("s-sex"); else if (!st.focus) { paintFocus(); show("s-focus"); } else { paintQ(); show("s-q"); } });
   document.querySelectorAll("[data-sex]").forEach(b => b.onclick = () => {
