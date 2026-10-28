@@ -117,6 +117,13 @@
   .under.small { margin-top: 6px; font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
   #s-start h1 { font-size: clamp(26px, 6.4vw, 36px); text-wrap: balance; }
   #s-start .btn.siht { margin-top: clamp(48px, 14vh, 140px); }
+  /* Start button: the page's one filled action, gold with a soft pulse and a light sweep */
+  #s-start .btn.siht { position: relative; overflow: hidden; display: block; width: auto; min-width: 240px; margin-left: auto; margin-right: auto; padding: 18px 56px;
+    background: linear-gradient(180deg, #F6CF78 0%, #E3A93F 100%); color: #0A1222; border: 1.5px solid #FFE7A8; animation: buyGlow 3.2s ease-in-out infinite; transition: transform .18s ease, filter .18s ease; }
+  #s-start .btn.siht::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent); transform: skewX(-20deg); animation: sweep 3.6s ease-in-out infinite; }
+  #s-start .btn.siht:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  @keyframes sweep { 0%, 55% { left: -60%; } 85%, 100% { left: 130%; } }
+  @media (prefers-reduced-motion: reduce) { #s-start .btn.siht, #s-start .btn.siht::after { animation: none; } }
   /* Footer like HELM: Floreo in Marcellus, motto in gold-to-sea italic; start page shows Floreo only */
   .foot { display: flex; flex-direction: column; align-items: center; gap: 4px; line-height: 1.15; border-top: 0; margin-top: auto; padding-top: 56px; }
   .foot-ship { font: 400 21px "Marcellus", serif; letter-spacing: 0.2em; color: #EAF4FF; }
