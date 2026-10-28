@@ -559,11 +559,12 @@
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg`;
-    const NO_IMG = ["raha-n", "suhted-n"];   // new photos coming 29.10; hide banner until then
+    const NO_IMG = ["suhted-n"];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
     $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 55%"   // helm plus waves and horizon
       : main === "vaim" && st.sex === "naine" ? "42% center"                                 // Kaidi on the rock
-      : main === "vaim" ? "center 48%" : "";                                                  // Hendrik's face
+      : main === "vaim" ? "center 48%"                                                       // Hendrik's face
+      : main === "raha" && st.sex === "naine" ? "center 30%" : "";                            // Kaidi with flowers
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
