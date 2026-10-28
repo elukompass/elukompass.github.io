@@ -543,7 +543,10 @@
     const head = st.sex === "naine"
       ? ["Rahu RUUM", "Ela sisemises rahus ja kerguses juba 7 päevaga."]
       : ["Jõu ja Edu RUUM", "Liigu selgel suunal juba 7 päevaga."];
-    $("r-mc-head").textContent = head[0];
+    const NAME = st.sex === "naine"
+      ? { keha: "Elujõu RUUM", vaim: "Rahu RUUM", raha: "Õitsengu RUUM", suhted: "Armastuse RUUM" }
+      : { keha: "Jõu RUUM", vaim: "Väe RUUM", raha: "Edu RUUM", suhted: "Südame RUUM" };
+    $("r-mc-head").textContent = NAME[main] || head[0];
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
