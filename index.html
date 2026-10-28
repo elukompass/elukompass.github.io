@@ -561,12 +561,12 @@
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
-    const IMGV = "0536";   // bump when a photo is swapped (beats browser + CDN cache)
+    const IMGV = "0541";   // bump when a photo is swapped (beats browser + CDN cache)
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg?v=${IMGV}`;
     const NO_IMG = [];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
     // Most photos are pre-cropped to 16:9 in assets/bg; these need a focus point
-    const POS = { "keha-m": "center top", "keha-n": "center 35%", "vaim-n": "42% center", "raha-n": "center 30%" };
+    const POS = { "keha-m": "center top", "vaim-n": "42% center", "raha-n": "center 30%" };
     $("r-mc-img").style.objectPosition = POS[`${main}-${st.sex === "naine" ? "n" : "m"}`] || "center center";
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
