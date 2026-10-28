@@ -9,7 +9,7 @@
 <meta name="description" content="Mis kursil Sa oled? 8 küsimust, 1 minut. Näed oma elukompassi ja saad elukompassi lugemi.">
 <meta property="og:title" content="Kompass · Floreo">
 <meta property="og:description" content="8 küsimust, 1 minut. Näe, kus Sa praegu oma elus asud.">
-<meta property="og:image" content="https://elukompass.github.io/assets/og.jpg">
+<meta property="og:image" content="https://elukompass.github.io/assets/og2.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://elukompass.github.io/">
@@ -686,7 +686,8 @@
     const min = (MIN[st.sex] || {})[st.mc];
     $("r-audio-wait").querySelector("small").textContent = min ? `${min} minutit` : "";
     // One photo per page: the product photo is the VM thumbnail until they listen, then it moves to the product box
-    const thumb = st.photo;
+    const THUMB = { "keha-m": "assets/vm/thumb-keha-m.jpg" };   // own VM thumbnail where the product photo doesn't fit (product box keeps its photo)
+    const thumb = THUMB[`${st.mc}-${st.sex === "naine" ? "n" : "m"}`] || st.photo;
     $("r-audio-wait").style.backgroundImage = thumb ? `linear-gradient(rgba(4,10,16,0) 45%, rgba(4,10,16,.75)), url(${thumb})` : "";
     $("r-audio-wait").style.backgroundPosition = st.photoPos || "center";
     $("vm-focus-img").src = thumb || ""; $("vm-focus-img").style.objectPosition = st.photoPos || "center";
