@@ -207,6 +207,7 @@
   .legal section + section { margin-top: 18px; }
   /* Comet draws the video above the ::after overlay: a real dim layer on top */
   .sea-dim { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(4,16,25,0.55) 0%, rgba(4,16,25,0.78) 45%, rgba(4,16,25,0.92) 100%); }
+  @media (max-width: 520px) { .sea-dim { background: linear-gradient(180deg, rgba(4,16,25,0.80) 0%, rgba(4,16,25,0.84) 40%, rgba(4,16,25,0.92) 100%); } }   /* phones show more bright sky: darker top so headlines read */
   .sea::after { display: none; }
   .sea { z-index: 0; }
   main { position: relative; z-index: 1; }
