@@ -154,10 +154,14 @@
   body.naine .btn:not(.ghost) { color: #FFBFA6; border-color: rgba(255,180,150,0.75); box-shadow: 0 0 16px rgba(255,150,110,0.2); }
   body.naine .btn:not(.ghost):hover { border-color: #FFBFA6; box-shadow: 0 0 22px rgba(255,150,110,0.35); }
   /* The one filled button: buy. Men gold, women sunset coral */
-  .btn.buy { background: linear-gradient(180deg, #F6CF78 0%, #E3A93F 100%) !important; color: #0A1222 !important; border: 0 !important; box-shadow: 0 6px 22px rgba(233,180,76,0.35) !important; }
+  .btn.buy { background: linear-gradient(180deg, #F6CF78 0%, #E3A93F 100%) !important; color: #0A1222 !important; border: 1.5px solid #FFE7A8 !important;
+    display: table !important; width: auto !important; max-width: 100%; margin: 0 auto !important; padding: 18px 44px !important; animation: buyGlow 3.2s ease-in-out infinite; }
+  @keyframes buyGlow { 0%, 100% { box-shadow: 0 6px 20px rgba(233,180,76,0.30); } 50% { box-shadow: 0 6px 32px rgba(233,180,76,0.60); } }
+  @keyframes buyGlowW { 0%, 100% { box-shadow: 0 6px 20px rgba(242,120,90,0.30); } 50% { box-shadow: 0 6px 32px rgba(242,120,90,0.60); } }
+  @media (prefers-reduced-motion: reduce) { .btn.buy { animation: none; } }
   .btn.buy:hover { filter: brightness(1.08) saturate(1.1); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(233,180,76,0.5) !important; }
   body.naine .btn.buy:hover { box-shadow: 0 10px 30px rgba(242,120,90,0.5) !important; }
-  body.naine .btn.buy { background: linear-gradient(180deg, #FFC9B0 0%, #FF9D5E 55%, #F2785A 100%) !important; color: #2A0F14 !important; box-shadow: 0 6px 22px rgba(242,104,90,0.38) !important; }
+  body.naine .btn.buy { animation-name: buyGlowW; border-color: #FFE0CF !important; background: linear-gradient(180deg, #FFC9B0 0%, #FF9D5E 55%, #F2785A 100%) !important; color: #2A0F14 !important; }
   /* Lines under the headings: crisp white with a soft teal neon glow */
   .screen > p:not(.under), #s-start > p:not(.under) { color: #FFFFFF !important; -webkit-font-smoothing: antialiased; text-shadow: 0 0 1px rgba(255,255,255,0.9), 0 0 8px rgba(111,231,220,0.55), 0 0 18px rgba(111,231,220,0.25); }
   .emo { background: none; -webkit-text-fill-color: initial; color: initial; filter: none; }
