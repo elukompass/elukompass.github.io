@@ -52,7 +52,7 @@
   .btn { appearance: none; border: 0; border-radius: 999px; padding: 16px 22px; font: 700 17px "Manrope"; cursor: pointer;
     background: linear-gradient(135deg, var(--teal), var(--teal-2)); color: #04161d; width: 100%; margin-top: auto; }
   .btn:disabled { opacity: .4; cursor: default; }
-  .btn.siht { background: #0A1222; color: #6FE7DC; border: 1px solid rgba(111,231,220,0.55); border-radius: 10px; font: 800 17px "Orbitron", sans-serif; letter-spacing: 0.22em; box-shadow: 0 0 18px rgba(111,231,220,0.18); }
+  .btn.siht { background: rgba(10,18,34,0.85); color: #C3D5E6; border: 1px solid rgba(169,194,218,0.5); border-radius: 10px; font: 700 16px "Manrope", sans-serif; letter-spacing: 0.18em; box-shadow: 0 0 14px rgba(169,194,218,0.12); }
   .btn .ot { font-family: "Manrope", sans-serif; font-weight: 800; letter-spacing: 0; }   /* Orbitron has no Õ glyph */
   .btn.siht:hover { border-color: #6FE7DC; box-shadow: 0 0 24px rgba(111,231,220,0.35); }
   .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); margin-top: 10px; }
@@ -140,15 +140,18 @@
   .host b { color: var(--warm); }
   #r-focus { font-size: 16px; line-height: 1.4; color: var(--ink); }
   #s-half .card b { color: var(--warm); }
-  /* One type system on every screen: Marcellus for text and choices, Orbitron (SIHT style) for buttons */
+  /* One type system: Marcellus for text and choices, Manrope caps for buttons */
   .screen > p, .screen .card p { font-family: "Marcellus", serif; letter-spacing: 0.02em; }
   .screen > p:not(.under) { font-size: 16px; color: #EAF2F6; }
   .choice { font: 400 19px "Marcellus", serif; letter-spacing: 0.02em; }
-  .btn:not(.ghost) { background: #0A1222; color: #6FE7DC; border: 1px solid rgba(111,231,220,0.55); border-radius: 10px; font: 800 16px "Orbitron", sans-serif; letter-spacing: 0.2em; text-transform: uppercase; box-shadow: 0 0 18px rgba(111,231,220,0.18); }
+  .btn:not(.ghost) { background: rgba(10,18,34,0.85); color: #C3D5E6; border: 1px solid rgba(169,194,218,0.5); border-radius: 10px; font: 700 15px "Manrope", sans-serif; letter-spacing: 0.14em; text-transform: uppercase; box-shadow: 0 0 14px rgba(169,194,218,0.12); }
   .btn.ghost { font: 400 16px "Marcellus", serif; border-radius: 10px; }
   /* Women: sunset-pink action buttons */
   body.naine .btn:not(.ghost) { color: #FF9DB5; border-color: rgba(255,157,181,0.6); box-shadow: 0 0 18px rgba(255,120,160,0.22); }
   body.naine .btn:not(.ghost):hover { border-color: #FF9DB5; box-shadow: 0 0 24px rgba(255,120,160,0.38); }
+  /* The one filled button: buy. Men gold, women sunset coral */
+  .btn.buy { background: linear-gradient(180deg, #F6CF78 0%, #E3A93F 100%) !important; color: #0A1222 !important; border: 0 !important; box-shadow: 0 6px 22px rgba(233,180,76,0.35) !important; }
+  body.naine .btn.buy { background: linear-gradient(180deg, #FFB08F 0%, #F2685A 100%) !important; color: #2A0F14 !important; box-shadow: 0 6px 22px rgba(242,104,90,0.38) !important; }
   /* Lines under the headings: crisp white with a soft teal neon glow */
   .screen > p:not(.under), #s-start > p:not(.under) { color: #FFFFFF !important; -webkit-font-smoothing: antialiased; text-shadow: 0 0 1px rgba(255,255,255,0.9), 0 0 8px rgba(111,231,220,0.55), 0 0 18px rgba(111,231,220,0.25); }
   .emo { background: none; -webkit-text-fill-color: initial; color: initial; filter: none; }
@@ -354,7 +357,7 @@
       <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
       <ul id="r-mc-list" style="list-style:none;padding:0;margin:14px 0 12px;text-align:left"></ul>
       <p style="margin:0 0 12px"><b>39 €</b> <span style="font-size:.8em;opacity:.85">· 14 päeva raha tagasi garantii</span></p>
-      <a class="btn" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Jah, alustan TÄNA</a>
+      <a class="btn buy" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Jah, alustan TÄNA</a>
     </div>
     <div class="card hidden" id="r-group"><!-- hidden 28.10: one CTA only; invite via ManyChat/DM -->
       <h3 class="card-h">Astu RUUMi</h3>
