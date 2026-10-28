@@ -617,7 +617,7 @@
   $("home").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); home(); } };
   $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
-  if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = "Hendrik"; result();
+  if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = st.sex === "naine" ? "Kaidi" : "Hendrik"; result();
     st.email = "preview"; openRing(); if (params.get("a")) { $("r-course").classList.remove("hidden"); $("r-course").scrollIntoView(); } }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
