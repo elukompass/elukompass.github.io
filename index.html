@@ -285,7 +285,7 @@
   <!-- 2b · halfway: proof between questions -->
   <section class="screen" id="s-half">
     <h2>Oled poolel teel <span class="emo">🌊</span></h2>
-    <div class="card"><p style="margin:0">Hea progress, 4 küsimust veel.</p><p style="margin:10px 0 0">Rohkem kui <b>2 600 eestlast</b> on Kaidi ja Hendriku abiga selgemale kursile asunud.</p><p style="margin:10px 0 0">Esimest nihet tuntakse tavaliselt <b>kohe</b>, esimesel kuulamisel.</p></div>
+    <div class="card"><p style="margin:0">Hea progress, 4 küsimust veel.</p><p style="margin:10px 0 0">Rohkem kui <b>2 600 eestlast</b> on Kaidi ja Hendriku abiga selgemale kursile asunud.</p><p style="margin:10px 0 0">Uut energiat tuntakse tavaliselt <b>kohe</b>, selget muutust <b>7 päevaga</b>.</p></div>
     <button class="btn" id="half-next">Jätkan</button>
   </section>
 
@@ -340,7 +340,7 @@
 
     <div class="card host">
       <div class="face"><img id="r-face" src="assets/hendrik-captain.png" alt=""></div>
-      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" id="r-practice" style="margin:0">Kuula oma elukompassi lugemit iga päev. Esimest nihet tunned <b>kohe</b>, selget muutust <b>7 päevaga</b>.</p></div>
+      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" id="r-practice" style="margin:0">Kuula oma elukompassi lugemit iga päev. Tunned uut energiat <b>kohe</b>, selget muutust <b>7 päevaga</b>.</p></div>
     </div>
 
     <div class="card">
@@ -605,7 +605,7 @@
     $("r-course-btn").textContent = (st.sex === "naine" && BTN_W[main]) || "Jah, alustan TÄNA";
     $("r-practice").innerHTML = st.sex === "naine"
       ? "Võid oma elukompassi lugemit kuulata nii palju kui soovid ja avastada iga kord suuremat nihet oma elus."
-      : "Kuula oma elukompassi lugemit iga päev. Esimest nihet tunned <b>kohe</b>, selget muutust <b>7 päevaga</b>.";
+      : "Kuula oma elukompassi lugemit iga päev. Tunned uut energiat <b>kohe</b>, selget muutust <b>7 päevaga</b>.";
     $("r-proof").textContent = st.sex === "naine" ? "✓ Sadade naiste valik\u2003✓ Eestis loodud" : "✓ Aidanud sadu mehi\u2003✓ Eestis loodud meetod";
     const IMGV = "0506b";   // bump when a photo is swapped (beats browser + CDN cache)
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg?v=${IMGV}`;
