@@ -63,10 +63,10 @@
     color: var(--ink); font: 600 18px "Manrope"; cursor: pointer; }
   .choice[aria-pressed="true"] { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(63,214,198,.35) inset; }
   .progress { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 22px; }
-  .progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--gold)); transition: width .3s; }
+  .progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--warm), var(--gold)); transition: width .3s; }
   .step { font: 700 12px "Manrope"; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .score { font: 400 64px/1 "Marcellus"; color: var(--gold); text-align: center; margin: 18px 0 6px; }
-  input[type=range] { width: 100%; accent-color: var(--teal); height: 36px; }
+  input[type=range] { width: 100%; accent-color: var(--gold); height: 36px; }   /* gold for men, sunset orange for women */
   .ends { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); margin-bottom: 20px; }
   .ends span:last-child { text-align: right; }
   .row { display: flex; gap: 10px; }
@@ -170,7 +170,7 @@
   .player { display: flex; align-items: center; gap: 12px; margin: 12px 0 4px; padding: 12px 14px; border-radius: 999px; background: rgba(0,0,0,0.35); border: 1px solid var(--line); }
   .player .play { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,200,100,0.15); border: 1px solid rgba(255,200,100,0.6); font-size: 15px; flex: none; }
   .player .track { flex: 1; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
-  .player .track i { display: block; width: 8%; height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); }
+  .player .track i { display: block; width: 8%; height: 100%; background: linear-gradient(90deg, var(--warm), var(--gold)); }
   .player .time { font: 400 13px "Marcellus", serif; color: var(--muted); }
   #r-ring-card .field, #r-ring-card .consent { text-align: left; }
   /* Bottom sheet for the email */
