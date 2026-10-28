@@ -560,7 +560,7 @@
     $("r-course-btn").href = payOf(main) || "#";
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg`;
     $("r-mc-img").src = bg;
-    $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 75%"   // show the boat and helm
+    $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 55%"   // helm plus waves and horizon
       : main === "vaim" && st.sex === "naine" ? "42% center" : "";                          // Kaidi on the rock
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
