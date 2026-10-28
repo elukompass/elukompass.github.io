@@ -19,6 +19,7 @@
     --gold: #ffc861; --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14);
   }
   body.naine { --warm: #FFA24A; --gold: #F7922F; }
+  body.reply .brand span { display: none; }   /* result pages: logo only, the headline already names it */
   /* Women: Bali sunset — gold sheen to orange to coral */
   body.naine { --warm: #FF9A2E; }
   body.naine h1, body.naine h2, body.naine .card-h, body.naine .brand span {
@@ -485,7 +486,7 @@
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
   document.body.classList.toggle("naine", st.sex === "naine");
   const $ = id => document.getElementById(id);
-  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); window.scrollTo(0, 0); };
+  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); document.body.classList.toggle("reply", id === "s-result" || id === "s-ring"); window.scrollTo(0, 0); };
 
   document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { if (!st.sex) show("s-sex"); else if (!st.focus) { paintFocus(); show("s-focus"); } else { paintQ(); show("s-q"); } });
   document.querySelectorAll("[data-sex]").forEach(b => b.onclick = () => {
