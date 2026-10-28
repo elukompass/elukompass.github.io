@@ -529,7 +529,8 @@
     const head = st.sex === "naine"
       ? ["Rahu RUUM – tagasi iseendasse", "Ela sisemises rahus ja kerguses juba 7 päevaga."]
       : ["Jõu ja Edu RUUM – selgus", "Liigu selge suuna ja jõuga juba 7 päevaga."];
-    $("r-mc-head").textContent = head[0];
+    const [prod, kw] = head[0].split(" – ");
+    $("r-mc-head").innerHTML = prod + (kw ? `<br><span style="font-size:.7em;opacity:.85">· ${kw}</span>` : "");
     $("r-mc-sub").textContent = head[1];
     $("r-mc-list").innerHTML = (OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
