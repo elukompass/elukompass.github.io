@@ -6,7 +6,7 @@
 <title>Kompass · Floreo</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="description" content="Mis kursil Sa oled? 8 küsimust, 1 minut. Näed oma elukompassi ja saad häälsõnumi.">
+<meta name="description" content="Mis kursil Sa oled? 8 küsimust, 1 minut. Näed oma elukompassi ja saad elukompassi lugemi.">
 <meta property="og:title" content="Kompass · Floreo">
 <meta property="og:description" content="8 küsimust, 1 minut. Näe, kus Sa praegu oma elus asud.">
 <meta name="theme-color" content="#06141f">
@@ -285,7 +285,7 @@
   <!-- 2b · halfway: proof between questions -->
   <section class="screen" id="s-half">
     <h2>Oled poolel teel <span class="emo">🌊</span></h2>
-    <div class="card"><p style="margin:0">Hea progress, 4 küsimust veel.</p><p style="margin:10px 0 0">Rohkem kui <b>2 600 eestlast</b> on Kaidi ja Hendriku abiga selgemale kursile asunud.</p><p style="margin:10px 0 0">Esimesi muutusi tuntakse tavaliselt juba <b>7 päevaga</b>.</p></div>
+    <div class="card"><p style="margin:0">Hea progress, 4 küsimust veel.</p><p style="margin:10px 0 0">Rohkem kui <b>2 600 eestlast</b> on Kaidi ja Hendriku abiga selgemale kursile asunud.</p><p style="margin:10px 0 0">Esimest nihet tuntakse tavaliselt <b>kohe</b>, esimesel kuulamisel.</p></div>
     <button class="btn" id="half-next">Jätkan</button>
   </section>
 
@@ -312,7 +312,7 @@
               <ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/>
             </svg>
       <h2>Arvutan Sinu kompassi…</h2>
-      <ul class="calc-steps"><li>Loen Su vastuseid</li><li>Leian madalaima punkti</li><li>Valin Sinu häälsõnumi</li></ul>
+      <ul class="calc-steps"><li>Loen Su vastuseid</li><li>Leian madalaima punkti</li><li>Valin Sinu elukompassi lugemi</li></ul>
     </div>
   </section>
 
@@ -340,7 +340,7 @@
 
     <div class="card host">
       <div class="face"><img id="r-face" src="assets/hendrik-captain.png" alt=""></div>
-      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" style="margin:0">Tee häälsõnumi praktikat iga päev ja tunned muutuseid juba <b>5–7 päevaga</b>.</p></div>
+      <div><p id="r-focus" style="margin:0 0 6px"></p><p class="small" id="r-practice" style="margin:0">Kuula oma elukompassi lugemit iga päev. Esimest nihet tunned <b>kohe</b>, selget muutust <b>7 päevaga</b>.</p></div>
     </div>
 
     <div class="card">
@@ -356,7 +356,7 @@
         <span class="track"><i></i></span>
         <span class="time">3:00</span>
       </div>
-      <button class="btn" id="r-unlock" style="margin-top:10px">Kuula häälsõnumit</button>
+      <button class="btn" id="r-unlock" style="margin-top:10px">Kuula elukompassi lugemit</button>
     </div>
 
     <button class="btn ghost" id="r-again">Alusta uuesti</button>
@@ -367,7 +367,7 @@
     <h2>Sinu elukompassi lugem</h2>
     <div class="card">
       <audio id="r-audio" controls preload="auto" class="hidden" style="width:100%"></audio>
-      <div class="vsl" id="r-audio-wait"><small>🎧 Häälsõnum · 3 min</small></div>
+      <div class="vsl" id="r-audio-wait"><small>🎧 Elukompassi lugem · 3 min</small></div>
     </div>
     <p id="r-open-msg"></p>
     <button class="btn" id="r-listen" style="display:block;width:auto;min-width:260px;margin:26px auto 26px;padding:16px 48px">Asun kuulama</button>
@@ -450,26 +450,26 @@
   // Offer card bullets per area: [bold feature, benefit]
   const MK = "Meistriklass</b> (veebis)<b>";
   // Women's own wording where it differs from the men's: sub line + bullets per area
-  const SUB_W = { keha: "Ela heas energias, kerguses ja enesetundes juba 7 päevaga.",
+  const SUB_W = { keha: "Lõpeta võitlus oma kehaga ja tee temaga koostööd. Astu oma elu väkke, kaunis Naine. Olen Sulle kokku pannud:",
                   vaim: "Ela puhtas sageduses.",
-                  raha: "Astu õitsengusse juba 7 päevaga.",
+                  raha: "Astu õitsengusse, kaunis Naine. Olen Sulle kokku pannud:",
                   suhted: "Ava oma süda ja ela armastuses." };
   const SUB_M = { vaim: "Ela rahus ja rõõmus.", suhted: "Ole päriselt Sina ja kohalolus oma lähedaste jaoks." };
   const OFFER_W = {
-    keha:   [[MK, " – naudi elustiili, mis pakatab energiast ja keha, mida Sa armastad"],
-             ["Trennikava, tantsud ja lihtsad retseptid", " – tunne sellest kõigest iga päev rõõmu"]],
+    keha:   [[MK, " – avasta, kus Su elujõud lekib ja kuidas taastada ühendus oma keha loomuliku tarkuse, kerguse ja elurõõmuga"],
+             ["Liikumine, tants ja toit", " – mitte järjekordsed reeglid ja dieedid, vaid võimalus avastada, mis Sinu kehale päriselt sobib. Sinu keha teab."]],
     vaim:   [[MK, " – vabane piiravatest uskumustest ja häälesta end tingimusteta armastusele"],
              ["Meditatsioonid ja hingamisharjutused", " – leia sisemine kindlustunne. Ela rahus ja rõõmus."]],
-    raha:   [[MK, " – näe, mis pidurdab praegu Su loovat energiat ja too oma ellu rohkem küllust"],
-             ["Kalkulaator, automatsioonid ja manifesteerimise tööriist", " – loo kindel energeetika finantskindluse ja vabaduseni"]],
+    raha:   [[MK, " – õpi ise nägema, millised peidetud mõttemustrid hoiavad Sind rahalises pinges ja takistavad Sinu loomulikku loovust"],
+             ["Aktivatsioonid, koodid ja teadvuses loomise tööriistad", " – astu välja rahalisest pingest, muuda senised uskumused ja loo oma ellu rohkem vabadust"]],
   };
   const OFFER = {
     keha:   [[MK, " – mõista, miks Su füüsis ei muutu ja ehita endale rutiin ja keha, mis kannab Sind elus tugevalt edasi"],
              ["Trennikava ja lihtsad retseptid", " – saa parem enesetunne juba esimesel nädalal"]],
     vaim:   [[MK, " – lõpeta enda tagaplaanile jätmine ja vabane piiravatest uskumustest"],
              ["Meditatsioonid ja hingamisharjutused", " – leia sisemine kindlus ja ühendus enda keskmega"]],
-    raha:   [[MK, " – näe, mis pidurdab Su finantsreaalsust ja loo oma ellu jätkusuutlikkus ja õitseng"],
-             ["Kalkulaator, automatsioonid ja manifesteerimise tööriist", " – loo selge süsteem finantskindluse ja vabaduseni"]],
+    raha:   [[MK, " – näe, millised mõttemustrid hoiavad Sind rahalises pinges, ja ehita jätkusuutlik õitseng"],
+             ["Rahakalkulaator, automatsioonid ja loomise tööriistad", " – ehita selge süsteem, mis viib Sind finantskindluse ja vabaduseni"]],
     suhted: [[MK, " – mõista, kus Sa oled oma elus kaitses ja õpi oma südant avama"],
              ["Sisemaailma harjutused", " – astu iseenda väesse ja taasühendu teistega"]],
   };
@@ -601,6 +601,11 @@
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
+    const BTN_W = { keha: "Jah, valin ELUVÄE", vaim: "Jah, valin RAHU", raha: "Jah, valin ÕITSENGU", suhted: "Jah, valin ARMASTUSE" };
+    $("r-course-btn").textContent = (st.sex === "naine" && BTN_W[main]) || "Jah, alustan TÄNA";
+    $("r-practice").innerHTML = st.sex === "naine"
+      ? "Võid oma elukompassi lugemit kuulata nii palju kui soovid ja avastada iga kord suuremat nihet oma elus."
+      : "Kuula oma elukompassi lugemit iga päev. Esimest nihet tunned <b>kohe</b>, selget muutust <b>7 päevaga</b>.";
     $("r-proof").textContent = st.sex === "naine" ? "✓ Sadade naiste valik\u2003✓ Eestis loodud" : "✓ Aidanud sadu mehi\u2003✓ Eestis loodud meetod";
     const IMGV = "0506b";   // bump when a photo is swapped (beats browser + CDN cache)
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg?v=${IMGV}`;
