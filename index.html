@@ -401,6 +401,12 @@
   };
   // Offer card bullets per area: [bold feature, benefit]
   const MK = "Meistriklass</b> (veebis)<b>";
+  // Women's own wording where it differs from the men's: sub line + bullets per area
+  const SUB_W = { keha: "Ela heas energias, kerguses ja enesetundes juba 7 päevaga." };
+  const OFFER_W = {
+    keha:   [[MK, ", et luua endale elustiil, mis pakatab energiast, ning keha, mida Sa taas armastama hakkad"],
+             ["Trennikava, tantsud ja lihtsad retseptid", ", et sellest kõigest iga päev rõõmu tunda"]],
+  };
   const OFFER = {
     keha:   [[MK, ", et mõista, miks Su keha ei muutu, ja et ehitada rutiin ja keha, mis kannab Sind elus edasi"],
              ["Trennikava ja lihtsad retseptid", ", et tunneksid muutust enesetundes juba esimesel nädalal"]],
@@ -530,8 +536,8 @@
       ? ["Rahu RUUM", "Ela sisemises rahus ja kerguses juba 7 päevaga."]
       : ["Jõu ja Edu RUUM", "Liigu selgel suunal juba 7 päevaga."];
     $("r-mc-head").textContent = head[0];
-    $("r-mc-sub").textContent = head[1];
-    $("r-mc-list").innerHTML = (OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
+    $("r-mc-sub").textContent = (st.sex === "naine" && SUB_W[main]) || head[1];
+    $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
