@@ -367,7 +367,7 @@
     <h2>Sinu elukompassi lugem</h2>
     <div class="card">
       <video id="r-audio" controls playsinline preload="metadata" class="hidden" style="width:100%;aspect-ratio:16/9;border-radius:14px;background:#000"></video>
-      <div class="vsl" id="r-audio-wait"><small>🎧 Elukompassi lugem · 3 min</small></div>
+      <div class="vsl" id="r-audio-wait" style="cursor:pointer"><small style="color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8)">🎧 Elukompassi lugem · 3 min</small></div>
     </div>
     <p id="r-open-msg"></p>
     <button class="btn" id="r-listen" style="display:block;width:auto;min-width:260px;margin:26px auto 26px;padding:16px 48px">Asun kuulama</button>
@@ -657,6 +657,10 @@
     const MIN = { naine: { keha: 5, vaim: 4, raha: 4, suhted: 4 }, mees: { keha: 6, vaim: 10, raha: 9, suhted: 8 } };   // VM length, rounded
     const min = (MIN[st.sex] || {})[st.mc];
     $("r-audio-wait").querySelector("small").textContent = "🎧 Elukompassi lugem" + (min ? ` · ${min} min` : "");
+    // Thumbnail = the VM's own photo frame (assets/vm/<area>-<m|n>.jpg)
+    const thumb = st.mc && `assets/vm/${st.mc}-${st.sex === "naine" ? "n" : "m"}.jpg`;
+    $("r-audio-wait").style.background = thumb ? `linear-gradient(rgba(4,10,16,.15), rgba(4,10,16,.55)), url(${thumb}) center/cover` : "";
+    $("r-audio").poster = thumb || "";
     const audio = (AUDIO[st.sex] || {})[st.mc], offer = () => $("r-course").classList.remove("hidden");
     if (audio) {
       const a = $("r-audio"); a.src = audio;
@@ -669,6 +673,7 @@
   // Email sheet
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
   const closeSheet = () => $("r-sheet").classList.add("hidden");
+  $("r-audio-wait").onclick = () => $("r-listen").onclick && $("r-listen").onclick();
   $("r-unlock").onclick = () => st.email ? openRing() : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
@@ -679,7 +684,8 @@
   $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
   if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = st.sex === "naine" ? "Kaidi" : "Hendrik"; document.body.classList.toggle("naine", st.sex === "naine"); result();
-    st.email = "preview"; openRing(); if (params.get("a")) { $("r-course").classList.remove("hidden"); } setTimeout(() => window.scrollTo(0, 0), 50); }
+    // Preview: the offer box appears after "Asun kuulama" (live it waits for 90% of the VM)
+    st.email = "preview"; openRing(); if (params.get("a")) { const go = $("r-listen").onclick; $("r-listen").onclick = () => { go(); $("r-course").classList.remove("hidden"); }; } setTimeout(() => window.scrollTo(0, 0), 50); }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
   document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
