@@ -151,6 +151,8 @@
   .card-h { font: 600 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, #FFE3A3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   #r-group b, #r-course b { color: #FFE3A3; }
   #r-course s { color: var(--muted); }
+  /* Offer card: end-goal photo per area + gender, dark fade so the text stays readable */
+  #r-course.has-bg { background-size: cover; background-position: center top; }
   .vsl { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.45); border: 1px solid var(--line); display: grid; place-items: center; align-content: center; gap: 6px; }
   .vsl span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #04161d; background: linear-gradient(135deg, var(--teal), var(--gold)); }
   .vsl small { font: 400 13px "Marcellus", serif; color: var(--muted); }
@@ -347,7 +349,7 @@
     <div class="sheet-panel" id="r-gate">
       <button class="sheet-x" id="r-sheet-x" aria-label="Sulge">×</button>
         <h2 id="r-sheet-title" style="margin-bottom:6px">Ava oma täielik kompass</h2>
-        <p class="sheet-sub">Madalaim punkt, Sinu fookus ja häälsõnum. Avaneb kohe.</p>
+        <p class="sheet-sub">Suurim takistus, fookuskoht ja lugemine. Avaneb kohe.</p>
         <input class="field" id="r-name" placeholder="Nimi" autocomplete="name">
         <input class="field" id="r-email" type="email" placeholder="E-post" autocomplete="email">
         <input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
@@ -553,6 +555,9 @@
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
+    const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg`;
+    $("r-course").style.backgroundImage = `linear-gradient(rgba(8,16,30,.35), rgba(8,16,30,.88) 45%, rgba(8,16,30,.96)), url(${bg})`;
+    $("r-course").classList.add("has-bg");
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
