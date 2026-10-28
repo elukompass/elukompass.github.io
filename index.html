@@ -15,8 +15,10 @@
 <style>
   :root {
     --bg1: #041019; --bg2: #0b2a3a; --ink: #eaf6f8; --muted: #c3d6dd; --teal: #3fd6c6; --teal-2: #1aa3a0;
+    --warm: #FFE3A3;   /* highlight; women get the orange of Kaidi's dress */
     --gold: #ffc861; --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14);
   }
+  body.naine { --warm: #FFA24A; --gold: #F7922F; }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
@@ -91,12 +93,12 @@
   .brand span { font-family: "Cinzel", "Marcellus", serif; font-weight: 600; font-size: 24px; letter-spacing: 0.28em; }
   #s-start > p:not(.under) { font: italic 500 22px/1.35 "Cormorant Garamond", serif; color: #cfe3e8; }
   /* Colours: warm gold-white headings, brighter body text, soft shadow over the sea */
-  h1, h2 { background: linear-gradient(180deg, #FFF8E7 0%, #FFE3A3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.45)); }
+  h1, h2 { background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.45)); }
   #s-start > p:not(.under) { color: #EAF2F6; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
   .card p { color: #DCE8EC; }
-  .card b { color: #FFE3A3 !important; }
+  .card b { color: var(--warm) !important; }
   .under { margin: 34px 0 0; color: #EAF2F6; font-size: 15px; }
-  .under b { color: #FFE3A3; }
+  .under b { color: var(--warm); }
   .under.small { margin-top: 6px; font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
   #s-start h1 { font-size: clamp(26px, 6.4vw, 36px); text-wrap: balance; }
   #s-start .btn.siht { margin-top: clamp(48px, 14vh, 140px); }
@@ -123,9 +125,9 @@
   .host .face { width: 88px; height: 88px; border-radius: 50%; overflow: hidden; flex: none; border: 2px solid rgba(255,200,100,0.7); box-shadow: 0 0 14px rgba(255,200,100,0.35); }
   .host .face { background: radial-gradient(circle at 50% 40%, #1d4a5e, #0a1a2a); }
   .host .face img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; transform: scale(1.12); display: block; }
-  .host b { color: #FFE3A3; }
+  .host b { color: var(--warm); }
   #r-focus { font-size: 16px; line-height: 1.4; color: var(--ink); }
-  #s-half .card b { color: #FFE3A3; }
+  #s-half .card b { color: var(--warm); }
   /* One type system on every screen: Marcellus for text and choices, Orbitron (SIHT style) for buttons */
   .screen > p, .screen .card p { font-family: "Marcellus", serif; letter-spacing: 0.02em; }
   .screen > p:not(.under) { font-size: 16px; color: #EAF2F6; }
@@ -150,8 +152,8 @@
   .sheet .field, .sheet .consent { text-align: left; }
   #r-lock { cursor: pointer; }
   /* Card headlines: same gold Cormorant as the page headings, one size smaller */
-  .card-h { font: 600 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, #FFE3A3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  #r-group b, #r-course b { color: #FFE3A3; }
+  .card-h { font: 600 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #r-group b, #r-course b { color: var(--warm); }
   #r-course s { color: var(--muted); }
   /* End-goal photo per area + gender as a banner on top of the offer card */
   .mc-banner { display: block; width: calc(100% + 40px); aspect-ratio: 16 / 9; height: auto; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
@@ -467,12 +469,13 @@
   const PREVIEW = location.hash === "#paasterongas" || location.hash === "#deepdive";
   // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
+  document.body.classList.toggle("naine", st.sex === "naine");
   const $ = id => document.getElementById(id);
   const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); window.scrollTo(0, 0); };
 
   document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { if (!st.sex) show("s-sex"); else if (!st.focus) { paintFocus(); show("s-focus"); } else { paintQ(); show("s-q"); } });
   document.querySelectorAll("[data-sex]").forEach(b => b.onclick = () => {
-    st.sex = b.dataset.sex; document.querySelectorAll("[data-sex]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    st.sex = b.dataset.sex; document.body.classList.toggle("naine", st.sex === "naine"); document.querySelectorAll("[data-sex]").forEach(x => x.setAttribute("aria-pressed", x === b));
     setTimeout(() => { paintFocus(); show("s-focus"); }, 250); });
   document.querySelectorAll("[data-focus]").forEach(b => b.onclick = () => {
     st.focus = b.dataset.focus; document.querySelectorAll("[data-focus]").forEach(x => x.setAttribute("aria-pressed", x === b));
@@ -620,7 +623,7 @@
   $("home").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); home(); } };
   $("r-again").onclick = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); paintQ(); show("s-q"); };
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
-  if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = st.sex === "naine" ? "Kaidi" : "Hendrik"; result();
+  if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = st.sex === "naine" ? "Kaidi" : "Hendrik"; document.body.classList.toggle("naine", st.sex === "naine"); result();
     st.email = "preview"; openRing(); if (params.get("a")) { $("r-course").classList.remove("hidden"); $("r-course").scrollIntoView(); } }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
