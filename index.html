@@ -151,11 +151,8 @@
   .card-h { font: 600 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, #FFE3A3 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   #r-group b, #r-course b { color: #FFE3A3; }
   #r-course s { color: var(--muted); }
-  /* End-goal photo per area + gender replaces the ship's bow; sky and waves keep moving above it */
-  .sea-photo { position: absolute; left: 0; right: 0; bottom: 0; height: 58%; z-index: 1; background: center 40% / cover no-repeat;
-    opacity: 0; transition: opacity 1.2s ease;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 28%); mask-image: linear-gradient(to bottom, transparent 0%, #000 28%); }
-  .sea-photo.on { opacity: 1; }
+  /* End-goal photo per area + gender as a banner on top of the offer card */
+  .mc-banner { display: block; width: calc(100% + 40px); height: 190px; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
   .vsl { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.45); border: 1px solid var(--line); display: grid; place-items: center; align-content: center; gap: 6px; }
   .vsl span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #04161d; background: linear-gradient(135deg, var(--teal), var(--gold)); }
   .vsl small { font: 400 13px "Marcellus", serif; color: var(--muted); }
@@ -189,7 +186,7 @@
 </style>
 </head>
 <body>
-<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-photo"></div><div class="sea-dim"></div></div>
+<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
 <main>
   <div class="brand" id="home" role="link" tabindex="0" title="Algusesse"><svg class="kompass" aria-hidden="true" viewBox="0 0 100 100">
               <defs>
@@ -332,6 +329,7 @@
     <p id="r-open-msg"></p>
     <button class="btn" id="r-listen" style="display:block;width:auto;min-width:260px;margin:0 auto 16px;padding:16px 48px">Asun kuulama</button>
     <div class="card hidden" id="r-course">
+      <img class="mc-banner" id="r-mc-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
       <h3 class="card-h" id="r-mc-head"></h3>
       <p style="margin:0 0 14px" id="r-mc-sub"></p>
       <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
@@ -559,7 +557,7 @@
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg`;
-    const sp = document.querySelector(".sea-photo"); sp.style.backgroundImage = `url(${bg})`; sp.classList.add("on");
+    $("r-mc-img").src = bg;
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
