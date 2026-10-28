@@ -564,7 +564,8 @@
     $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 55%"   // helm plus waves and horizon
       : main === "vaim" && st.sex === "naine" ? "42% center"                                 // Kaidi on the rock
       : main === "vaim" ? "center 48%"                                                       // Hendrik's face
-      : main === "raha" && st.sex === "naine" ? "center 30%" : "";                            // Kaidi with flowers
+      : main === "raha" && st.sex === "naine" ? "center 30%"                                 // Kaidi with flowers
+      : main === "suhted" && st.sex !== "naine" ? "center 45%" : "";                          // the bridge crew
     const v = MC[main] && MC[main].vsl[st.sex];
     if (v) $("r-vsl").innerHTML = `<iframe src="${v}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
     st.mc = main;
