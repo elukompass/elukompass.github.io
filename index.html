@@ -594,7 +594,7 @@
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
     $("r-proof").textContent = st.sex === "naine" ? "✓ Sadade naiste valik\u2003✓ Eestis loodud" : "✓ Aidanud sadu mehi\u2003✓ Eestis loodud meetod";
-    const IMGV = "0620";   // bump when a photo is swapped (beats browser + CDN cache)
+    const IMGV = "0624";   // bump when a photo is swapped (beats browser + CDN cache)
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg?v=${IMGV}`;
     const NO_IMG = [];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
