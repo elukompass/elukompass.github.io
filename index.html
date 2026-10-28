@@ -19,7 +19,12 @@
     --gold: #ffc861; --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14);
   }
   body.naine { --warm: #FFA24A; --gold: #F7922F; }
-  body.naine .brand span { background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  /* Women: satin orange like Kaidi's dress — light sheen on top, deep glowing orange below */
+  body.naine { --warm: #FF9A2E; }
+  body.naine h1, body.naine h2, body.naine .card-h, body.naine .brand span {
+    background: linear-gradient(180deg, #FFE7C4 0%, #FFB35A 38%, #FF8A1A 72%, #F26B0F 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255, 138, 26, 0.35)); }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
