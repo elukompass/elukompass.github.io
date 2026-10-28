@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pardakaart · Floreo</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#06141f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700;800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg1: #041019; --bg2: #0b2a3a; --ink: #eaf6f8; --muted: #c3d6dd; --teal: #3fd6c6; --gold: #ffc861;
+    --card: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.14); }
+  body.naine { --gold: #F7922F; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body { font: 500 17px/1.5 "Manrope", system-ui, sans-serif; color: var(--ink); background-color: var(--bg1); -webkit-font-smoothing: antialiased; }
+  .sea { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #041019 url(assets/sea.jpg) 55% center / cover no-repeat; }
+  .sea video { width: 100%; height: 100%; object-fit: cover; object-position: 53% center; display: block; transform: translateX(-3%) scale(1.5); transform-origin: 53% 15%; }   /* same zoom as Kompass: bow sits low */
+  @media (prefers-reduced-motion: reduce) { .sea video { display: none; } }
+  /* Comet draws the background above a ::after overlay: a real dim layer instead (same fix as Kompass) */
+  .sea-dim { position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(4,16,25,0.55) 0%, rgba(4,16,25,0.8) 45%, rgba(4,16,25,0.94) 100%); }
+  @media (max-width: 520px) { .sea-dim { background: linear-gradient(180deg, rgba(4,16,25,0.80) 0%, rgba(4,16,25,0.84) 40%, rgba(4,16,25,0.94) 100%); } }
+  main { max-width: 560px; margin: 0 auto; padding: 28px 16px 24px; min-height: 100vh; display: flex; flex-direction: column; }
+  h1, h2 { font-family: "Cormorant Garamond", "Marcellus", serif; font-weight: 700; letter-spacing: 0.01em; margin: 0 0 14px; text-align: center; }
+  h1 { font-size: clamp(26px, 7.4vw, 36px); line-height: 1.12; white-space: nowrap; } h2 { font-size: 28px; line-height: 1.15; }
+  body:not(.naine) h1, body:not(.naine) h2 { background: linear-gradient(180deg, #FFF1CF 0%, #F7CD6B 45%, #E0A23A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  body.naine h1, body.naine h2, body.naine .brand span { background: linear-gradient(180deg, #FFD37A 0%, #FFAB3D 32%, #FF7C22 66%, #EE5238 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  p { margin: 0 0 14px; color: var(--muted); font-family: "Marcellus", serif; letter-spacing: 0.02em; text-align: center; }
+  /* Header: KOMPASS · symbol · PÄEV 2, centred */
+  .brand { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 26px; }
+  .brand .day { font-size: 15px !important; letter-spacing: 0.3em !important; background: none !important; -webkit-background-clip: border-box !important; color: var(--gold) !important; text-shadow: 0 0 10px rgba(255,200,97,0.35); }
+  .brand span { font: 600 19px/1 "Cinzel", "Marcellus", serif; letter-spacing: 0.2em; white-space: nowrap; }
+  body:not(.naine) .brand span { background: linear-gradient(180deg, #FFFFFF 0%, #D6E4F0 32%, #7FA3C8 68%, #3A6A9C 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .brand svg.kompass { width: 56px; height: 56px; border-radius: 50%; box-shadow: 0 0 18px 3px rgba(255,200,100,0.35); flex: none; }
+  .kicker { font: 400 17px "Marcellus", serif; letter-spacing: 0.02em; color: var(--gold); margin-bottom: 10px; text-align: center; }
+  .screen { display: none; flex: 1; flex-direction: column; animation: fade .35s ease; }
+  .screen.on { display: flex; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin: 10px 0 18px; }
+  label.q { display: block; font: 400 18px/1.35 "Marcellus", serif; letter-spacing: 0.02em; color: var(--gold) !important; margin: 22px 0 8px; }
+  textarea, input[type=text], input[type=email] { width: 100%; background: rgba(4,16,25,0.6); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 14px; font: 400 17px "Marcellus", serif; }
+  textarea::placeholder, input::placeholder { font-family: "Marcellus", serif; color: rgba(195,214,221,0.55); }
+  textarea { min-height: 0; height: 64px; resize: vertical; }
+  textarea:focus, input:focus { outline: none; border-color: var(--gold); }
+  /* Soft button with shining edges (same as Kompass); women get the coral edge */
+  .btn { appearance: none; display: block; width: 100%; text-align: center; text-decoration: none; margin-top: 22px; padding: 16px 22px; cursor: pointer;
+    background: rgba(10,18,34,0.85); color: #C3D5E6; border: 1.5px solid rgba(169,194,218,0.7); border-radius: 10px; font: 800 18px "Manrope", sans-serif; letter-spacing: 0.14em; text-transform: uppercase;
+    animation: edge 3.2s ease-in-out infinite; transition: transform .18s ease, border-color .18s ease, color .18s ease; }
+  .btn:hover { transform: translateY(-2px); border-color: #DDE8F2; color: #EAF2F9; }
+  .btn:disabled { opacity: .75; cursor: default; transform: none; }   /* still shines before both boxes are filled */
+  @keyframes edge { 0%, 100% { box-shadow: 0 0 12px rgba(169,194,218,0.14), inset 0 0 8px rgba(169,194,218,0.06); } 50% { box-shadow: 0 0 26px rgba(169,194,218,0.38), inset 0 0 12px rgba(169,194,218,0.12); } }
+  body.naine .btn:not(.ghost) { color: #FFBFA6; border-color: rgba(255,180,150,0.75); animation-name: edgeW; }
+  body.naine .btn:not(.ghost):hover { border-color: #FFBFA6; }
+  @keyframes edgeW { 0%, 100% { box-shadow: 0 0 14px rgba(255,150,110,0.18), inset 0 0 8px rgba(255,150,110,0.06); } 50% { box-shadow: 0 0 28px rgba(255,150,110,0.42), inset 0 0 12px rgba(255,150,110,0.14); } }
+  @media (prefers-reduced-motion: reduce) { .btn { animation: none !important; } }
+  .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); font: 400 16px "Marcellus", serif; letter-spacing: 0.04em; text-transform: none; margin-top: 12px; animation: none; }
+  .row { display: flex; gap: 10px; } .row > * { flex: 1; }
+  .check { display: flex; gap: 10px; align-items: flex-start; font: 400 14px/1.4 "Marcellus", serif; color: var(--muted); margin-top: 14px; }
+  .check input { width: 20px; height: 20px; accent-color: var(--gold); margin-top: 2px; flex: none; }
+  .areas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .areas button { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 14px; padding: 18px 10px; font: 400 19px "Marcellus", serif; cursor: pointer; }
+  /* Result: the coordinate card */
+  .coord { border: 1.5px solid var(--gold); border-radius: 18px; padding: 22px; background: rgba(4,16,25,0.7); box-shadow: 0 0 28px rgba(255,200,97,0.15); margin: 8px 0 18px; }
+  .coord .lab { font: 400 15px "Marcellus", serif; letter-spacing: 0.02em; color: var(--gold); margin-top: 14px; }
+  .coord .lab:first-child { margin-top: 0; }
+  .coord .val { font: 400 21px/1.35 "Marcellus", serif; color: var(--ink); margin-top: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .coord .from { text-decoration: line-through; text-decoration-color: rgba(234,246,248,0.35); color: var(--muted); }
+  .small { font: 400 13px "Marcellus", serif; color: var(--muted); text-align: center; margin-top: 14px; }
+</style>
+<style>
+  .step { display: flex; gap: 14px; align-items: flex-start; margin: 0 0 18px; }
+  .step .n { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); color: var(--gold); display: grid; place-items: center; font: 400 17px "Marcellus", serif; }
+  .step h3 { font: 400 19px/1.3 "Marcellus", serif; color: var(--ink); margin: 4px 0 4px; }
+  .step p { text-align: left; margin: 0 0 8px; font-size: 15.5px; }
+  .step .btn { margin-top: 10px; font-size: 15px; padding: 13px 16px; }
+  .hello { font: 400 18px/1.5 "Marcellus", serif; color: var(--ink); text-align: center; margin: 0 0 22px; }
+</style>
+<!-- Meta Pixel: Purchase fires once per visit to this page (Stripe redirects here after a paid checkout) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '587447591933718');
+fbq('track', 'PageView');
+if (location.hash !== "#eelvaade") fbq('track', 'Purchase', { value: 39, currency: 'EUR', content_name: 'RUUM - kursus' });
+</script>
+</head>
+<body>
+<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
+<main>
+  <div class="brand"><svg class="kompass" aria-hidden="true" viewBox="0 0 100 100">
+              <defs>
+                <radialGradient id="kBrass" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.45" stop-color="#E2B54E"/><stop offset="1" stop-color="#7A5214"/></radialGradient>
+                <radialGradient id="kFace" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A4E7A"/><stop offset="0.6" stop-color="#16324F"/><stop offset="1" stop-color="#0A1A2E"/></radialGradient>
+                <linearGradient id="kGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#B8862E"/></linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="48" fill="url(#kBrass)"/><circle cx="50" cy="50" r="42" fill="url(#kFace)" stroke="#5A3D10" stroke-width="1"/>
+              <g class="k-ring" fill="none" stroke="#E2C27A" stroke-width="0.6" opacity="0.8">
+                <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 2"/><circle cx="50" cy="50" r="16"/>
+                <circle cx="50" cy="42" r="8"/><circle cx="57" cy="46" r="8"/><circle cx="57" cy="54" r="8"/><circle cx="50" cy="58" r="8"/><circle cx="43" cy="54" r="8"/><circle cx="43" cy="46" r="8"/>
+              </g>
+              <g class="k-rose">
+                <path d="M50 10 L54 46 L50 50 L46 46Z M50 90 L54 54 L50 50 L46 54Z M10 50 L46 46 L50 50 L46 54Z M90 50 L54 46 L50 50 L54 54Z" fill="url(#kGold)" stroke="#6B4A12" stroke-width="0.5"/>
+                <path d="M50 22 L52 48 L50 50 L48 48Z M78 50 L52 52 L50 50 L52 48Z M50 78 L48 52 L50 50 L52 52Z M22 50 L48 48 L50 50 L48 52Z" fill="#9FD4FF" opacity="0.55" transform="rotate(45 50 50)"/>
+                <path d="M50 10 L54 46 L50 50Z" fill="#E5483D"/>
+              </g>
+              <g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g>
+              <circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/>
+              <ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/>
+            </svg><span>Kompass</span><span class="day">Pardakaart</span></div>
+  <section class="screen on" id="s-card">
+    <h1 id="h"></h1>
+    <p class="hello" id="hello"></p>
+
+    <div class="step"><div class="n">1</div><div>
+      <h3>Sinu kursus</h3>
+      <p id="p1"></p>
+    </div></div>
+
+    <div class="step"><div class="n">2</div><div>
+      <h3>Sinu esimene samm täna</h3>
+      <p>Pane paika oma uus koordinaat: mille Sa maha jätad ja kuhu Sa lähed. 3 minutit, see on Sinu teekonna algus.</p>
+      <a class="btn" id="coord">Sisesta koordinaat</a>
+    </div></div>
+
+    <div class="step"><div class="n">3</div><div>
+      <h3>Liitu meie ringiga</h3>
+      <p>RUUM grupp Facebookis: inimesed, kes on sama teel. Siin jagame lives'e, harjutusi ja tuge.</p>
+      <a class="btn ghost" href="https://www.facebook.com/groups/ruuum" target="_blank" rel="noopener">Liitu RUUM grupiga</a>
+    </div></div>
+
+    <div class="step"><div class="n">4</div><div>
+      <h3 id="h4"></h3>
+      <p id="p4"></p>
+      <a class="btn ghost" id="talk" target="_blank" rel="noopener"></a>
+    </div></div>
+
+    <div class="small">Kviitung tuli Sinu e-postile. 14 päeva raha tagasi garantii.</div>
+  </section>
+</main>
+<script>
+  const sex = new URLSearchParams(location.search).get("s") === "naine" ? "naine" : "mees";
+  document.body.classList.toggle("naine", sex === "naine");
+  const $ = id => document.getElementById(id);
+  const T = {
+    mees: { h: "Tere tulemast pardale", hello: "Sa valisid suuna. See on päris samm, mitte mõte.",
+      p1: "Kursus avaneb Sulle 24 tunni jooksul. Ligipääsu link tuleb Sinu e-postile, sama aadressi peale, millega maksid.",
+      h4: "Räägime 1:1", p4: "Kirjutan Sulle ise isiklikult. Kui soovid kohe alustada, kirjuta mulle Messengeris ja lepime kokku 20-minutilise vestluse.",
+      talk: "Kirjuta Hendrikule", href: "https://m.me/hendrikwholifts" },
+    naine: { h: "Tere tulemast pardale", hello: "Sa valisid iseennast. See on kõige ilusam samm.",
+      p1: "Kursus avaneb Sulle 24 tunni jooksul. Ligipääsu link tuleb Sinu e-postile, sama aadressi peale, millega maksid.",
+      h4: "Räägime 1:1", p4: "Kaidi kirjutab Sulle ise isiklikult. Kui soovid kohe alustada, kirjuta meile Messengeris ja lepime kokku 20-minutilise vestluse.",
+      talk: "Kirjuta meile", href: "https://m.me/hendrikwholifts" },
+  }[sex];
+  $("h").textContent = T.h; $("hello").textContent = T.hello; $("p1").textContent = T.p1;
+  $("h4").textContent = T.h4; $("p4").textContent = T.p4; $("talk").textContent = T.talk; $("talk").href = T.href;
+  $("coord").href = "koordinaadid.html?s=" + sex;
+</script>
+</body>
+</html>

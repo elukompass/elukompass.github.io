@@ -70,6 +70,10 @@
   .coord .from { text-decoration: line-through; text-decoration-color: rgba(234,246,248,0.35); color: var(--muted); }
   .small { font: 400 13px "Marcellus", serif; color: var(--muted); text-align: center; margin-top: 14px; }
 </style>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track', 'PageView'); }
+</script>
 </head>
 <body>
 <div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
@@ -200,6 +204,7 @@
     const A = AREAS[area], now = new Date().toISOString();
     const data = { kind: "siht", ts: now, sex, area, mode: A.mode, name: val("f-name"), email: val("f-email"), consent: now,
       a: val("f-a"), b: val("f-b"), share: $("f-share").checked ? "jah" : "ei", website: val("website") };
+    if (!PREVIEW && window.fbq) { try { history.replaceState(null, "", location.pathname + location.search + "#koordinaat"); } catch (e) {} fbq("track", "PageView"); fbq("trackCustom", "Koordinaat", { content_name: area }); }
     if (ENDPOINT && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
     $("done-h").textContent = `${data.name.split(" ")[0]}, Sinu suund on paigas.`;
     $("coord").innerHTML = `<div class="lab">${esc(A.la)}</div><div class="val${A.mode === "energia" ? " from" : ""}">${esc(data.a)}</div>

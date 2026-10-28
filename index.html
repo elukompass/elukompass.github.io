@@ -247,6 +247,11 @@
   .focus .vm-player { width: min(86vw, 460px); }
   .focus .sheet-x { position: absolute; top: 14px; right: 14px; }
 </style>
+<!-- Meta Pixel 587447591933718: PageView here; each funnel step also sets a URL hash (#kusimused, #tulemus, #lugem, #vsl, #ost) for URL-based custom conversions -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('init', '587447591933718'); fbq('track', 'PageView'); }
+</script>
 </head>
 <body>
 <div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
@@ -545,7 +550,13 @@
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
   document.body.classList.toggle("naine", st.sex === "naine");
   const $ = id => document.getElementById(id);
-  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); document.body.classList.toggle("reply", id !== "s-start"); /* KOMPASS word only on the start page */ window.scrollTo(0, 0); };
+  // Funnel step → URL hash + pixel event, once per step; previews stay silent
+  const seen = {};
+  const step = (hash, std, custom, params) => { if (PREVIEW || seen[hash]) return; seen[hash] = true;
+    try { history.replaceState(null, "", location.pathname + location.search + "#" + hash); } catch (e) {}
+    if (!window.fbq) return; fbq("track", "PageView"); if (std) fbq("track", std, params || {}); if (custom) fbq("trackCustom", custom, params || {}); };
+  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("foot").classList.toggle("start", id !== "s-result" && id !== "s-ring"); document.body.classList.toggle("reply", id !== "s-start"); /* KOMPASS word only on the start page */ window.scrollTo(0, 0);
+    if (id === "s-q") step("kusimused", null, "KompassStart"); if (id === "s-result") step("tulemus", "ViewContent", "KompassDone", { content_name: st.mc || "" }); };
 
   document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { if (!st.sex) show("s-sex"); else if (!st.focus) { paintFocus(); show("s-focus"); } else { paintQ(); show("s-q"); } });
   document.querySelectorAll("[data-sex]").forEach(b => b.onclick = () => {
@@ -673,7 +684,7 @@
     if (!/^\S+@\S+\.\S+$/.test(st.email)) { $("r-sent").textContent = "Palun kontrolli e-posti aadressi."; return; }
     if (!$("r-consent").checked) { $("r-sent").textContent = "Palun kinnita nõusolek, et saaksin Sulle kirjutada."; return; }
     st.consent = new Date().toISOString();
-    send();
+    send(); step("lugem", "Lead", null, { content_name: st.mc || "" });
     // Unlock: the audio plays here and is also sent by email
     closeSheet(); $("s-result").classList.remove("gated"); window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -694,7 +705,7 @@
     $("vm-focus-head").textContent = (st.sex === "naine" ? "Kaidi" : "Hendrik") + " · Sinu elukompassi lugem";
     // Lock screen shows the photo + title while it plays
     if (thumb && "mediaSession" in navigator) navigator.mediaSession.metadata = new MediaMetadata({ title: "Sinu elukompassi lugem", artist: st.sex === "naine" ? "Kaidi · Floreo" : "Hendrik · Floreo", artwork: [{ src: new URL(thumb, location.href).href, type: "image/jpeg" }] });
-    const audio = (AUDIO[st.sex] || {})[st.mc], offer = () => $("r-course").classList.remove("hidden");
+    const audio = (AUDIO[st.sex] || {})[st.mc], offer = () => { $("r-course").classList.remove("hidden"); step("vsl", null, "VSL", { content_name: st.mc || "" }); };
     // After listening (or closing the focus view): thumbnail → simple player, photo → product box
     const settle = () => { $("vm-focus").classList.add("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-player").classList.remove("hidden"); offer(); };
     st.settle = settle;
@@ -727,6 +738,7 @@
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
   // Logo → back to the start screen (fresh test)
+  $("r-course-btn").addEventListener("click", () => step("ost", "InitiateCheckout", null, { value: 39, currency: "EUR", content_name: st.mc || "" }));
   const home = () => { st.i = 0; st.half = false; st.scores = Array(Q.length).fill(5); show("s-start"); };
   $("home").onclick = home;
   $("home").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); home(); } };
