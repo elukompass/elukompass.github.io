@@ -11,7 +11,7 @@
 <meta property="og:description" content="8 küsimust, 1 minut. Näe, kus sa praegu oma elus asud.">
 <meta name="theme-color" content="#06141f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700&family=Orbitron:wght@800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700&family=Orbitron:wght@800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg1: #041019; --bg2: #0b2a3a; --ink: #eaf6f8; --muted: #c3d6dd; --teal: #3fd6c6; --teal-2: #1aa3a0;
@@ -24,12 +24,12 @@
   body.naine h1, body.naine h2, body.naine .card-h, body.naine .brand span {
     background: linear-gradient(180deg, #FFE9B8 0%, #FFC266 28%, #FF9442 58%, #F2685A 100%);   /* Bali sunset */
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    filter: drop-shadow(0 0 10px rgba(255, 138, 26, 0.35)); }
+    }
   /* Men: steel into the button's sea-teal */
   body:not(.naine) h1, body:not(.naine) h2, body:not(.naine) .card-h, body:not(.naine) .brand span {
     background: linear-gradient(180deg, #FFFFFF 0%, #D4F3F4 30%, #8FDDE2 65%, #48BCCB 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    filter: drop-shadow(0 0 8px rgba(111, 231, 220, 0.28)); }
+    }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
@@ -98,13 +98,13 @@
   @media (prefers-reduced-motion: reduce) { .sea video { display: none; } }
   .card { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
   /* Headings in HELM's Cormorant Garamond, KOMPASS in Cinzel */
-  h1, h2 { font-family: "Cormorant Garamond", "Marcellus", serif; font-weight: 600; letter-spacing: 0.01em; }
+  h1, h2 { font-family: "Cormorant Garamond", "Marcellus", serif; font-weight: 700; letter-spacing: 0.01em; }
   h1 { font-size: 42px; line-height: 1.08; }
   h2 { font-size: 32px; line-height: 1.12; }
   .brand span { font-family: "Cinzel", "Marcellus", serif; font-weight: 600; font-size: 21px; letter-spacing: 0.2em; }   /* same size as Floreo in the footer */
   #s-start > p:not(.under) { font: italic 500 22px/1.35 "Cormorant Garamond", serif; color: #cfe3e8; }
   /* Colours: warm gold-white headings, brighter body text, soft shadow over the sea */
-  h1, h2 { background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.45)); }
+  h1, h2 { background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }   /* no filter: filters on gradient text blur it */
   #s-start > p:not(.under) { color: #EAF2F6; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
   .card p { color: #DCE8EC; }
   .card b { color: var(--warm) !important; }
@@ -163,7 +163,7 @@
   .sheet .field, .sheet .consent { text-align: left; }
   #r-lock { cursor: pointer; }
   /* Card headlines: same gold Cormorant as the page headings, one size smaller */
-  .card-h { font: 600 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .card-h { font: 700 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   #r-group b, #r-course b { color: var(--warm); }
   #r-course s { color: var(--muted); }
   /* End-goal photo per area + gender as a banner on top of the offer card */
