@@ -561,7 +561,7 @@
     const bg = `assets/bg/${main}-${st.sex === "naine" ? "n" : "m"}.jpg`;
     const NO_IMG = ["suhted-n"];   // new photos coming 29.10; hide banner until then
     $("r-mc-img").src = bg; $("r-mc-img").style.display = NO_IMG.includes(`${main}-${st.sex === "naine" ? "n" : "m"}`) ? "none" : "";
-    $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 55%"   // helm plus waves and horizon
+    $("r-mc-img").style.objectPosition = main === "raha" && st.sex !== "naine" ? "center 45%"   // Hendrik looking over the sea
       : main === "vaim" && st.sex === "naine" ? "42% center"                                 // Kaidi on the rock
       : main === "vaim" ? "center 48%"                                                       // Hendrik's face
       : main === "raha" && st.sex === "naine" ? "center 30%"                                 // Kaidi with flowers
