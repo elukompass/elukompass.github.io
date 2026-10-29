@@ -228,6 +228,7 @@
   main { position: relative; z-index: 1; }
   /* Until opt-in: the wheel shows, the reading cards are blurred */
   #s-result.gated .card:not(#r-ring-card) { filter: blur(7px); pointer-events: none; user-select: none; }
+  #s-result.gatedB > * { filter: blur(9px); pointer-events: none; user-select: none; }
   /* VSL moved to the day-2 follow-up + RUUM pinned post (Captain 28.10) */
   #r-vsl { display: none; }
   /* Price + buy button appear once the voice note is (almost) heard */
@@ -381,7 +382,10 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
         <span class="track"><i></i></span>
         <span class="time">3:00</span>
       </div>
+      <p class="hidden" id="r-choice-q" style="margin:12px 0 0;text-align:center"><b>Kuidas soovid oma lugemit?</b></p>
       <button class="btn" id="r-unlock" style="margin-top:10px">Kuula elukompassi lugemit</button>
+      <button class="btn ghost hidden" id="r-call-btn" style="margin-top:8px">📞 Helista mulle (15 min)</button>
+      <div class="hidden" id="r-call"><input class="field" id="r-phone" type="tel" placeholder="Telefoninumber" autocomplete="tel" style="margin-top:10px"><button class="btn" id="r-call-send">Saada number</button><p class="small" id="r-call-msg" style="margin:8px 0 0"></p></div>
     </div>
 
     <button class="btn ghost" id="r-again">Alusta uuesti</button>
@@ -548,6 +552,10 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
   const PREVIEW = location.hash === "#paasterongas" || location.hash === "#deepdive";
   // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
+  // A/B (29.10): A = opt-in on the result screen (blurred cards), B = opt-in sheet first, the whole result blurred until email. 50/50, sticky per browser; ?v=A|B forces one.
+  st.v = /^[AB]$/.test(params.get("v") || "") ? params.get("v") : (() => { try { let v = localStorage.getItem("kv"); if (!/^[AB]$/.test(v || "")) { v = Math.random() < 0.5 ? "A" : "B"; localStorage.setItem("kv", v); } return v; } catch (e) { return Math.random() < 0.5 ? "A" : "B"; } })();
+  const post = o => { if (!ENDPOINT || PREVIEW) return; try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(o) }); } catch (e) {} };
+  try { if (!sessionStorage.getItem("kview")) { sessionStorage.setItem("kview", "1"); post({ kind: "view", src: st.src, variant: st.v }); } } catch (e) {}   // one page view per visit → tab "Vaated"
   document.body.classList.toggle("naine", st.sex === "naine");
   const $ = id => document.getElementById(id);
   // Funnel step → URL hash + pixel event, once per step; previews stay silent
@@ -665,13 +673,16 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     st.mc = main;
     send();
     show("s-result");
-    if (!st.email) setTimeout(() => { if ($("s-result").classList.contains("on")) openSheet(); }, 2500);
+    if (!st.email && st.v === "B") { $("s-result").classList.add("gatedB"); $("r-sheet-title").textContent = "Sinu kompass on valmis";
+      document.querySelector("#r-gate .sheet-sub").textContent = "Sisesta nimi ja e-post ning näed kohe oma ratast, suurimat takistust ja lugemit."; openSheet(); }
+    else if (!st.email) setTimeout(() => { if ($("s-result").classList.contains("on")) openSheet(); }, 2500);
   }
 
   function payload() {
     const o = { ts: new Date().toISOString(), sex: st.sex, name: st.name, email: st.email, consent: st.consent, src: st.src, focus: st.focus || "", offer: st.mc || "" };
     Q.forEach((q, i) => o[q.k] = st.scores[i]);
     o.lowest = Q[st.scores.indexOf(Math.min(...st.scores))].name;
+    o.variant = st.v;
     const hp = document.getElementById("r-website"); if (hp && hp.value) o.website = hp.value;   // bots fill it; the receiver drops those
     return o;
   }
@@ -686,7 +697,18 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     st.consent = new Date().toISOString();
     send(); step("lugem", "Lead", null, { content_name: st.mc || "" });
     // Unlock: the audio plays here and is also sent by email
-    closeSheet(); $("s-result").classList.remove("gated"); window.scrollTo({ top: 0, behavior: "smooth" });
+    closeSheet(); $("s-result").classList.remove("gated", "gatedB"); window.scrollTo({ top: 0, behavior: "smooth" });
+    // After opt-in: how they want the reading (voice message or a call)
+    $("r-choice-q").classList.remove("hidden"); $("r-unlock").textContent = "🎧 Kuulan häälsõnumit"; $("r-call-btn").classList.remove("hidden");
+  };
+  $("r-call-btn").onclick = () => { $("r-call").classList.remove("hidden"); $("r-phone").focus(); };
+  $("r-call-send").onclick = () => {
+    const ph = $("r-phone").value.trim();
+    if (!/^\+?[\d][\d\s-]{6,18}$/.test(ph)) { $("r-call-msg").textContent = "Palun kontrolli numbrit."; return; }
+    post({ kind: "call", ts: new Date().toISOString(), sex: st.sex, name: st.name, email: st.email, consent: st.consent, phone: ph, offer: st.mc || "", src: st.src, variant: st.v });
+    step("kone", "Contact", null, { content_name: st.mc || "" });
+    $("r-call-btn").classList.add("hidden");
+    $("r-call").innerHTML = `<p class="small" style="text-align:center;margin:10px 0 0">Aitäh! ${st.sex === "naine" ? "Kaidi" : "Hendrik"} helistab Sulle 24 tunni jooksul. Seni võid lugemit juba kuulata.</p>`;
   };
   // Step 2: the voice note screen (from "Kuula häälsõnumit" after opt-in)
   function openRing() {
@@ -721,7 +743,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
   }
   // Email sheet
   const openSheet = () => { if (st.email) return; $("r-sheet").classList.remove("hidden"); st.sheetShown = true; };
-  const closeSheet = () => $("r-sheet").classList.add("hidden");
+  const closeSheet = () => { $("r-sheet").classList.add("hidden"); $("s-result").classList.remove("gatedB"); };   // B: closing falls back to the A view (no dead end)
   $("r-audio-wait").onclick = () => $("r-listen").onclick && $("r-listen").onclick();
   $("vm-focus-x").onclick = () => st.settle && st.settle();   // closing keeps it playing
   // Simple player (focus view + upper box share the one <audio>)
