@@ -71,6 +71,7 @@
   .small { font: 400 13px "Marcellus", serif; color: var(--muted); text-align: center; margin-top: 14px; }
   /* Men: audio + product block (Day 2) */
   .m-only { display: none; } body:not(.naine) .m-only { display: block; }
+  .n-only { display: none; } body.naine .n-only { display: block; }
   .vm-audio { width: 100%; margin: 4px 0 6px; height: 48px; border-radius: 12px; color-scheme: dark; }
   .mc-banner { display: block; width: calc(100% + 40px); aspect-ratio: 16 / 9; height: auto; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
   .card-h { font: 700 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, var(--gold) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -121,6 +122,7 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
     <h1 id="form-h"></h1>
     <p id="form-p"></p>
     <audio class="vm-audio m-only" id="vm-audio" controls preload="metadata" src="assets/vm/vm2-m.mp3?v=1"></audio>
+    <audio class="vm-audio n-only" id="vm-audio-n" controls preload="metadata" src="assets/vm/vm2-n.mp3?v=1"></audio>
     <label class="q" for="f-a" id="lab-a"></label>
     <textarea id="f-a" maxlength="300" rows="2"></textarea>
     <label class="q" for="f-b" id="lab-b"></label>
