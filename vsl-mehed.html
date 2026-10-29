@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUUM Mehed · Keha ja Edu</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#06141f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700;800&family=Orbitron:wght@800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#041019;--bg2:#0b2a3a;--ink:#eaf6f8;--muted:#c3d6dd;--teal:#3fd6c6;--teal-2:#1aa3a0;--gold:#ffc861;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);}
+body.naine{--gold:#F7922F;}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font:500 17px/1.55 "Manrope",system-ui,sans-serif;color:var(--ink);background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg1) 70%) fixed;background-color:var(--bg1);-webkit-font-smoothing:antialiased}
+main{max-width:620px;margin:0 auto;padding:10px 16px 60px}
+h1,h2,h3{font-family:"Marcellus",serif;font-weight:400;letter-spacing:.02em;margin:0 0 12px}
+h1{font-size:34px;line-height:1.15}
+h2{font-size:27px;line-height:1.2}
+h3{font-size:20px;color:var(--ink)}
+body:not(.naine) h1,body:not(.naine) h2{background:linear-gradient(180deg,#FFF1CF 0%,#F7CD6B 45%,#E0A23A 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+body.naine h1,body.naine h2{background:linear-gradient(180deg,#FFD37A 0%,#FFAB3D 32%,#FF7C22 66%,#EE5238 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{margin:0 0 14px;color:var(--muted)}
+strong{color:var(--ink)}
+section{margin:46px 0}
+.brand{display:flex;align-items:center;gap:10px;font:700 12px/1 "Manrope";letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:26px}
+.brand img{width:44px;height:44px;border-radius:50%;box-shadow:0 0 18px 3px rgba(255,200,100,.3)}
+.eyebrow{font:700 12px "Manrope";letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sub{font-size:19px;color:var(--ink)}
+.video{aspect-ratio:16/9;width:100%;border:1.5px dashed var(--line);border-radius:16px;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);font-weight:700;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0}
+.card.ok{border-color:rgba(63,214,198,.5)}
+.card.no{border-color:rgba(255,120,120,.4)}
+ul{margin:0;padding-left:20px;color:var(--muted)}
+li{margin:0 0 9px}
+.btn{display:block;text-align:center;text-decoration:none;border-radius:999px;padding:17px 22px;font:800 18px "Manrope";background:linear-gradient(135deg,var(--teal),var(--teal-2));color:#04161d;margin:18px 0 6px}
+.note{font-size:14px;color:var(--muted);text-align:center}
+.k{background:rgba(255,200,97,.18);color:var(--gold);border-radius:6px;padding:0 5px;font:700 12px "Manrope";white-space:nowrap}
+.ph{border:1.5px dashed var(--line);border-radius:14px;padding:14px;color:var(--muted);font-size:15px;margin:10px 0}
+.img{aspect-ratio:4/3;border:1.5px dashed var(--line);border-radius:16px;background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(0,0,0,.3));display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;color:var(--muted);font-size:14px;margin:14px 0}
+.row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row b{color:var(--ink);display:block}
+.row span.v{white-space:nowrap;color:var(--gold);font-weight:800}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:19px;padding-top:14px;color:var(--ink)}
+.price{font:400 64px/1 "Marcellus";color:var(--gold);text-align:center;margin:10px 0 4px}
+.was{text-align:center;text-decoration:line-through;color:var(--muted)}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0}
+summary{font-weight:700;color:var(--ink);cursor:pointer}
+details p{margin:10px 0 0}
+footer{text-align:center;color:var(--muted);font-size:14px}
+
+h1,h2,h3{font-family:"Cormorant Garamond","Marcellus",serif;font-weight:700;letter-spacing:.01em;text-align:center}
+h1{font-size:42px;line-height:1.08}h2{font-size:34px;line-height:1.1}h3{font-size:24px}
+p{font-family:"Marcellus",serif;letter-spacing:.02em;text-align:center}
+.brand{justify-content:center}.eyebrow,.note,.sub,footer{text-align:center}
+.row p,.row b{text-align:left}
+ul{display:table;margin:0 auto;padding-left:20px;text-align:left}
+.hero{position:relative;overflow:hidden;padding:26px 16px 44px;background:#041019 url(assets/sea.jpg) 55% center/cover no-repeat}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:53% center;transform:scale(1.15)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,16,25,.62) 0%,rgba(4,16,25,.8) 55%,rgba(4,16,25,.95) 100%)}
+.hero-in{position:relative;z-index:2;max-width:620px;margin:0 auto}
+.hero section{margin:0}
+.photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;margin:22px 0;border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){.hero video{display:none}}
+</style>
+</head>
+<body class="mees">
+<header class="hero"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="hero-in">
+<div class="brand"><img src="assets/favicon.svg" alt="Floreo"><span>Floreo · RUUM</span></div>
+<section>
+<div class="eyebrow">RUUM · Meeste grupiprogramm · Hendrik ja Uku</div>
+<h1>Tugev keha. Selge pea. Raha, mis tuleb Sinu enda tööst. 12 nädalaga.</h1>
+<p class="sub">Grupiprogramm meestele, kes on valmis võtma vastutuse: keha esimesena, edu sellest järgmisena. Hendrik juhib, Uku on kõrval partnerina. [KINNITA: 12 nädalat]</p>
+<div class="video">VSL video tuleb siia</div>
+<a class="btn" href="#">Broneeri 20-min videokõne</a>
+<p class="note">20 minutit, otse ja ausalt. Vaatame koos, kas see sobib Sulle.</p>
+</section>
+</div></header>
+<main>
+
+<section>
+<h2>Kellele see on</h2>
+<div class="card ok"><h3>Sulle, kui</h3><ul><li>Sa tead, et Sa ei ole oma potentsiaalis, ei kehas ega töös.</li><li>Sa oled proovinud üksi ja jäänud pooleli.</li><li>Sa tahad kindlat rütmi ja mehi enda ümber, kes liiguvad edasi.</li><li>Sa oled valmis panema aega ja raha iseendasse.</li></ul></div>
+<div class="card no"><h3>Mitte Sulle, kui</h3><ul><li>Sa otsid imerohtu ilma tegemata.</li><li>Sa ei ole valmis iga nädal tulema.</li><li>Sa tahad, et keegi teeb töö Sinu eest ära.</li></ul></div>
+</section>
+
+<section style="margin:0">
+<img class="photo" src="assets/vsl/men-2.jpg" alt="Mees kõnnib seljaga kaamerale mäeoru poole" loading="lazy">
+</section>
+
+<section>
+<h2>Kas see kõlab tuttavalt?</h2>
+<div class="card"><p style="margin:0">Sa ärkad väsinuna ja kohvi peal. Keha ei tee seda, mida Sa temalt tahad.</p></div><div class="card"><p style="margin:0">Sa oled alustanud treeningut ja toitu mitu korda. Kolmandal nädalal on kõik jälle laiali.</p></div><div class="card"><p style="margin:0">Töö võtab kõik, aga raha ei kasva Sinu tööga võrdselt.</p></div><div class="card"><p style="margin:0">Sa tead, mida peaks tegema. Puudu on rütm ja mehed, kes seda koos teevad.</p></div>
+</section>
+
+<section>
+<h2>Pööre: mis muutus Hendriku jaoks</h2>
+<img class="photo" src="assets/vsl/men-1.jpg" alt="Mees seisab üksi madalas meres hämaruses, seljaga kaamera poole" loading="lazy">
+<p>[HENDRIKU LUGU SIIA: kus ta oli, mis murdis, mida ta tegi teisiti. Ainult päris lugu.]</p><p>Hendrik on aastaid ehitanud treeningut, ettevõtteid ja mehi enda ümber. Üks asi on tulnud alati enne teist: kui keha on korras, on pea selge ja töö läheb edasi. [KINNITA: täpsusta loo faktid]</p><p>Uku on selles kõrval partnerina. [UKU ROLL SIIA: mida Uku toob, ühe lausega]</p>
+</section>
+
+<section style="margin:0">
+<img class="photo" src="assets/vsl/men-3.jpg" alt="Mees istub kalju serval ja vaatab metsade ja mägede poole" loading="lazy">
+</section>
+
+<section>
+<h2>Kolm sammast: Keha, Meel, Edu</h2>
+<div class="card"><div class="eyebrow">1 · KEHA</div><h3>Jõud ja energia</h3><p>Algus on alati keha, sest sealt tuleb energia kõigeks muuks.</p><ul><li>Treeningkava Sinu tasemele (kodus või jõusaalis)</li><li>Toit ja uni nii, et Sa jaksad päeval</li><li>Iganädalane rütm, millest Sa kinni hoiad</li></ul></div><div class="card"><div class="eyebrow">2 · MEEL</div><h3>Selgus ja kindlus</h3><p>Tugev pea ei tule mõttest, vaid igapäevastest valikutest.</p><ul><li>Hommikune ja õhtune rutiin</li><li>Närvisüsteemi reguleerimine, stress alla</li><li>Eesmärgid, mis on Sinu omad</li></ul></div><div class="card"><div class="eyebrow">3 · EDU</div><h3>Töö ja raha</h3><p>Kui energia ja selgus on olemas, saab ehitada sissetuleku, mis kasvab Sinuga.</p><ul><li>Selge sihttulu ja samm-sammuline plaan [KINNITA]</li><li>Pakkumine, müük ja esimesed kliendid või palgaläbirääkimine</li><li>Mehed, kes aitavad ja nõuavad</li></ul></div>
+</section>
+
+<section>
+<h2>Proof: mis juhtub, kui inimene alustab</h2>
+<div class="ph"><b>[PROOF SIIA]</b> Päris lugu nr 1: nimi (loa korral), enne/pärast, number, tsitaat. Ei mingeid väljamõeldud lugusid.</div>
+<div class="ph"><b>[PROOF SIIA]</b> Päris lugu nr 2.</div>
+<div class="ph"><b>[PROOF SIIA]</b> Päris lugu nr 3 või lühike video.</div>
+<div class="ph"><b>[NUMBER SIIA]</b> Näiteks mitu inimest oleme toetanud. Ainult päris number.</div>
+</section>
+
+<section>
+<h2>Mida Sa saad</h2>
+<div class="card">
+<div class="row"><div><b>12 nädalat grupiprogrammi</b><p style="margin:2px 0 0;font-size:15px">Iganädalane kohtumine Hendriku ja Ukuga, kolm sammast</p></div><span class="v">1 500 € <span class="k">[KINNITA]</span></span></div><div class="row"><div><b>Isiklik kava</b><p style="margin:2px 0 0;font-size:15px">Treening, toit, uni Sinu algpunktist</p></div><span class="v">500 € <span class="k">[KINNITA]</span></span></div><div class="row"><div><b>Edu töölaud</b><p style="margin:2px 0 0;font-size:15px">Sihttulu, pakkumine, plaan 90 päevaks</p></div><span class="v">700 € <span class="k">[KINNITA]</span></span></div><div class="row"><div><b>Suletud meeste ring</b><p style="margin:2px 0 0;font-size:15px">Igapäevane tugi ja vastutus</p></div><span class="v">400 € <span class="k">[KINNITA]</span></span></div><div class="row"><div><b>1:1 algkõne ja nädala 6 kontroll</b><p style="margin:2px 0 0;font-size:15px">Kus Sa oled, mis muuta</p></div><span class="v">300 € <span class="k">[KINNITA]</span></span></div>
+<div class="total"><span>Kogu väärtus</span><span>3 400 € <span class="k">[KINNITA]</span></span></div>
+</div>
+</section>
+
+<section>
+<h2>Boonused, kui Sa otsustad nüüd</h2>
+<div class="card">
+<div class="row"><div><b>Boonus 1: [KINNITA: nimi]</b><p style="margin:2px 0 0;font-size:15px">Näiteks toiduplaan ja ostunimekiri</p></div><span class="v">150 € <span class="k">[KINNITA]</span></span></div><div class="row"><div><b>Boonus 2: [KINNITA: nimi]</b><p style="margin:2px 0 0;font-size:15px">Näiteks salvestatud töötuba</p></div><span class="v">200 € <span class="k">[KINNITA]</span></span></div><div class="row"><div><b>Boonus 3: [KINNITA: nimi]</b><p style="margin:2px 0 0;font-size:15px">Näiteks vestlus külalisega</p></div><span class="v">150 € <span class="k">[KINNITA]</span></span></div>
+</div>
+</section>
+
+<section style="margin:0">
+<img class="photo" src="assets/vsl/men-4.jpg" alt="Mees mägimatkal, seljaga kaamerale, kalju nõlval" loading="lazy">
+</section>
+
+<section>
+<h2>Meie lubadus Sulle</h2>
+<div class="card ok">
+<p>[GARANTII SIIA, KINNITA] Näiteks: tule kaks esimest nädalat, tee kaasa. Kui Sa tunned, et see ei ole Sinule, saad raha tagasi, ilma küsimusteta.</p><p>Risk on meie poolel. Sinu osa on tulla kohale ja teha.</p>
+</div>
+</section>
+
+<section>
+<h2>Kohti on vähe</h2>
+<p>Grupp jääb väikseks, et iga mees saab tähelepanu. Kohti on [KINNITA: arv].</p><p>Järgmine grupp algab: <b>[ALGUSKUUPÄEV SIIA]</b>. Kui kohad saavad täis, on järgmine võimalus [KINNITA].</p>
+</section>
+
+<section>
+<h2>Sinu panus</h2>
+<div class="was">Väärtus 3 400 €</div>
+<div class="price">997 €</div>
+<p class="note">Ühe maksena. Või 2-3 osamaksena: [MAKSEPLAAN SIIA] <span class="k">[KINNITA]</span></p>
+<a class="btn" href="#">Broneeri 20-min videokõne</a>
+<p class="note">Kõigepealt räägime 20 minutit. Sa ei pea midagi ette maksma.</p>
+</section>
+
+<section>
+<h2>Küsimused, mis Sul võivad olla</h2>
+<details><summary>Mul ei ole aega.</summary><p>Nädalas on üks kohtumine ja lühikesed igapäevased sammud. Sinu päev saab selgema, mitte tihedama. [KINNITA: tunnid nädalas]</p></details><details><summary>Mul ei ole praegu raha.</summary><p>Sellepärast on 20-min kõne: vaatame ausalt, kas ja kuidas see Sulle sobib. Osamaksed on olemas. [KINNITA]</p></details><details><summary>Ma olen proovinud ja ei ole töötanud.</summary><p>Üksi proovimine ja grupis tegemine on kaks eri asja. Siin on rütm, mehed ja tagasiside.</p></details><details><summary>Kas see sobib algajale?</summary><p>Jah. Kava ehitatakse Sinu algpunktist.</p></details><details><summary>Mis juhtub pärast kõnet?</summary><p>Sa kuuled, kuidas programm käib. Kui see sobib, otsustame koos. Kui ei, saad vähemalt selgema pildi.</p></details>
+</section>
+
+<section>
+<h2>Sa tead juba, mis Sa tunned</h2>
+<p>Sa võid jätkata nagu seni. See on ka valik. Aga Sa oled siin lugenud, sest midagi Sinus tahab liikuda.</p><p>Broneeri 20 minutit. Räägime ausalt.</p>
+<p class="note">Hendrik ja Uku</p>
+</section>
+
+<footer>Floreo · RUUM</footer>
+</main>
+</body>
+</html>
