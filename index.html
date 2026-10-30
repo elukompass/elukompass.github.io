@@ -382,7 +382,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
         <span class="track"><i></i></span>
         <span class="time">3:00</span>
       </div>
-      <p class="hidden" id="r-choice-q" style="margin:12px 0 0;text-align:center"><b>Kuidas soovid oma lugemit?</b></p>
+      <p class="hidden" id="r-choice-q" style="margin:12px 0 0;text-align:center"><b>Kuidas soovid oma lugemit: häälsõnumina või kõnena?</b></p>
       <button class="btn" id="r-unlock" style="margin-top:10px">Kuula elukompassi lugemit</button>
       <button class="btn ghost hidden" id="r-call-btn" style="margin-top:8px">📞 Helista mulle (15 min)</button>
       <div class="hidden" id="r-call"><input class="field" id="r-phone" type="tel" placeholder="Telefoninumber" autocomplete="tel" style="margin-top:10px"><button class="btn" id="r-call-send">Saada number</button><p class="small" id="r-call-msg" style="margin:8px 0 0"></p></div>
@@ -689,6 +689,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     closeSheet(); $("s-result").classList.remove("gated", "gatedB"); window.scrollTo({ top: 0, behavior: "smooth" });
     // After opt-in: how they want the reading (voice message or a call)
     $("r-choice-q").classList.remove("hidden"); $("r-unlock").textContent = "🎧 Kuulan häälsõnumit"; $("r-call-btn").classList.remove("hidden");
+    const pl = $("r-lock"); pl.querySelector(".play").textContent = "▶"; pl.querySelector(".time").textContent = `${(MIN[st.sex] || {})[st.mc] || 3}:00`;
   };
   $("r-call-btn").onclick = () => { $("r-call").classList.remove("hidden"); $("r-phone").focus(); };
   $("r-call-send").onclick = () => {
@@ -745,7 +746,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     p.querySelector(".pp").onclick = () => { const a = $("r-audio"); a.paused ? a.play().catch(() => {}) : a.pause(); };
     p.querySelector(".bar").onclick = e => { const a = $("r-audio"), r = e.currentTarget.getBoundingClientRect(); if (a.duration) a.currentTime = (e.clientX - r.left) / r.width * a.duration; };
   });
-  $("r-unlock").onclick = () => st.email ? openRing() : openSheet(); $("r-lock").onclick = openSheet; $("r-sheet-x").onclick = closeSheet;
+  $("r-unlock").onclick = () => st.email ? openRing() : openSheet(); $("r-lock").onclick = () => st.email ? openRing() : openSheet(); $("r-sheet-x").onclick = closeSheet;
   $("r-sheet").onclick = e => { if (e.target.id === "r-sheet") closeSheet(); };
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !st.sheetShown && $("s-result").classList.contains("on")) openSheet(); }), { threshold: 0.6 }).observe($("r-again"));
   // Logo → back to the start screen (fresh test)
