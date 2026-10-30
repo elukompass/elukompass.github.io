@@ -618,7 +618,6 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     const LOW1 = W ? "Siin ootab Sind kõige rohkem kasvu. Väike hoolitsus siin teeb kogu Su elu kergemaks." : "Siin on kõige rohkem jõudu peidus. Väike muutus siin liigutab kogu laeva.";
     $("r-low").innerHTML = low.map((q, n) => `<div class="low"><b>${q.name} · ${st.scores[Q.indexOf(q)]}/10</b><br><span class="small">${n === 0 ? LOW1 : "Teine koht, kuhu tasub tähelepanu tuua."}</span></div>`).join("");
     const ring = RING[low[0].ring];
-    $("r-ring-intro").textContent = `Teema: „${ring.title}”. Võta ${(MIN[st.sex] || {})[low[0].ring] || 3} minutit iseendale.`;
     const host = st.sex === "mees" ? "Hendrik" : "Kaidi";
     $("r-wheel-line").textContent = st.sex === "naine" ? "Mida tasakaalukam on Sinu ratas, seda kergemalt elu Sinus voolab." : "Mida ühtlasem ratas, seda sujuvamalt elumerel sõidad.";
     $("r-face").src = st.sex === "mees" ? "assets/hendrik-captain.png" : "assets/kaidi-queen.jpg";
@@ -633,6 +632,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     const ready = k => !!payOf(k);
     let main = (st.focus && MC[st.focus]) ? st.focus : low[0].ring; if (!ready(main)) main = Object.keys(MC).find(ready) || main;
     if (PREVIEW && MC[params.get("a")]) main = params.get("a");   // preview: ?a=keha|vaim|raha|suhted
+    $("r-ring-intro").textContent = `Teema: „${(MC[main] || ring).name || ring.title}”. Võta ${(MIN[st.sex] || {})[main] || 3} minutit iseendale.`;   // same area as the voice note (main)
     const head = st.sex === "naine"
       ? ["Rahu RUUM", "Ela sisemises rahus ja kerguses juba 7 päevaga."]
       : ["Jõu ja Edu RUUM", "Liigu selgel suunal juba 7 päevaga."];
