@@ -689,7 +689,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     closeSheet(); $("s-result").classList.remove("gated", "gatedB"); window.scrollTo({ top: 0, behavior: "smooth" });
     // After opt-in: how they want the reading (voice message or a call)
     $("r-choice-q").classList.remove("hidden"); $("r-unlock").textContent = "🎧 Kuulan häälsõnumit"; $("r-call-btn").classList.remove("hidden");
-    const pl = $("r-lock"); pl.querySelector(".play").textContent = "▶"; pl.querySelector(".time").textContent = `${(MIN[st.sex] || {})[st.mc] || 3}:00`;
+    const pl = $("r-lock"); pl.querySelector(".play").textContent = "🔓"; pl.querySelector(".time").textContent = `${(MIN[st.sex] || {})[st.mc] || 3}:00`;
   };
   $("r-call-btn").onclick = () => { $("r-call").classList.remove("hidden"); $("r-phone").focus(); };
   $("r-call-send").onclick = () => {
