@@ -76,6 +76,27 @@
   .mc-banner { display: block; width: calc(100% + 40px); aspect-ratio: 16 / 9; height: auto; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
   .card-h { font: 700 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, var(--gold) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   #m-course b { color: var(--gold); }
+  #to-who { margin-bottom: 24px; }
+  .daynav { display: flex; justify-content: center; gap: 8px; margin: -12px 0 22px; }
+  .daynav span { width: 32px; height: 32px; text-align: center; border-radius: 50%; border: 1px solid var(--line); color: var(--muted); font: 400 14px/30px "Marcellus", serif; }
+  .daynav span.on { border-color: var(--gold); color: var(--gold); }
+  .daynav span.done { background: var(--gold); border-color: var(--gold); color: #041019; }
+/* Alive buttons: men brass gold, women sunrise coral, a slow shine passes over */
+body .btn:not(.ghost) { position: relative; overflow: hidden; border: 0; color: #1E1405; background: linear-gradient(135deg, #FFEDBE 0%, #F7CD6B 45%, #DE9E36 100%); box-shadow: 0 6px 22px rgba(224,162,58,0.35), inset 0 1px 0 rgba(255,255,255,0.55); animation: pulseM 3.2s ease-in-out infinite; }
+body.naine .btn:not(.ghost) { color: #2B0F06; background: linear-gradient(135deg, #FFD98C 0%, #FF9E52 52%, #EE5238 100%); box-shadow: 0 6px 22px rgba(238,110,60,0.38), inset 0 1px 0 rgba(255,255,255,0.5); animation: pulseW 3.2s ease-in-out infinite; }
+body .btn:not(.ghost)::after { content: ""; position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.6), transparent); transform: skewX(-18deg); animation: shine 4.2s ease-in-out infinite; }
+body .btn:not(.ghost):hover { transform: translateY(-2px) scale(1.01); filter: brightness(1.06); color: #1E1405; }
+body.naine .btn:not(.ghost):hover { color: #2B0F06; }
+body .btn:not(.ghost):active { transform: scale(0.98); }
+body .btn:not(.ghost):disabled { opacity: 0.45; filter: saturate(0.6); box-shadow: none; animation: none; }
+body .btn:not(.ghost):disabled::after { display: none; }
+@keyframes pulseM { 0%, 100% { box-shadow: 0 6px 18px rgba(224,162,58,0.28), inset 0 1px 0 rgba(255,255,255,0.55); } 50% { box-shadow: 0 8px 32px rgba(247,205,107,0.55), inset 0 1px 0 rgba(255,255,255,0.55); } }
+@keyframes pulseW { 0%, 100% { box-shadow: 0 6px 18px rgba(238,110,60,0.3), inset 0 1px 0 rgba(255,255,255,0.5); } 50% { box-shadow: 0 8px 32px rgba(255,150,90,0.6), inset 0 1px 0 rgba(255,255,255,0.5); } }
+@keyframes shine { 0%, 55% { left: -40%; } 100% { left: 120%; } }
+@media (prefers-reduced-motion: reduce) { body .btn:not(.ghost), body .btn:not(.ghost)::after { animation: none !important; } }
+.backbtn { position: fixed; top: 14px; left: 14px; z-index: 5; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: rgba(4,16,25,0.6); color: var(--ink); font: 400 18px/1 "Manrope", sans-serif; cursor: pointer; }
+.backbtn:hover { border-color: var(--gold); color: var(--gold); }
+.hidden { display: none !important; }
 </style>
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -127,8 +148,16 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
     <textarea id="f-a" maxlength="300" rows="2"></textarea>
     <label class="q" for="f-b" id="lab-b"></label>
     <textarea id="f-b" maxlength="300" rows="2"></textarea>
-    <button class="btn" id="to-who" data-go="s-who" disabled>Edasi</button>
-    <div class="m-only" id="m-extra">
+    <button class="btn" id="to-who" disabled>Edasi</button>
+  </section>
+
+  <!-- 4 · result -->
+  <section class="screen" id="s-done">
+    <div class="kicker">Sinu koordinaat on sisestatud</div>
+    <h2 id="done-h"></h2>
+    <div class="coord" id="coord"></div>
+    <p id="done-p"></p>
+    <div id="m-extra">
       <div class="card" id="m-course" style="margin-top:0">
         <img class="mc-banner" id="m-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">
         <h3 class="card-h" id="m-head"></h3>
@@ -138,30 +167,7 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
         <a class="btn" id="m-buy" href="#" target="_blank" rel="noopener">Jah, alustan TÄNA</a>
       </div>
     </div>
-  </section>
-
-  <!-- 3 · who (links the answer to the Kompass row) -->
-  <section class="screen" id="s-who">
-    <div class="kicker">Viimane samm</div>
-    <h2>Kinnita oma koordinaat</h2>
-    <p>Sama e-post, mis Kompassis. Nii näeme Sinu teekonda tervikuna ja saame Sulle isiklikult vastata.</p>
-    <label class="q" for="f-name">Eesnimi</label>
-    <input type="text" id="f-name" maxlength="60" autocomplete="given-name">
-    <label class="q" for="f-email">E-post</label>
-    <input type="email" id="f-email" maxlength="120" autocomplete="email">
-    <label class="check"><input type="checkbox" id="f-share" checked> Võite minu sihti näidata RUUM grupis ilma nimeta.</label>
-    <input type="text" id="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-    <button class="btn" id="send" disabled>Kinnita</button>
-  </section>
-
-  <!-- 4 · result -->
-  <section class="screen" id="s-done">
-    <div class="kicker">Sinu koordinaat on sisestatud</div>
-    <h2 id="done-h"></h2>
-    <div class="coord" id="coord"></div>
-    <p id="done-p"></p>
-    <a class="btn" id="pay" target="_blank" rel="noopener">Asu teele</a>
-    <a class="btn ghost" id="group" target="_blank" rel="noopener">Liitu RUUM grupiga</a>
+    <a class="btn ghost hidden" id="day3">Päev 3</a>
     <div class="small">14 päeva raha tagasi garantii.</div>
   </section>
 </main>
@@ -192,12 +198,18 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
       pb: "nt usaldus, soojus, lähedus" },
   };
 
+  const SIHT_M = { raha: "Edu", keha: "Jõud ja tervis", vaim: "Sisemine rahu ja vaimne heaolu", suhted: "Südamlikud suhted" };
+  const SIHT_N = { keha: "Elujõud ja keha, mida armastad", vaim: "Rahu, Selgus ja Vaimne heaolu", suhted: "Tingimusteta armastus", raha: "Õitseng ja vabadus luua" };
   const q = new URLSearchParams(location.search);
   const sex = q.get("s") === "naine" ? "naine" : "mees";
   let area = AREAS[q.get("a")] ? q.get("a") : "";
   document.body.classList.toggle("naine", sex === "naine");
   const $ = id => document.getElementById(id);
-  const show = id => { document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); scrollTo(0, 0); };
+let cur = null, trail = [];
+const show = (id, isBack) => { if (cur && cur !== id && !isBack) trail.push(cur); cur = id; if (id === "s-done") trail = [];
+  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id)); $("back").classList.toggle("hidden", !trail.length); scrollTo(0, 0); };
+document.body.insertAdjacentHTML("afterbegin", '<button class="backbtn hidden" id="back" aria-label="Tagasi">←</button>');
+$("back").onclick = () => show(trail.pop(), true);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
   const MK = "Meistriklass</b> (veebis)<b>";
@@ -207,47 +219,61 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
     raha:   { name: "Edu RUUM", sub: "Liigu selgel suunal juba 7 päevaga.", l: [[MK, " – näe, millised mõttemustrid hoiavad Sind rahalises pinges, ja ehita jätkusuutlik õitseng"], ["Rahakalkulaator, automatsioonid ja loomise tööriistad", " – ehita selge süsteem, mis viib Sind finantskindluse ja vabaduseni"]] },
     suhted: { name: "Südame RUUM", sub: "Ole päriselt Sina ja kohalolus oma lähedaste jaoks.", l: [[MK, " – mõista, kus Sa oled oma elus kaitses ja õpi oma südant avama"], ["Sisemaailma harjutused", " – astu iseenda väesse ja taasühendu teistega"]] },
   };
+  const NOFFER = {
+    keha:   { name: "Eluväe RUUM", sub: "Tule viie päevaga tagasi oma kehasse.", l: [[MK, " – mõista, miks energia kaob, ja leia see endas uuesti"], ["5 päeva väikeseid samme", " – keha, mis kannab Sind kergelt läbi päeva"]] },
+    vaim:   { name: "Rahu RUUM", sub: "Leia koht, kuhu saad alati tagasi tulla.", l: [[MK, " – peatu ja tule rattast välja"], ["Meditatsioonid ja hingamine", " – rahu, mis jääb ka siis, kui maailm läheb valjuks"]] },
+    suhted: { name: "Armastuse RUUM", sub: "Armastus algab suhtest iseendaga.", l: [[MK, " – astu lähemale iseendale"], ["Sisemaailma harjutused", " – õpi vastu võtma, mitte ainult andma"]] },
+    raha:   { name: "Õitsengu RUUM", sub: "Vaata raha ja tööd uue pilguga.", l: [[MK, " – näe, kus Sa end väikseks teed"], ["5 päeva väikeseid samme", " – astu üks samm küllusesse"]] },
+  };
   function paintCourse(a) {
-    const O = MOFFER[a] || { name: "RUUM kursus", sub: "Liigu selgel suunal juba 7 päevaga.", l: [[MK, " – lõpeta enda tagaplaanile jätmine ja ehita selge suund"]] };
+    const OFFERS = sex === "naine" ? NOFFER : MOFFER;
+    const O = OFFERS[a] || { name: "RUUM kursus", sub: "Liigu selgel suunal juba 7 päevaga.", l: [[MK, " – lõpeta enda tagaplaanile jätmine ja ehita selge suund"]] };
     $("m-head").textContent = O.name; $("m-sub").textContent = O.sub;
     $("m-list").innerHTML = O.l.map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
-    $("m-buy").href = PAY.mees;
-    if (MOFFER[a]) $("m-img").src = `assets/bg/${a}-m.jpg?v=0506b`; else $("m-img").style.display = "none";
+    $("m-buy").href = PAY[sex];
+    if (OFFERS[a]) $("m-img").src = `assets/bg/${a}-${sex === "naine" ? "n" : "m"}.jpg?v=0506b`; else $("m-img").style.display = "none";
   }
 
   function setArea(a) {
     area = a; const A = AREAS[a]; paintCourse(a);
-    $("form-h").textContent = A.h; $("form-p").textContent = A.p;
+    $("form-h").textContent = "Sinu SIHT: " + (sex === "mees" ? SIHT_M : SIHT_N)[a]; $("form-h").style.whiteSpace = "normal"; $("form-p").textContent = A.p;
     $("lab-a").textContent = A.la; $("lab-b").textContent = A.lb;
     $("f-a").placeholder = A.pa[sex]; $("f-b").placeholder = A.pb;
     show("s-form");
   }
 
   const val = id => ($(id) ? $(id).value.trim() : "");
-  const emailOk = () => /^[^\s@]{1,64}@[^\s@]{1,190}\.[a-z]{2,24}$/i.test(val("f-email"));
-  function check() {
-    $("to-who").disabled = !(val("f-a") && val("f-b"));
-    $("send").disabled = !(val("f-name") && emailOk());
-  }
-  ["f-a", "f-b", "f-name", "f-email"].forEach(id => $(id).addEventListener("input", check));
+  const check = () => { $("to-who").disabled = !(val("f-a") && val("f-b")); };
+  ["f-a", "f-b"].forEach(id => $(id).addEventListener("input", check));
 
   document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => show(b.dataset.go)));
   document.querySelectorAll(".areas button").forEach(b => b.addEventListener("click", () => setArea(b.dataset.a)));
 
-  $("send").addEventListener("click", () => {
+  // Opted in at Kompass: no second form. Another device: the row waits on a browser id, Day 5 joins the email
+  const PAEV_LIVE = false;   // on after the Apps Script knows kind "paev"
+  $("to-who").addEventListener("click", () => {
     const A = AREAS[area], now = new Date().toISOString();
-    const data = { kind: "siht", ts: now, sex, area, mode: A.mode, name: val("f-name"), email: val("f-email"), consent: now,
-      a: val("f-a"), b: val("f-b"), share: $("f-share").checked ? "jah" : "ei", website: val("website") };
+    let kc = {}; try { kc = JSON.parse(localStorage.getItem("kc") || "{}"); } catch (e) {}
+    if (!kc.cid) kc.cid = Math.random().toString(36).slice(2, 12);
+    const answers = { a: val("f-a"), b: val("f-b"), mode: A.mode };
+    const data = kc.email ? { kind: "siht", ts: now, sex, area, mode: A.mode, name: kc.name || "", email: kc.email, consent: now, a: answers.a, b: answers.b, share: "ei", website: "" }
+      : { kind: "paev", day: 2, cid: kc.cid, ts: now, sex, area, answers: JSON.stringify(answers), website: "" };
     if (!PREVIEW && window.fbq) { try { history.replaceState(null, "", location.pathname + location.search + "#koordinaat"); } catch (e) {} fbq("track", "PageView"); fbq("trackCustom", "Koordinaat", { content_name: area }); }
-    if (ENDPOINT && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
-    $("done-h").textContent = `${data.name.split(" ")[0]}, Sinu suund on paigas.`;
-    $("coord").innerHTML = `<div class="lab">${esc(A.la)}</div><div class="val${A.mode === "energia" ? " from" : ""}">${esc(data.a)}</div>
-      <div class="lab">${esc(A.lb)}</div><div class="val">${esc(data.b)}</div>`;
-    $("done-p").textContent = "Kompass näitas, kus Sa oled. Nüüd teed, kuhu Sa lähed. RUUM on see teekond: samm-sammult, koos teistega, kes on sarnasel teel.";
-    $("pay").href = PAY[sex]; $("group").href = GROUP;
+    if (ENDPOINT && !PREVIEW && (kc.email || PAEV_LIVE)) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
+    try { Object.assign(kc, { sex, area, goal: A.mode === "energia" ? answers.b : answers.a }); localStorage.setItem("kc", JSON.stringify(kc)); } catch (e) {}   // day 3–5 read this
+    $("done-h").textContent = (kc.name ? kc.name.split(" ")[0] + ", " : "") + "Sinu suund on paigas.";
+    $("coord").innerHTML = `<div class="lab">${esc(A.la)}</div><div class="val${A.mode === "energia" ? " from" : ""}">${esc(answers.a)}</div>
+      <div class="lab">${esc(A.lb)}</div><div class="val">${esc(answers.b)}</div>`;
+    $("done-p").innerHTML = sex === "mees" ? 'Nüüd tead, kuhu Sa lähed. Ainult teadmisest ei piisa.<br><b style="display:block;margin-top:8px;font-size:1.25em;color:var(--gold)">Tee täna esimene samm.</b>' : 'Nüüd tead, kuhu Sa lähed.<br><b style="display:block;margin-top:8px;font-size:1.25em;color:var(--gold)">Luba endal täna esimene samm astuda.</b>';
+    $("day3").href = `paev3.html?s=${sex}&a=${area}`;
     show("s-done");
   });
 
+  (() => { const nav = document.createElement("div"); nav.className = "daynav"; nav.setAttribute("aria-label", "Päev 2 / 5");
+    nav.innerHTML = [1, 2, 3, 4, 5].map(i => `<span class="${i === 2 ? "on" : i < 2 ? "done" : ""}">${i}</span>`).join("");
+    document.querySelector(".brand").after(nav); })();
+  document.addEventListener("input", e => { if (e.target.tagName === "TEXTAREA") { e.target.style.height = "auto"; e.target.style.height = e.target.scrollHeight + 2 + "px"; } });   // boxes grow with the text
+  (() => { const k = document.querySelector(".brand svg.kompass"); if (!k) return; k.style.cursor = "pointer"; k.addEventListener("click", () => location.reload()); })();   // emblem = back to the start of this day
   area ? setArea(area) : show("s-pick");
 </script>
 </body>

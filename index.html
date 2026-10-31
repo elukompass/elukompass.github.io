@@ -684,6 +684,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     if (!/^\S+@\S+\.\S+$/.test(st.email)) { $("r-sent").textContent = "Palun kontrolli e-posti aadressi."; return; }
     if (!$("r-consent").checked) { $("r-sent").textContent = "Palun kinnita nõusolek, et saaksin Sulle kirjutada."; return; }
     st.consent = new Date().toISOString();
+    try { const kc = JSON.parse(localStorage.getItem("kc") || "{}"); Object.assign(kc, { sex: st.sex, name: st.name, email: st.email }); localStorage.setItem("kc", JSON.stringify(kc)); } catch (e) {}   // later days do not ask again
     send(); step("lugem", "Lead", null, { content_name: st.mc || "" });
     // Unlock: the audio plays here and is also sent by email
     closeSheet(); $("s-result").classList.remove("gated", "gatedB"); window.scrollTo({ top: 0, behavior: "smooth" });
