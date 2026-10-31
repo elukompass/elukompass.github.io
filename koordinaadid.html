@@ -250,7 +250,7 @@ $("back").onclick = () => show(trail.pop(), true);
   document.querySelectorAll(".areas button").forEach(b => b.addEventListener("click", () => setArea(b.dataset.a)));
 
   // Opted in at Kompass: no second form. Another device: the row waits on a browser id, Day 5 joins the email
-  const PAEV_LIVE = false;   // on after the Apps Script knows kind "paev"
+  const PAEV_LIVE = true;   // on after the Apps Script knows kind "paev"
   $("to-who").addEventListener("click", () => {
     const A = AREAS[area], now = new Date().toISOString();
     let kc = {}; try { kc = JSON.parse(localStorage.getItem("kc") || "{}"); } catch (e) {}
