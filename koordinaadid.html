@@ -265,7 +265,7 @@ $("back").onclick = () => show(trail.pop(), true);
     $("coord").innerHTML = `<div class="lab">${esc(A.la)}</div><div class="val${A.mode === "energia" ? " from" : ""}">${esc(answers.a)}</div>
       <div class="lab">${esc(A.lb)}</div><div class="val">${esc(answers.b)}</div>`;
     $("done-p").innerHTML = sex === "mees" ? 'Nüüd tead, kuhu Sa lähed. Ainult teadmisest ei piisa.<br><b style="display:block;margin-top:8px;font-size:1.25em;color:var(--gold)">Tee täna esimene samm.</b>' : 'Nüüd tead, kuhu Sa lähed.<br><b style="display:block;margin-top:8px;font-size:1.25em;color:var(--gold)">Luba endal täna esimene samm astuda.</b>';
-    $("day3").href = `paev3.html?s=${sex}&a=${area}`;
+    $("day3").href = `paev3.html?s=${sex}&a=${area}`; $("day3").classList.toggle("hidden", sex !== "mees");   // men first, women after Kaidi's voice notes
     show("s-done");
   });
 

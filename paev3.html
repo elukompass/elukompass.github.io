@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Päev 3 · Floreo</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#06141f">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700;800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="paev.css">
+</head>
+<body>
+<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
+<main>
+  <div class="brand"><svg class="kompass" aria-hidden="true" viewBox="0 0 100 100"><defs><radialGradient id="kBrass" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.45" stop-color="#E2B54E"/><stop offset="1" stop-color="#7A5214"/></radialGradient><radialGradient id="kFace" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A4E7A"/><stop offset="0.6" stop-color="#16324F"/><stop offset="1" stop-color="#0A1A2E"/></radialGradient><linearGradient id="kGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#B8862E"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#kBrass)"/><circle cx="50" cy="50" r="42" fill="url(#kFace)" stroke="#5A3D10" stroke-width="1"/><g class="k-ring" fill="none" stroke="#E2C27A" stroke-width="0.6" opacity="0.8"><circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 2"/><circle cx="50" cy="50" r="16"/><circle cx="50" cy="42" r="8"/><circle cx="57" cy="46" r="8"/><circle cx="57" cy="54" r="8"/><circle cx="50" cy="58" r="8"/><circle cx="43" cy="54" r="8"/><circle cx="43" cy="46" r="8"/></g><g class="k-rose"><path d="M50 10 L54 46 L50 50 L46 46Z M50 90 L54 54 L50 50 L46 54Z M10 50 L46 46 L50 50 L46 54Z M90 50 L54 46 L50 50 L54 54Z" fill="url(#kGold)" stroke="#6B4A12" stroke-width="0.5"/><path d="M50 22 L52 48 L50 50 L48 48Z M78 50 L52 52 L50 50 L52 48Z M50 78 L48 52 L50 50 L52 52Z M22 50 L48 48 L50 50 L48 52Z" fill="#9FD4FF" opacity="0.55" transform="rotate(45 50 50)"/><path d="M50 10 L54 46 L50 50Z" fill="#E5483D"/></g><g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g><circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/><ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/></svg><span>Kompass</span><span class="day">Päev 3</span></div>
+
+  <section class="screen" id="s-pick">
+    <div class="kicker">Sinu fookus</div>
+    <h1>Mis on Sinu fookus?</h1>
+    <p>Vali ala, mille Sa Kompassis valisid.</p>
+    <div class="areas">
+      <button data-a="keha">Keha</button><button data-a="vaim">Vaim</button>
+      <button data-a="raha">Raha ja töö</button><button data-a="suhted">Suhted</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-gap">
+    <h1 style="white-space:normal">Distants Sinu SIHINI</h1>
+    <p>Eile määrasid koordinaadi.<br>Vaatame nüüd ausalt, kui kaugel see on.</p>
+    <audio class="vm-audio" id="vm" controls preload="metadata"></audio>
+    <div class="card hidden" id="goal-card"><div class="kicker" style="margin-bottom:4px">Sinu koordinaat</div><p id="goal-show" style="margin:0"></p></div>
+    <div id="goal-ask" class="hidden"><label class="q" for="f-goal">Koordinaat: Kuhu soovid jõuda?</label><textarea id="f-goal" maxlength="300" rows="2"></textarea></div>
+    <div class="meter"><div class="top"><label for="r-now">Kus oled täna?</label><b id="r-now-v">4</b></div><input type="range" id="r-now" min="1" max="10" value="4"><div class="ends"><span>kaugel</span><span>kohal</span></div></div>
+    <div class="meter"><div class="top"><label for="r-want">Kus tahaksid olla?</label><b id="r-want-v">9</b></div><input type="range" id="r-want" min="1" max="10" value="9"><div class="ends"><span>kaugel</span><span>kohal</span></div></div>
+    <div class="gapbar"><i id="gap-bar"></i></div>
+    <div class="big" id="gap-n">5</div><div class="big-lab">sammu vahet</div>
+    <button class="btn" id="to-cost">Edasi</button>
+  </section>
+
+  <section class="screen" id="s-cost">
+    <h2>Mida see distants oma SIHIST Sulle maksab?</h2>
+    <p>Iga kuu, mil see vahe on alles, võtab ta Sult midagi.<br>Hinda, kui palju.</p>
+    <div id="costs"></div>
+    <label class="q" for="f-lose">Kui järgmised 12 kuud jääb kõik samaks,<br>mis Sul siis kaotsi läheb?</label>
+    <textarea id="f-lose" maxlength="300" rows="2"></textarea>
+    <button class="btn" id="to-who" disabled>Edasi</button>
+  </section>
+
+  
+
+  <section class="screen" id="s-done">
+    <div class="kicker">Päev 3 on tehtud</div>
+    <h2 id="done-h"></h2>
+    <div class="coord" id="coord"></div>
+    <p>Nüüd tead, kui kaugel oled oma sihist.<br>Järgmiseks vaatame üle takistavad asjaolud.</p>
+    <a class="btn" id="next">Päev 4</a>
+  </section>
+</main>
+<script src="paev.js"></script>
+<script>
+
+// Cost rows follow the focus: the other areas it pulls down
+const COST_NAME = { keha: "Sinu keha ja energia", raha: "Sinu raha ja töö", suhted: "Sinu suhted", vaim: "Sinu vaimne heaolu" };
+const COST_FOR = { keha: ["raha", "suhted", "vaim"], raha: ["keha", "suhted", "vaim"], suhted: ["keha", "vaim"], vaim: ["keha", "raha", "suhted"] };
+let COSTS = [];
+function paintCosts() {
+  COSTS = COST_FOR[st.area].map(k => [k, COST_NAME[k]]);
+  $("costs").innerHTML = COSTS.map(([k, n]) => `<div class="meter"><div class="top"><label for="c-${k}">${n}</label><b id="c-${k}-v">5</b></div><input type="range" id="c-${k}" min="1" max="10" value="5"><div class="ends"><span>vähe</span><span>väga palju</span></div></div>`).join("");
+  COSTS.forEach(([k]) => slider("c-" + k));
+}
+function gap() { const n = +$("r-now").value, w = +$("r-want").value, g = Math.max(0, w - n);
+  $("gap-n").textContent = g; $("gap-bar").style.left = (Math.min(n, w) - 1) / 9 * 100 + "%"; $("gap-bar").style.width = g / 9 * 100 + "%"; return g; }
+slider("r-now", gap); slider("r-want", gap);
+function start() { paintCosts(); audio(3); show("s-gap");
+  if (st.goal) { $("goal-show").textContent = st.goal; $("goal-card").classList.remove("hidden"); } else $("goal-ask").classList.remove("hidden"); }
+needArea(start);
+$("to-cost").onclick = () => { if (!st.goal && val("f-goal")) st.goal = val("f-goal"); show("s-cost"); };
+$("f-lose").addEventListener("input", () => { $("to-who").disabled = !val("f-lose"); });
+$("to-who").onclick = () => {
+  st.now = +$("r-now").value; st.want = +$("r-want").value; st.gap = gap(); st.lose = val("f-lose");
+  const costs = Object.fromEntries(COSTS.map(([k]) => [k, +$("c-" + k).value]));
+  st.cost = Object.values(costs).reduce((x, y) => x + y, 0) / COSTS.length;
+  sendDay(3, { goal: st.goal, now: st.now, want: st.want, gap: st.gap, costs, lose: st.lose });
+  const top = COSTS.slice().sort((a, b) => costs[b[0]] - costs[a[0]])[0];
+  $("done-h").textContent = st.name ? `${st.name.split(" ")[0]}, nüüd Sa näed seda.` : "Nüüd Sa näed seda.";
+  $("coord").innerHTML = `<div class="lab">Vahe</div><div class="val">${st.gap} sammu</div><div class="lab">Maksab kõige rohkem</div><div class="val">${esc(top[1])}</div><div class="lab">Kui midagi ei muutu</div><div class="val">${esc(st.lose)}</div>`;
+  $("next").href = link("paev4.html"); show("s-done");
+};
+
+</script>
+</body>
+</html>

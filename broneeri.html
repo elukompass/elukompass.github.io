@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kursikõne · Floreo</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#06141f">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700;800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="paev.css">
+</head>
+<body>
+<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
+<main>
+  <div class="brand"><svg class="kompass" aria-hidden="true" viewBox="0 0 100 100"><defs><radialGradient id="kBrass" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.45" stop-color="#E2B54E"/><stop offset="1" stop-color="#7A5214"/></radialGradient><radialGradient id="kFace" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A4E7A"/><stop offset="0.6" stop-color="#16324F"/><stop offset="1" stop-color="#0A1A2E"/></radialGradient><linearGradient id="kGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#B8862E"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#kBrass)"/><circle cx="50" cy="50" r="42" fill="url(#kFace)" stroke="#5A3D10" stroke-width="1"/><g class="k-ring" fill="none" stroke="#E2C27A" stroke-width="0.6" opacity="0.8"><circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 2"/><circle cx="50" cy="50" r="16"/><circle cx="50" cy="42" r="8"/><circle cx="57" cy="46" r="8"/><circle cx="57" cy="54" r="8"/><circle cx="50" cy="58" r="8"/><circle cx="43" cy="54" r="8"/><circle cx="43" cy="46" r="8"/></g><g class="k-rose"><path d="M50 10 L54 46 L50 50 L46 46Z M50 90 L54 54 L50 50 L46 54Z M10 50 L46 46 L50 50 L46 54Z M90 50 L54 46 L50 50 L54 54Z" fill="url(#kGold)" stroke="#6B4A12" stroke-width="0.5"/><path d="M50 22 L52 48 L50 50 L48 48Z M78 50 L52 52 L50 50 L52 48Z M50 78 L48 52 L50 50 L52 52Z M22 50 L48 48 L50 50 L48 52Z" fill="#9FD4FF" opacity="0.55" transform="rotate(45 50 50)"/><path d="M50 10 L54 46 L50 50Z" fill="#E5483D"/></g><g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g><circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/><ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/></svg><span>Kompass</span><span class="day">Kursikõne</span></div>
+
+  <section class="screen on" id="s-book">
+    <h1>Broneeri oma veebikõne</h1>
+    <p id="who"></p>
+    <div id="book-live" class="hidden">
+      <div class="cal">
+        <div class="cal-head"><button id="cal-prev" aria-label="Eelmine kuu">‹</button><b id="cal-title"></b><button id="cal-next" aria-label="Järgmine kuu">›</button></div>
+        <div class="cal-grid cal-dow"><span>E</span><span>T</span><span>K</span><span>N</span><span>R</span><span>L</span><span>P</span></div>
+        <div class="cal-grid" id="cal-days"></div>
+        <div class="cal-tz">Eesti aeg · 20 minutit · Google Meet</div>
+      </div>
+      <div id="cal-times-wrap" class="hidden"><div class="kicker" id="cal-day" style="margin-top:14px"></div><div class="cal-times" id="cal-times"></div></div>
+    </div>
+    <div id="book-form">
+      <label class="q" for="f-name">Eesnimi</label><input type="text" id="f-name" maxlength="60" autocomplete="given-name">
+      <label class="q" for="f-email">E-post</label><input type="email" id="f-email" maxlength="120" autocomplete="email">
+      <label class="q" for="f-phone">Telefon</label><input type="text" id="f-phone" maxlength="30" autocomplete="tel">
+      <div id="f-when-box"><label class="q" for="f-when">Millal Sulle sobib?</label><textarea id="f-when" maxlength="200" rows="2" placeholder="nt tööpäeviti pärast 17, laupäeval hommikul"></textarea></div>
+      <input type="text" id="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <button class="btn" id="send" disabled>Saada</button>
+    </div>
+    <a class="btn ghost" id="course" style="margin-bottom:18px">Või alusta RUUM kursusega · 39 €</a>
+  </section>
+</main>
+<script src="paev.js"></script>
+<script>
+
+$("who").innerHTML = st.sex === "naine" ? "20 minutit Kaidiga või kogukonna liikmega meie seast.<br>Vaatame koos, kas Floreo on 'laev', mille pardale võiksid tulla."
+  : "20 minutit Hendrikuga või coachiga meie tiimist.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla.";
+$("course").href = link("kursus.html");
+$("f-name").value = st.name || ""; $("f-email").value = st.email || "";
+// Own calendar for men: free times come from the Sheet script, never event details. Women keep the form until Kaidi's calendar is in.
+let PICKER = st.sex === "mees"; const MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], DAYS = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"];
+const pad = n => String(n).padStart(2, "0"), keyOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+let slots = {}, shown = new Date(), pickedDay = "", picked = null;
+function sampleSlots() {   // preview only, the real ones come from the Sheet script
+  const out = {}; [2, 3, 4].forEach(i => { const d = new Date(); d.setDate(d.getDate() + i); (out[keyOf(d)] = []).push(new Date(d.setHours(18, 0, 0, 0)).toISOString(), new Date(d.setHours(18, 30, 0, 0)).toISOString()); });
+  return out; }
+function paintCal() {
+  const y = shown.getFullYear(), m = shown.getMonth(), first = new Date(y, m, 1), blanks = (first.getDay() + 6) % 7, count = new Date(y, m + 1, 0).getDate();
+  $("cal-title").textContent = `${MONTHS[m]} ${y}`;
+  let h = "<span></span>".repeat(blanks);
+  for (let i = 1; i <= count; i++) { const k = keyOf(new Date(y, m, i)), on = slots[k] && slots[k].length;
+    h += on ? `<button class="${k === pickedDay ? "sel" : ""}" data-k="${k}">${i}</button>` : `<span class="off">${i}</span>`; }
+  $("cal-days").innerHTML = h;
+  $("cal-days").querySelectorAll("button").forEach(b => b.onclick = () => pickDay(b.dataset.k)); }
+function pickDay(k) { pickedDay = k; picked = null; paintCal(); const d = new Date(k + "T12:00:00");
+  $("cal-day").textContent = `${DAYS[d.getDay()]}, ${d.getDate()}. ${MONTHS[d.getMonth()]}`;
+  $("cal-times").innerHTML = slots[k].map(t => { const x = new Date(t); return `<button data-t="${t}">${pad(x.getHours())}:${pad(x.getMinutes())}</button>`; }).join("");
+  $("cal-times").querySelectorAll("button").forEach(b => b.onclick = () => { picked = b.dataset.t; $("cal-times").querySelectorAll("button").forEach(x => x.classList.toggle("sel", x === b)); $("book-form").classList.remove("hidden"); check(); $("book-form").scrollIntoView({ behavior: "smooth", block: "center" }); });
+  $("cal-times-wrap").classList.remove("hidden"); }
+async function loadSlots() {
+  if (SEND_LIVE && !PREVIEW) { try { slots = await (await fetch(ENDPOINT + "?slots=mees")).json(); } catch (e) { slots = {}; } } else slots = sampleSlots();
+  const firstDay = Object.keys(slots).sort()[0]; if (firstDay) { shown = new Date(firstDay + "T12:00:00"); }
+  if (!firstDay) { PICKER = false; $("book-live").classList.add("hidden"); $("book-form").classList.remove("hidden"); $("f-when-box").classList.remove("hidden"); $("send").textContent = "Saada"; check(); return; }   // no open times: fall back to the plain form
+  paintCal(); pickDay(firstDay); }
+if (PICKER) { $("book-live").classList.remove("hidden"); $("book-form").classList.add("hidden"); $("f-when-box").classList.add("hidden"); $("send").textContent = "Kinnita aeg"; loadSlots(); }
+$("cal-prev").onclick = () => { shown.setMonth(shown.getMonth() - 1); paintCal(); };
+$("cal-next").onclick = () => { shown.setMonth(shown.getMonth() + 1); paintCal(); };
+const check = () => { $("send").disabled = !(val("f-name") && emailOk(val("f-email")) && val("f-phone") && (PICKER ? picked : val("f-when"))); };
+["f-name", "f-email", "f-phone", "f-when"].forEach(id => $(id).addEventListener("input", check)); check();
+$("send").onclick = () => { st.name = val("f-name"); st.email = val("f-email");
+  const now = new Date().toISOString();
+  const data = PICKER ? { kind: "book", start: picked, ts: now, sex: st.sex, name: st.name, email: st.email, consent: now, phone: val("f-phone"), score: st.score === undefined ? "" : st.score, website: val("website") }
+    : { kind: "call", ts: now, sex: st.sex, area: st.area || "", name: st.name, email: st.email, consent: now, phone: val("f-phone"), offer: "kõne · " + val("f-when"), src: "paev5", website: val("website") };
+  save(st);
+  if (SEND_LIVE && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
+  st.booked = picked || ""; save(st); location.href = link("aitah.html"); };
+</script>
+</body>
+</html>

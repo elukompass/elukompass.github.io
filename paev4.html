@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Päev 4 · Floreo</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="theme-color" content="#06141f">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700;800&family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="paev.css">
+</head>
+<body>
+<div class="sea" aria-hidden="true"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="sea-dim"></div></div>
+<main>
+  <div class="brand"><svg class="kompass" aria-hidden="true" viewBox="0 0 100 100"><defs><radialGradient id="kBrass" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1B8"/><stop offset="0.45" stop-color="#E2B54E"/><stop offset="1" stop-color="#7A5214"/></radialGradient><radialGradient id="kFace" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#2A4E7A"/><stop offset="0.6" stop-color="#16324F"/><stop offset="1" stop-color="#0A1A2E"/></radialGradient><linearGradient id="kGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="1" stop-color="#B8862E"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#kBrass)"/><circle cx="50" cy="50" r="42" fill="url(#kFace)" stroke="#5A3D10" stroke-width="1"/><g class="k-ring" fill="none" stroke="#E2C27A" stroke-width="0.6" opacity="0.8"><circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 2"/><circle cx="50" cy="50" r="16"/><circle cx="50" cy="42" r="8"/><circle cx="57" cy="46" r="8"/><circle cx="57" cy="54" r="8"/><circle cx="50" cy="58" r="8"/><circle cx="43" cy="54" r="8"/><circle cx="43" cy="46" r="8"/></g><g class="k-rose"><path d="M50 10 L54 46 L50 50 L46 46Z M50 90 L54 54 L50 50 L46 54Z M10 50 L46 46 L50 50 L46 54Z M90 50 L54 46 L50 50 L54 54Z" fill="url(#kGold)" stroke="#6B4A12" stroke-width="0.5"/><path d="M50 22 L52 48 L50 50 L48 48Z M78 50 L52 52 L50 50 L52 48Z M50 78 L48 52 L50 50 L52 52Z M22 50 L48 48 L50 50 L48 52Z" fill="#9FD4FF" opacity="0.55" transform="rotate(45 50 50)"/><path d="M50 10 L54 46 L50 50Z" fill="#E5483D"/></g><g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g><circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/><ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/></svg><span>Kompass</span><span class="day">Päev 4</span></div>
+
+  <section class="screen" id="s-pick">
+    <div class="kicker">Sinu fookus</div>
+    <h1>Mis on Sinu fookus?</h1>
+    <p>Vali ala, mille Sa Kompassis valisid.</p>
+    <div class="areas">
+      <button data-a="keha">Keha</button><button data-a="vaim">Vaim</button>
+      <button data-a="raha">Raha ja töö</button><button data-a="suhted">Suhted</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s-time">
+    <h1>Takistavad asjaolud</h1>
+    <p>Aeg - Energia - Inimesed - Raha</p>
+    <audio class="vm-audio" id="vm" controls preload="metadata"></audio>
+    <div class="meter"><div class="top"><label for="r-hours">Palju on Sul keskmiselt vaba aega ühes päevas enda projektideks?</label><b id="r-hours-v">2</b></div><input type="range" id="r-hours" min="0" max="12" value="2"></div>
+    <label class="q">Kuhu Su aeg praegu läheb?</label>
+    <div class="chips" id="c-time"><button class="on green" data-v="uni">Uni</button><button data-v="too">Töö</button><button data-v="toit">Toidud ja trennid</button><button data-v="pere">Pere ja kodu</button><button data-v="oma">Oma aeg</button><button data-v="asjad">Asjaajamine</button><button data-v="teised">Teiste mured</button><button data-v="ekraan">Telefon ja ekraanid</button></div>
+    <button class="btn" id="to-energy" disabled>Edasi</button>
+  </section>
+
+  <section class="screen" id="s-energy">
+    <h2>Sinu energia</h2>
+    <p>Aeg ilma energiata ei vii kuhugi.</p>
+    <div class="meter"><div class="top"><label for="r-energy">Kui palju energiat Sul tavaliselt päevas on?</label><b id="r-energy-v">5</b></div><input type="range" id="r-energy" min="1" max="10" value="5"><div class="ends"><span>🪫 on vähe</span><span>🔋 on palju</span></div></div>
+    <label class="q" for="f-drain">Mis sööb Su energiat kõige rohkem?</label>
+    <textarea id="f-drain" maxlength="300" rows="2"></textarea>
+    <button class="btn" id="to-people" disabled>Edasi</button>
+  </section>
+
+  <section class="screen" id="s-people">
+    <h2>Inimesed Sinu ümber</h2>
+    <p>Inimesed kas kannavad Sind või võtavad Sinult.</p>
+    <div class="meter"><div class="top"><label for="r-people">Kui palju lähedased Sind Sinu sihil toetavad?</label><b id="r-people-v">5</b></div><input type="range" id="r-people" min="1" max="10" value="5"><div class="ends"><span>üldse mitte</span><span>täielikult</span></div></div>
+    <label class="q" for="f-rel">Milline suhe võtab Su energiat kõige rohkem?</label>
+    <textarea id="f-rel" maxlength="300" rows="2"></textarea>
+    <button class="btn" id="to-money" disabled>Edasi</button>
+  </section>
+
+  <section class="screen" id="s-money">
+    <h2>Sinu finantsid</h2>
+    <p>Kuhu Su raha läheb, näitab, mida Sa päriselt väärtustad.</p>
+    <label class="q">Kas Sul on vabu vahendeid, mida soovi korral iseendasse investeerida?</label>
+    <div class="opts" id="c-money"><button data-v="jah">Jah, vahendid on olemas</button><button data-v="umber">On, kuid piiratud hulgal</button><button data-v="ei">Praegu mitte</button></div>
+    <label class="q" for="f-cut">Mis on üks kulu, mille Sa võiksid kohe ära lõpetada?</label>
+    <textarea id="f-cut" maxlength="300" rows="2"></textarea>
+    <button class="btn" id="to-who" disabled>Edasi</button>
+  </section>
+
+  
+
+  <section class="screen" id="s-done">
+    <div class="kicker">Päev 4 on tehtud</div>
+    <h2 id="done-h"></h2>
+    <div class="coord" id="coord"></div>
+    <p>Takistused on nüüd nähtaval.<br>Jääb vaid üks küsimus...</p>
+    <a class="btn" id="next">Päev 5</a>
+  </section>
+</main>
+<script src="paev.js"></script>
+<script>
+
+let time = [], money = [];
+slider("r-hours", v => { $("r-hours-v").textContent = v === 0 ? "vähem kui 1 tund" : v === 1 ? "1 tund" : v + " tundi"; }); slider("r-energy"); slider("r-people");
+chooser("c-time", true, v => { time = v; $("to-energy").disabled = !v.length; });
+const check = () => { $("to-who").disabled = !(money.length && val("f-cut")); };
+chooser("c-money", false, v => { money = v; check(); });
+$("f-cut").addEventListener("input", check);
+$("f-drain").addEventListener("input", () => { $("to-people").disabled = !val("f-drain"); });
+$("f-rel").addEventListener("input", () => { $("to-money").disabled = !val("f-rel"); });
+needArea(() => { audio(4); show("s-time"); });
+$("to-energy").onclick = () => show("s-energy");
+$("to-people").onclick = () => show("s-people");
+$("to-money").onclick = () => show("s-money");
+$("to-who").onclick = () => {
+  st.hours = +$("r-hours").value; st.energy = +$("r-energy").value; st.money = money[0]; st.drain = val("f-drain"); st.rel = val("f-rel");
+  sendDay(4, { hours: st.hours, time, energy: st.energy, drain: val("f-drain"), people: +$("r-people").value, rel: val("f-rel"), money: st.money, cut: val("f-cut") });
+  const M = { jah: "Vahendid on olemas", umber: "On, kuid piiratud hulgal", ei: "Praegu mitte" }[st.money];
+  $("done-h").textContent = st.name ? `${st.name.split(" ")[0]}, nüüd on pilt aus.` : "Nüüd on pilt aus.";
+  $("coord").innerHTML = `<div class="lab">Aeg</div><div class="val">${st.hours === 0 ? "Vähem kui 1 tund" : st.hours + " tundi"} päevas</div><div class="lab">Energia</div><div class="val">${st.energy} / 10 · ${esc(val("f-drain"))}</div><div class="lab">Inimesed</div><div class="val">Tugi ${+$("r-people").value} / 10 · ${esc(val("f-rel"))}</div><div class="lab">Raha</div><div class="val">${esc(M)}</div><div class="lab">Lõpetad kohe</div><div class="val">${esc(val("f-cut"))}</div>`;
+  $("next").href = link("paev5.html"); show("s-done");
+};
+
+</script>
+</body>
+</html>
