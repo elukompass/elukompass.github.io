@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Koordinaadid · Floreo</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<meta name="description" content="Päev 2. Said oma Kompassi. Nüüd sisesta oma uus koordinaat.">
+<meta name="description" content="Samm 2. Said oma Kompassi. Nüüd sisesta oma uus koordinaat.">
 <meta name="theme-color" content="#06141f">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -125,7 +125,7 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
               <g font-family="Marcellus, serif" font-size="7" fill="#FFE9A8" text-anchor="middle"><text x="50" y="7.5">N</text><text x="50" y="98">S</text><text x="96" y="52.5">E</text><text x="4" y="52.5">W</text></g>
               <circle cx="50" cy="50" r="3.2" fill="url(#kBrass)" stroke="#5A3D10" stroke-width="0.5"/>
               <ellipse cx="38" cy="30" rx="16" ry="7" fill="#FFFFFF" opacity="0.12" transform="rotate(-30 38 30)"/>
-            </svg><span>Kompass</span><span class="day">Päev 2</span></div>
+            </svg><span>Kompass</span><span class="day">Samm 2</span></div>
 
   <!-- 0 · choose area (only when the link has no ?a=) -->
   <section class="screen" id="s-pick">
@@ -167,7 +167,7 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
         <a class="btn" id="m-buy" href="#" target="_blank" rel="noopener">Jah, alustan TÄNA</a>
       </div>
     </div>
-    <a class="btn ghost hidden" id="day3">Päev 3</a>
+    <a class="btn ghost" id="day3">Samm 3</a>
     <div class="small">14 päeva raha tagasi garantii.</div>
   </section>
 </main>
@@ -265,11 +265,11 @@ $("back").onclick = () => show(trail.pop(), true);
     $("coord").innerHTML = `<div class="lab">${esc(A.la)}</div><div class="val${A.mode === "energia" ? " from" : ""}">${esc(answers.a)}</div>
       <div class="lab">${esc(A.lb)}</div><div class="val">${esc(answers.b)}</div>`;
     $("done-p").innerHTML = sex === "mees" ? 'Nüüd tead, kuhu Sa lähed. Ainult teadmisest ei piisa.<br><b style="display:block;margin-top:8px;font-size:1.25em;color:var(--gold)">Tee täna esimene samm.</b>' : 'Nüüd tead, kuhu Sa lähed.<br><b style="display:block;margin-top:8px;font-size:1.25em;color:var(--gold)">Luba endal täna esimene samm astuda.</b>';
-    $("day3").href = `paev3.html?s=${sex}&a=${area}`; $("day3").classList.toggle("hidden", sex !== "mees");   // men first, women after Kaidi's voice notes
+    $("day3").href = `paev3.html?s=${sex}&a=${area}`; $("day3").classList.remove("hidden");
     show("s-done");
   });
 
-  (() => { const nav = document.createElement("div"); nav.className = "daynav"; nav.setAttribute("aria-label", "Päev 2 / 5");
+  (() => { const nav = document.createElement("div"); nav.className = "daynav"; nav.setAttribute("aria-label", "Samm 2 / 5");
     nav.innerHTML = [1, 2, 3, 4, 5].map(i => `<span class="${i === 2 ? "on" : i < 2 ? "done" : ""}">${i}</span>`).join("");
     document.querySelector(".brand").after(nav); })();
   document.addEventListener("input", e => { if (e.target.tagName === "TEXTAREA") { e.target.style.height = "auto"; e.target.style.height = e.target.scrollHeight + 2 + "px"; } });   // boxes grow with the text

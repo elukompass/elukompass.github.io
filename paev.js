@@ -87,6 +87,6 @@ document.addEventListener("input", e => { if (e.target.tagName === "TEXTAREA") {
 
 // Progress rings: show the day, not clickable. The next day opens from the button after finishing.
 (() => { const m = location.pathname.match(/paev(\d)/); if (!m) return;
-  const nav = document.createElement("div"); nav.className = "daynav"; nav.setAttribute("aria-label", `Päev ${m[1]} / 5`);
+  const nav = document.createElement("div"); nav.className = "daynav"; nav.setAttribute("aria-label", `Samm ${m[1]} / 5`);
   nav.innerHTML = [1, 2, 3, 4, 5].map(i => `<span class="${i === +m[1] ? "on" : i < +m[1] ? "done" : ""}">${i}</span>`).join("");
   document.querySelector(".brand").after(nav); })();
