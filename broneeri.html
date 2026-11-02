@@ -24,7 +24,7 @@
         <div class="cal-head"><button id="cal-prev" aria-label="Eelmine kuu">‹</button><b id="cal-title"></b><button id="cal-next" aria-label="Järgmine kuu">›</button></div>
         <div class="cal-grid cal-dow"><span>E</span><span>T</span><span>K</span><span>N</span><span>R</span><span>L</span><span>P</span></div>
         <div class="cal-grid" id="cal-days"></div>
-        <div class="cal-tz">Eesti aeg · 20 minutit · Google Meet</div>
+        <div class="cal-tz">Eesti aeg · 30 minutit · Google Meet</div>
       </div>
       <div id="cal-times-wrap" class="hidden"><div class="kicker" id="cal-day" style="margin-top:14px"></div><div class="cal-times" id="cal-times"></div></div>
     </div>
@@ -42,8 +42,8 @@
 <script src="paev.js"></script>
 <script>
 
-$("who").innerHTML = st.sex === "naine" ? "20 minutit Kaidiga või kogukonna liikmega meie seast.<br>Vaatame koos, kas Floreo on 'laev', mille pardale võiksid tulla."
-  : "20 minutit Hendrikuga või coachiga meie tiimist.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla.";
+$("who").innerHTML = st.sex === "naine" ? "30 minutit Kaidiga või kogukonna liikmega meie seast.<br>Vaatame koos, kas Floreo on 'laev', mille pardale võiksid tulla."
+  : "30 minutit Hendrikuga või coachiga meie tiimist.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla.";
 $("course").href = link("kursus.html");
 $("f-name").value = st.name || ""; $("f-email").value = st.email || "";
 // Own calendar for men: free times come from the Sheet script, never event details. Women keep the form until Kaidi's calendar is in.

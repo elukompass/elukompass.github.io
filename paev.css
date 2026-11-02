@@ -89,7 +89,7 @@ h1 { font-size: clamp(24px, 6.8vw, 34px); } h2 { font-size: 26px; }
 label.q, .meter .top { font-size: 16px; }
 .meter .top b { font-size: 24px; }
 .meter .top label[for=r-hours] { font-size: 14px; line-height: 1.35; }
-textarea, input[type=text], input[type=email] { font-size: 15px; }
+textarea, input[type=text], input[type=email] { font-size: 16px; }
 .btn { font-size: 16px; padding: 14px 20px; }
 .btn.ghost { font-size: 14px; }
 .areas button { font-size: 17px; }
@@ -140,3 +140,6 @@ body .btn:not(.ghost):disabled::after { display: none; }
 a.vid-slot { text-decoration: none; }
 a.vid-slot:hover { border-color: var(--gold); color: var(--gold); }
 .vm-audio { height: 36px; margin: 2px 0 10px; }
+
+/* phone: no sideways overflow, no iOS focus zoom */
+html, body { max-width: 100%; overflow-x: hidden; }
