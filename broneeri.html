@@ -47,6 +47,7 @@ $("who").innerHTML = st.sex === "naine" ? "30 minutit Kaidiga või kogukonna lii
 $("course").href = link("kursus.html");
 $("f-name").value = st.name || ""; $("f-email").value = st.email || "";
 // Own calendar for men: free times come from the Sheet script, never event details. Women keep the form until Kaidi's calendar is in.
+const HOST = new URLSearchParams(location.search).get("h") || "";
 let PICKER = st.sex === "mees"; const MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], DAYS = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"];
 const pad = n => String(n).padStart(2, "0"), keyOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 let slots = {}, shown = new Date(), pickedDay = "", picked = null;
@@ -78,7 +79,7 @@ const check = () => { $("send").disabled = !(val("f-name") && emailOk(val("f-ema
 ["f-name", "f-email", "f-phone", "f-when"].forEach(id => $(id).addEventListener("input", check)); check();
 $("send").onclick = () => { st.name = val("f-name"); st.email = val("f-email");
   const now = new Date().toISOString();
-  const data = PICKER ? { kind: "book", start: picked, ts: now, sex: st.sex, name: st.name, email: st.email, consent: now, phone: val("f-phone"), score: st.score === undefined ? "" : st.score, website: val("website") }
+  const data = PICKER ? { kind: "book", h: HOST, k: st.k || "", start: picked, ts: now, sex: st.sex, name: st.name, email: st.email, consent: now, phone: val("f-phone"), score: st.score === undefined ? "" : st.score, website: val("website") }
     : { kind: "call", ts: now, sex: st.sex, area: st.area || "", name: st.name, email: st.email, consent: now, phone: val("f-phone"), offer: "kõne · " + val("f-when"), src: "paev5", website: val("website") };
   save(st);
   if (SEND_LIVE && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
