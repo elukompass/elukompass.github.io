@@ -65,6 +65,7 @@
 <script>
 
 slider("r-will"); slider("r-gap");
+if (st.sex === "naine") $("r-will").parentNode.querySelector(".ends").innerHTML = "<span>kahtlen väga</span><span>olen otsustanud</span>";   // women: 1 = kahtlen väga, 10 = olen otsustanud
 const check = () => { $("to-who").disabled = !(val("f-stop") && val("f-step") && (st.goal || val("f-goal"))); };
 ["f-stop", "f-step", "f-goal"].forEach(id => $(id).addEventListener("input", check));
 needArea(() => { audio(5); show("s-will");
