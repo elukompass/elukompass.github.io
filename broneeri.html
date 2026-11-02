@@ -47,7 +47,7 @@ $("who").innerHTML = st.sex === "naine" ? "30 minutit Kaidiga või kogukonna lii
 $("course").href = link("kursus.html");
 $("f-name").value = st.name || ""; $("f-email").value = st.email || "";
 // Own calendar for men: free times come from the Sheet script, never event details. Women keep the form until Kaidi's calendar is in.
-let PICKER = st.sex === "mees"; const MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], DAYS = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"];
+let PICKER = true; const MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], DAYS = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"];
 const pad = n => String(n).padStart(2, "0"), keyOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 let slots = {}, shown = new Date(), pickedDay = "", picked = null;
 function sampleSlots() {   // preview only, the real ones come from the Sheet script
@@ -67,7 +67,7 @@ function pickDay(k) { pickedDay = k; picked = null; paintCal(); const d = new Da
   $("cal-times").querySelectorAll("button").forEach(b => b.onclick = () => { picked = b.dataset.t; $("cal-times").querySelectorAll("button").forEach(x => x.classList.toggle("sel", x === b)); $("book-form").classList.remove("hidden"); check(); $("book-form").scrollIntoView({ behavior: "smooth", block: "center" }); });
   $("cal-times-wrap").classList.remove("hidden"); }
 async function loadSlots() {
-  if (SEND_LIVE && !PREVIEW) { try { slots = await (await fetch(ENDPOINT + "?slots=mees")).json(); } catch (e) { slots = {}; } } else slots = sampleSlots();
+  if (SEND_LIVE && !PREVIEW) { try { slots = await (await fetch(ENDPOINT + "?slots=" + (st.sex === "naine" ? "naine" : "mees"))).json(); } catch (e) { slots = {}; } } else slots = sampleSlots();
   const firstDay = Object.keys(slots).sort()[0]; if (firstDay) { shown = new Date(firstDay + "T12:00:00"); }
   if (!firstDay) { PICKER = false; $("book-live").classList.add("hidden"); $("book-form").classList.remove("hidden"); $("f-when-box").classList.remove("hidden"); $("send").textContent = "Saada"; check(); return; }   // no open times: fall back to the plain form
   paintCal(); pickDay(firstDay); }
