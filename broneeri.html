@@ -81,7 +81,7 @@ $("send").onclick = () => { st.name = val("f-name"); st.email = val("f-email");
   const data = PICKER ? { kind: "book", start: picked, ts: now, sex: st.sex, name: st.name, email: st.email, consent: now, phone: val("f-phone"), score: st.score === undefined ? "" : st.score, website: val("website") }
     : { kind: "call", ts: now, sex: st.sex, area: st.area || "", name: st.name, email: st.email, consent: now, phone: val("f-phone"), offer: "kõne · " + val("f-when"), src: "paev5", website: val("website") };
   save(st);
-  if (SEND_LIVE && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
+  if (SEND_LIVE && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
   st.booked = picked || ""; save(st); location.href = link("aitah.html"); };
 </script>
 </body>
