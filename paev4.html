@@ -94,7 +94,7 @@ $("to-who").onclick = () => {
   sendDay(4, { hours: st.hours, time, energy: st.energy, drain: val("f-drain"), people: +$("r-people").value, rel: val("f-rel"), money: st.money, cut: val("f-cut") });
   const M = { jah: "Vahendid on olemas", umber: "On, kuid piiratud hulgal", ei: "Praegu mitte" }[st.money];
   $("done-h").textContent = st.name ? `${st.name.split(" ")[0]}, nüüd on pilt aus.` : "Nüüd on pilt aus.";
-  $("coord").innerHTML = `<div class="lab">Aeg</div><div class="val">${st.hours === 0 ? "Vähem kui 1 tund" : st.hours + " tundi"} päevas</div><div class="lab">Energia</div><div class="val">${st.energy} / 10 · ${esc(val("f-drain"))}</div><div class="lab">Inimesed</div><div class="val">Tugi ${+$("r-people").value} / 10 · ${esc(val("f-rel"))}</div><div class="lab">Raha</div><div class="val">${esc(M)}</div><div class="lab">Lõpetad kohe</div><div class="val">${esc(val("f-cut"))}</div>`;
+  $("coord").innerHTML = `<div class="lab">Sul on aega endale ühes päevas</div><div class="val">${st.hours === 0 ? "Vähem kui 1 tund" : st.hours === 1 ? "1 tund" : st.hours + " tundi"}</div><div class="lab">Energia</div><div class="val">${st.energy} / 10 · ${esc(val("f-drain"))}</div><div class="lab">Inimesed</div><div class="val">Tugi ${+$("r-people").value} / 10 · ${esc(val("f-rel"))}</div><div class="lab">Raha</div><div class="val">${esc(M)}</div><div class="lab">Lõpetad kohe</div><div class="val">${esc(val("f-cut"))}</div>`;
   $("next").href = link("paev5.html"); show("s-done");
 };
 

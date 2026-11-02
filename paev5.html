@@ -88,10 +88,10 @@ $("to-who").onclick = () => needWho(() => {
   const pts = score(st.will), v = verdict(pts); st.verdict = v; st.score = pts;
   sendDay(5, { goal: st.goal, gap: st.gap, cost: st.cost, hours: st.hours, energy: st.energy, money: st.money || "", will: st.will, stop: val("f-stop"), step: val("f-step"), lose: st.lose || "" }, { qualified: v + ":" + pts });
   const row = (l, v) => v === undefined || v === "" ? "" : `<div class="lab">${l}</div><div class="val">${esc(v)}</div>`;
-  const hrs = st.hours === undefined ? "" : st.hours === 0 ? "vähem kui 1 tund päevas" : st.hours === 1 ? "1 tund päevas" : st.hours + " tundi päevas";
+  const hrs = st.hours === undefined ? "" : st.hours === 0 ? "vähem kui 1 tund" : st.hours === 1 ? "1 tund" : st.hours + " tundi";
   const M = { jah: "vahendid on olemas", umber: "vahendid on piiratud", ei: "vahendeid praegu ei ole" }[st.money];
   $("coord").innerHTML = row("Sinu SIHT", st.goal) + row("Kus Sa oled: " + (AREA_NAME[st.area] || ""), st.now ? `${st.now} / 10, tahad olla ${st.want} / 10` : "")
-    + row("Kui midagi ei muutu", st.lose) + row("Aeg", hrs) + row("Energia", st.energy ? `${st.energy} / 10${st.drain ? " · " + st.drain : ""}` : "")
+    + row("Kui midagi ei muutu", st.lose) + row("Sul on aega endale ühes päevas", hrs) + row("Energia", st.energy ? `${st.energy} / 10${st.drain ? " · " + st.drain : ""}` : "")
     + row("Inimesed", st.rel) + row("Finantsid", M) + row("Minu tahe", `${st.will} / 10`) + row("Sa loobud", val("f-stop")) + row("Esimene samm", val("f-step"));
   const T = { go: ["Sa tead, kus Sa oled, kuhu Sa lähed ja mis Sind takistab. Tahe on olemas.", "Siit edasi ei pea Sa enam üksi minema.", link("broneeri.html"), false],
     course: ["Sa tead nüüd, kus Sa oled ja kuhu Sa lähed.", "Järgmine samm on väike ja täiesti tehtav.", link("kursus.html"), false],
