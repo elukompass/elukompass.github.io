@@ -43,6 +43,7 @@
 <script>
 
 $("who").innerHTML = st.sex === "naine" ? "30 minutit Kaidiga või kogukonna liikmega meie seast.<br>Vaatame koos, kas Floreo on 'laev', mille pardale võiksid tulla."
+  : new URLSearchParams(location.search).get("h") === "uku" ? "30 minutit Ukuga.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla."
   : "30 minutit Hendrikuga või coachiga meie tiimist.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla.";
 $("course").href = link("kursus.html");
 $("f-name").value = st.name || ""; $("f-email").value = st.email || "";
