@@ -42,8 +42,9 @@
 <script src="paev.js"></script>
 <script>
 
+if (new URLSearchParams(location.search).get("h") === "uku") { st.sex = "mees"; document.body.classList.remove("naine"); }   // Uku = men, whatever this browser saw before
 $("who").innerHTML = st.sex === "naine" ? "30 minutit Kaidiga või kogukonna liikmega meie seast.<br>Vaatame koos, kas Floreo on 'laev', mille pardale võiksid tulla."
-  : new URLSearchParams(location.search).get("h") === "uku" ? "30 minutit Ukuga.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla."
+  : new URLSearchParams(location.search).get("h") === "uku" ? "30 minutit kõne Ukuga.<br>Vaatame koos, kas Meeste RUUM võib olla Sinu jaoks."
   : "30 minutit Hendrikuga või coachiga meie tiimist.<br>Vaatame koos, kas Locupleto on 'laev', mille pardale võiksid tulla.";
 $("course").href = link("kursus.html");
 $("f-name").value = st.name || ""; $("f-email").value = st.email || "";
