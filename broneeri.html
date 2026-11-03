@@ -49,7 +49,7 @@ $("course").href = link("kursus.html");
 $("f-name").value = st.name || ""; $("f-email").value = st.email || "";
 // Own calendar for men: free times come from the Sheet script, never event details. Women keep the form until Kaidi's calendar is in.
 const HOST = new URLSearchParams(location.search).get("h") || "";
-let PICKER = st.sex === "mees" || HOST === "uku"; const MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], DAYS = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"];
+let PICKER = st.sex === "mees" || st.sex === "naine" || HOST === "uku"; const MONTHS = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], DAYS = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"];
 const pad = n => String(n).padStart(2, "0"), keyOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 let slots = {}, shown = new Date(), pickedDay = "", picked = null;
 function sampleSlots() {   // preview only, the real ones come from the Sheet script
