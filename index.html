@@ -252,7 +252,7 @@
 <!-- Meta Pixel 587447591933718: PageView here; each funnel step also sets a URL hash (#kusimused, #tulemus, #lugem, #vsl, #ost) for URL-based custom conversions -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('init', '587447591933718'); fbq('track', 'PageView'); }
+if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && location.hash !== "#proov") { fbq('init', '587447591933718'); fbq('track', 'PageView'); }
 </script>
 </head>
 <body>
@@ -540,7 +540,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
   // Orbitron has no Õ/õ: draw that one letter in Manrope inside buttons
   document.querySelectorAll(".btn").forEach(el => { if (/[õÕ]/.test(el.textContent) && !el.children.length) el.innerHTML = el.textContent.replace(/[õÕ]/g, m => `<span class="ot">${m}</span>`); });
   const params = new URLSearchParams(location.search);
-  const PREVIEW = location.hash === "#paasterongas" || location.hash === "#deepdive";
+  const PREVIEW = location.hash === "#paasterongas" || location.hash === "#deepdive" || location.hash === "#proov";
   // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
   // A/B (29.10): A = opt-in on the result screen (blurred cards), B = opt-in sheet first, the whole result blurred until email. 50/50, sticky per browser; ?v=A|B forces one.
@@ -667,7 +667,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
     if (st.v === "B" && st.sex === "mees" && st.ph) { st.v = "BP"; $("r-tel").classList.remove("hidden"); }
     send();
     show("s-result");
-    if (!st.email && st.v === "B") { $("s-result").classList.add("gatedB"); $("r-sheet-title").textContent = "Sinu kompass on valmis";
+    if (!st.email && (st.v === "B" || st.v === "BP")) { $("s-result").classList.add("gatedB"); $("r-sheet-title").textContent = "Sinu kompass on valmis";
       document.querySelector("#r-gate .sheet-sub").textContent = "Sisesta nimi ja e-post ning näed kohe oma ratast, suurimat takistust ja lugemit."; openSheet(); }
     else if (!st.email) setTimeout(() => { if ($("s-result").classList.contains("on")) openSheet(); }, 2500);
   }
@@ -766,6 +766,8 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
   // Preview: #deepdive (or #paasterongas) opens the page after the opt-in (?s=naine for Kaidi's version)
   if (location.hash === "#paasterongas" || location.hash === "#deepdive") { st.sex = st.sex || "mees"; st.name = st.sex === "naine" ? "Kaidi" : "Hendrik"; document.body.classList.toggle("naine", st.sex === "naine"); result();
     st.email = "preview"; openRing(); setTimeout(() => window.scrollTo(0, 0), 50); }
+  // Preview #proov: the opt-in sheet as a visitor sees it (?s=mees&v=BP shows the phone field), writes nothing
+  if (location.hash === "#proov") { st.sex = st.sex || "mees"; document.body.classList.toggle("naine", st.sex === "naine"); result(); }
   document.querySelectorAll(".legal-link").forEach(a => a.addEventListener("click", e => { e.preventDefault();
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
   document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
