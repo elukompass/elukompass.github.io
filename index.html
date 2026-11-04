@@ -434,7 +434,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
         <p class="sheet-sub">Suurim takistus, fookuskoht ja lugem. Avaneb kohe.</p>
         <input class="field" id="r-name" placeholder="Ees- ja perenimi" autocomplete="name">
         <input class="field" id="r-email" type="email" placeholder="E-post" autocomplete="email">
-        <input class="field hidden" id="r-tel" type="tel" placeholder="Telefon (WhatsApp)" autocomplete="tel">
+        <input class="field hidden" id="r-tel" type="tel" placeholder="Telefon (WhatsApp, soovi korral)" autocomplete="tel">
         <input id="r-website" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <label class="consent"><input type="checkbox" id="r-consent"><span>Nõustun saama materjali ja veel kasulikke nippe. Saan alati loobuda.</span></label>
         <button class="btn" id="r-send" style="margin-top:4px">Ava kompass</button>
@@ -687,7 +687,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
   $("r-send").onclick = () => {
     st.name = $("r-name").value.trim(); st.email = $("r-email").value.trim();
     if (!/^\S+@\S+\.\S+$/.test(st.email)) { $("r-sent").textContent = "Palun kontrolli e-posti aadressi."; return; }
-    if (st.v === "BP") { const ph = $("r-tel").value.trim(); if (!/^\+?[\d][\d\s-]{6,18}$/.test(ph)) { $("r-sent").textContent = "Palun kontrolli telefoninumbrit."; return; } st.phone = ph; }
+    if (st.v === "BP") { const ph = $("r-tel").value.trim(); if (ph && !/^\+?[\d][\d\s-]{6,18}$/.test(ph)) { $("r-sent").textContent = "Palun kontrolli telefoninumbrit."; return; } st.phone = ph; }   // optional: empty is fine
     if (!$("r-consent").checked) { $("r-sent").textContent = "Palun kinnita nõusolek, et saaksin Sulle kirjutada."; return; }
     st.consent = new Date().toISOString();
     try { const kc = JSON.parse(localStorage.getItem("kc") || "{}"); Object.assign(kc, { sex: st.sex, name: st.name, email: st.email }); localStorage.setItem("kc", JSON.stringify(kc)); } catch (e) {}   // later days do not ask again
