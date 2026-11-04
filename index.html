@@ -543,7 +543,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive") { fbq('i
   // Only non-personal values come in via the link (s = naine/mees, src = source); name and email are typed on the page, never passed in the URL
   const st = { sex: params.get("s") || "", i: 0, scores: Array(Q.length).fill(5), name: "", email: "", consent: "", src: params.get("src") || params.get("utm_source") || "direct" };
   // A/B (29.10): A = opt-in on the result screen (blurred cards), B = opt-in sheet first, the whole result blurred until email. 50/50, sticky per browser; ?v=A|B forces one.
-  st.v = /^[AB]$/.test(params.get("v") || "") ? params.get("v") : (() => { try { let v = localStorage.getItem("kv"); if (!/^[AB]$/.test(v || "")) { v = Math.random() < 0.5 ? "A" : "B"; localStorage.setItem("kv", v); } return v; } catch (e) { return Math.random() < 0.5 ? "A" : "B"; } })();
+  st.v = params.get("v") === "A" ? "A" : "B";   // 4.11 B won the A/B (29% vs 21% view→opt-in): everyone gets B; ?v=A only for preview
   const post = o => { if (!ENDPOINT || PREVIEW) return; try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(o) }); } catch (e) {} };
   try { if (!sessionStorage.getItem("kview")) { sessionStorage.setItem("kview", "1"); post({ kind: "view", src: st.src, variant: st.v }); } } catch (e) {}   // one page view per visit → tab "Vaated"
   document.body.classList.toggle("naine", st.sex === "naine");
