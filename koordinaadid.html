@@ -257,8 +257,8 @@ $("back").onclick = () => show(trail.pop(), true);
     let kc = {}; try { kc = JSON.parse(localStorage.getItem("kc") || "{}"); } catch (e) {}
     if (!kc.cid) kc.cid = Math.random().toString(36).slice(2, 12);
     const answers = { a: val("f-a"), b: val("f-b"), mode: A.mode };
-    const data = kc.email ? { kind: "siht", ts: now, sex, area, mode: A.mode, name: kc.name || "", email: kc.email, consent: now, a: answers.a, b: answers.b, share: "ei", website: "" }
-      : { kind: "paev", day: 2, cid: kc.cid, ts: now, sex, area, answers: JSON.stringify(answers), website: "" };
+    const data = kc.email ? { kind: "siht", ts: now, sex, area, mode: A.mode, name: kc.name || "", email: kc.email, consent: now, a: answers.a, b: answers.b, share: "ei" }
+      : { kind: "paev", day: 2, cid: kc.cid, ts: now, sex, area, answers: JSON.stringify(answers) };
     if (!PREVIEW && window.fbq) { try { history.replaceState(null, "", location.pathname + location.search + "#koordinaat"); } catch (e) {} fbq("track", "PageView"); fbq("trackCustom", "Koordinaat", { content_name: area }); }
     if (ENDPOINT && !PREVIEW && (kc.email || PAEV_LIVE)) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
     try { Object.assign(kc, { sex, area, goal: A.mode === "energia" ? answers.b : answers.a }); localStorage.setItem("kc", JSON.stringify(kc)); } catch (e) {}   // day 3–5 read this

@@ -34,7 +34,7 @@
       <label class="q" for="f-email">E-post</label><input type="email" id="f-email" maxlength="120" autocomplete="email">
       <label class="q" for="f-phone">Telefon</label><input type="text" id="f-phone" maxlength="30" autocomplete="tel">
       <div id="f-when-box"><label class="q" for="f-when">Millal Sulle sobib?</label><textarea id="f-when" maxlength="200" rows="2" placeholder="nt tööpäeviti pärast 17, laupäeval hommikul"></textarea></div>
-      <input type="text" id="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <input type="text" id="r-hp" name="hp_k7" tabindex="-1" autocomplete="off" data-lpignore="true" data-form-type="other" style="position:absolute;left:-9999px" aria-hidden="true">
       <button class="btn" id="send" disabled>Saada</button>
     </div>
     <a class="btn ghost" id="course" style="margin-bottom:18px">Või alusta RUUM kursusega · 39 €</a>
@@ -82,8 +82,8 @@ const check = () => { $("send").disabled = !(val("f-name") && emailOk(val("f-ema
 ["f-name", "f-email", "f-phone", "f-when"].forEach(id => $(id).addEventListener("input", check)); check();
 $("send").onclick = () => { st.name = val("f-name"); st.email = val("f-email");
   const now = new Date().toISOString();
-  const data = PICKER ? { kind: "book", h: HOST, k: st.k || "", start: picked, ts: now, sex: st.sex, name: st.name, email: st.email, consent: now, phone: val("f-phone"), score: st.score === undefined ? "" : st.score, website: val("website") }
-    : { kind: "call", ts: now, sex: st.sex, area: st.area || "", name: st.name, email: st.email, consent: now, phone: val("f-phone"), offer: "kõne · " + val("f-when"), src: "paev5", website: val("website") };
+  const data = PICKER ? { kind: "book", h: HOST, k: st.k || "", start: picked, ts: now, sex: st.sex, name: st.name, email: st.email, consent: now, phone: val("f-phone"), score: st.score === undefined ? "" : st.score, hp: val("r-hp") ? "1" : "" }
+    : { kind: "call", ts: now, sex: st.sex, area: st.area || "", name: st.name, email: st.email, consent: now, phone: val("f-phone"), offer: "kõne · " + val("f-when"), src: "paev5", hp: val("r-hp") ? "1" : "" };
   save(st);
   if (SEND_LIVE && !PREVIEW) { try { fetch(ENDPOINT, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) }); } catch (e) {} }
   st.booked = picked || ""; save(st); location.href = link("aitah.html"); };
