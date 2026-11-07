@@ -1,5 +1,5 @@
 // Kompass Challenge · shared logic for days 3–5 and the booking page
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbytDWu3nmpvkd61KV8XZq2TOt0JnWC4OBbasqk0_NIBktVtQRvaz2KNnO0QFYcAtqgiFQ/exec";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzMiAnvUs-WQsE-cfSAFlNbcv0nwto0u8tTTS5JAAIDqrxYnxz--lGFgcg1o_6rDcdleQ/exec";
 const SEND_LIVE = true;    // turn on after the Apps Script knows kind "paev", otherwise rows land in Opt-in
 const GROUP = "https://www.facebook.com/groups/ruuum";
 const PAY = { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" };
