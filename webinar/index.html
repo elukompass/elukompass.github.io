@@ -78,7 +78,7 @@ input:focus{border-color:var(--acc)}input.bad{border-color:#ff7a7a}input::placeh
 <p class="err" id="err"></p><button class="btn" id="go" type="button">REGISTREERI TASUTA WEBINARILE</button><p class="fine">Saadan Sulle kutse ja meeldetuletuse. Saad alati loobuda.</p></div></div></section>
 <script>
 (function(){
-var RECEIVER_URL="https://script.google.com/macros/s/AKfycbw5D-Vmuu6p7GuTzK2Da1_aQB_HC3YRmlif4WFjPngDvDw9AcxFDUwle_s9_FN0TtEo/exec", GROUP="https://www.facebook.com/groups/ruuum", WEBINAR_WHEN="";   // WEBINAR_WHEN e.g. "Esmaspäev 16.11 kell 19:00" once confirmed; empty = "Kuupäev peagi"
+var RECEIVER_URL="https://script.google.com/macros/s/AKfycbw5D-Vmuu6p7GuTzK2Da1_aQB_HC3YRmlif4WFjPngDvDw9AcxFDUwle_s9_FN0TtEo/exec", GROUP="https://www.facebook.com/groups/ruuum", WEBINAR_WHEN="Pühapäev 15.11 kell 18:00";   // WEBINAR_WHEN e.g. "Esmaspäev 16.11 kell 19:00" once confirmed; empty = "Kuupäev peagi"
 var $=function(x){return document.getElementById(x)},px=window.px||function(){};
 /* theme: light after sunrise, dark after sunset, Tallinn time (?theme=light|dark to preview) */
 function tallinn(){var p={};new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Tallinn",year:"numeric",month:"numeric",day:"numeric",hour:"numeric",minute:"numeric",hour12:false}).formatToParts(new Date()).forEach(function(o){p[o.type]=+o.value});return p}
