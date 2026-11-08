@@ -411,11 +411,11 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
       <a class="btn buy" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Jah, alustan TÄNA</a>
       <p id="r-proof" class="small" style="margin:12px 0 0;text-align:center;opacity:.85;white-space:nowrap;font-size:13.5px"></p>
     </div>
-    <div class="card hidden" id="r-group"><!-- hidden 28.10: one CTA only; invite via ManyChat/DM -->
+    <div class="card" id="r-group"><!-- 8.11: bridge back on — leads had only email; group + WhatsApp 1:1 -->
       <h3 class="card-h">Astu RUUMi</h3>
-      <div class="vsl"><small>🌊 RUUM · pilt tuleb peagi</small></div>
-      <p style="margin:12px 0">Meie tasuta kogukond edumeelsetest eestlastest.<br>Iga nädal ootab Sind seal uus deep dive.</p>
+      <p style="margin:12px 0;text-align:center">Meie tasuta kogukond edumeelsetest eestlastest.<br>Iga nädal ootab Sind seal uus deep dive.</p>
       <a class="btn" id="r-group-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Liitu grupiga</a>
+      <a class="btn hidden" id="r-wa-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-top:10px;background:transparent;border:1px solid var(--warm);color:var(--warm)">Kirjuta Kaidile WhatsAppi</a>
     </div>
   </section>
   <div class="focus hidden" id="vm-focus" role="dialog" aria-modal="true" aria-label="Elukompassi lugem">
@@ -516,6 +516,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
   };
   const paintFocus = () => { const F = FOCUS[st.sex] || FOCUS.mees;
     document.querySelectorAll("[data-focus]").forEach(b => { b.textContent = F[b.dataset.focus][0]; b.setAttribute("aria-pressed", b.dataset.focus === st.focus); }); };   // Karjäär shares the money masterclass
+  const WA_NAINE = "3725299119";   // Kaidi's WhatsApp, digits only with country code (e.g. 3725xxxxxxx); empty = button hidden
   const GROUP = "https://www.facebook.com/groups/ruuum";   // free Facebook group link ("RUUM", both men + women, 27.10); the card shows after the Deep Dive unlocks
 
   // ── The 8 areas · ring = which Deep Dive the area belongs to ──────────────
@@ -631,6 +632,8 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
       : st.focus === low[0].ring ? `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass kinnitab: just siit algab Sinu kurss.`
       : `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`;
     $("r-group-btn").href = GROUP || "#";
+    // WhatsApp 1:1 with the host (women → Kaidi). Number set in WA_NAINE; button stays hidden until it is filled.
+    if (st.sex === "naine" && WA_NAINE) { const wa = $("r-wa-btn"); wa.href = "https://wa.me/" + WA_NAINE + "?text=" + encodeURIComponent("Tere Kaidi! Tegin just Elukompassi 🌿"); wa.classList.remove("hidden"); }
     // Offer: sell what they want (their own focus), give what they need (the lowest area is named in the result and lives inside the course), 39 €
     const payOf = k => { const p = MC[k] && MC[k].pay; return p && typeof p === "object" ? p[st.sex] : p; };
     const ready = k => !!payOf(k);
