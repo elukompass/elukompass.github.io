@@ -67,7 +67,7 @@ ul{display:table;margin:0 auto;padding-left:20px;text-align:left}
 .photo{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;margin:22px 0;border:1px solid var(--line)}
 @media (prefers-reduced-motion:reduce){.hero video{display:none}}
 </style>
-</head>
+<style>.yt{position:relative}.yt-play{all:unset;cursor:pointer;position:absolute;inset:0;display:block}.yt-play img{width:100%;height:100%;object-fit:cover;display:block}.yt-btn{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--gold);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(255,200,97,.22),0 10px 40px rgba(0,0,0,.5);transition:transform .15s}.yt-btn svg{width:36px;height:36px;fill:#2a1a00;margin-left:5px}.yt-play:hover .yt-btn{transform:scale(1.06)}.yt-play:focus-visible .yt-btn{outline:3px solid var(--teal);outline-offset:6px}.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}</style></head>
 <body class="naine">
 <header class="hero"><video autoplay muted loop playsinline preload="auto" poster="assets/sea.jpg"><source src="assets/sea.mp4" type="video/mp4"></video><div class="hero-in">
 <div class="brand"><img src="assets/favicon.svg" alt="Floreo"><span>Floreo · RUUM</span></div>
@@ -75,7 +75,7 @@ ul{display:table;margin:0 auto;padding-left:20px;text-align:left}
 <div class="eyebrow">RUUM · Naiste grupiprogramm · Kaidi ja Hendrik</div>
 <h1>Naine, kes valib iseennast: keha, suhted ja vaim sama rütmiga. 12 nädalat.</h1>
 <p class="sub">Soe ja turvaline grupp naistele, kes on valmis end tagasi enda juurde tooma. Kaidi juhib, Hendrik on tema kõrval. [KINNITA: 12 nädalat]</p>
-<div class="video" style="border:0;background:#000;overflow:hidden"><iframe src="https://www.youtube-nocookie.com/embed/jlHmfAqejIM?rel=0&modestbranding=1" title="Kaidi Karilaid · Õitseng" style="width:100%;height:100%;border:0;display:block" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<div class="video yt" style="border:0;background:#000;overflow:hidden" data-id="jlHmfAqejIM"><button type="button" class="yt-play" aria-label="Vaata videot: Kaidi Karilaid · Õitseng"><img src="https://i.ytimg.com/vi/jlHmfAqejIM/maxresdefault.jpg" alt="" loading="lazy"><span class="yt-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></button></div>
 <a class="btn" href="broneeri.html?s=naine">Broneeri 20-min videokõne</a>
 <p class="note">20 minutit, rahulikult ja ausalt. Vaatame koos, kas see on Sinu aeg.</p>
 </section>
@@ -173,5 +173,5 @@ ul{display:table;margin:0 auto;padding-left:20px;text-align:left}
 
 <footer>Floreo · RUUM</footer>
 </main>
-</body>
+<script src="assets/ytclean.js"></script><script>document.querySelectorAll(".yt").forEach(function(v){v.querySelector(".yt-play").addEventListener("click",function(){window.ytClean(v,v.dataset.id)})})</script></body>
 </html>

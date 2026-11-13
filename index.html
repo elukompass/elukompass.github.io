@@ -197,7 +197,7 @@
   #r-lock { cursor: pointer; }
   /* Card headlines: same gold Cormorant as the page headings, one size smaller */
   .card-h { font: 700 26px/1.15 "Cormorant Garamond", serif; margin: 0 0 10px; text-align: center; background: linear-gradient(180deg, #FFF8E7 0%, var(--warm) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  #r-group b, #r-course b { color: var(--warm); }
+  #r-course b { color: var(--warm); }
   #r-course s { color: var(--muted); }
   /* End-goal photo per area + gender as a banner on top of the offer card */
   .mc-banner { display: block; width: calc(100% + 40px); aspect-ratio: 16 / 9; height: auto; margin: -20px -20px 16px; object-fit: cover; object-position: center 35%; border-radius: 18px 18px 0 0; }
@@ -392,7 +392,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
     <button class="btn ghost" id="r-again">Alusta uuesti</button>
   </section>
 
-  <!-- 4 · after the email: the Deep Dive plays right away, then mini course + group -->
+  <!-- 4 · after the email: the Deep Dive plays right away, then the relevant masterclass offer -->
   <section class="screen" id="s-ring">
     <h2>Sinu elukompassi lugem</h2>
     <div class="card">
@@ -408,14 +408,8 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
       <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
       <ul id="r-mc-list" style="list-style:none;padding:0;margin:14px 0 12px;text-align:left"></ul>
       <p style="margin:0 0 12px"><b>39 €</b> <span style="font-size:.8em;opacity:.85">· 14 päeva raha tagasi garantii</span></p>
-      <a class="btn buy" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Jah, alustan TÄNA</a>
+      <a class="btn buy" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Osta · 39 €</a>
       <p id="r-proof" class="small" style="margin:12px 0 0;text-align:center;opacity:.85;white-space:nowrap;font-size:13.5px"></p>
-    </div>
-    <div class="card" id="r-group"><!-- 8.11: bridge back on — leads had only email; group + WhatsApp 1:1 -->
-      <h3 class="card-h">Astu RUUMi</h3>
-      <p style="margin:12px 0;text-align:center">Meie tasuta kogukond edumeelsetest eestlastest.<br>Iga nädal ootab Sind seal uus deep dive.</p>
-      <a class="btn" id="r-group-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Liitu grupiga</a>
-      <a class="btn hidden" id="r-wa-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-top:10px;background:transparent;border:1px solid var(--warm);color:var(--warm)">Kirjuta Kaidile WhatsAppi</a>
     </div>
   </section>
   <div class="focus hidden" id="vm-focus" role="dialog" aria-modal="true" aria-label="Elukompassi lugem">
@@ -469,6 +463,9 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
     naine: { keha: "assets/vm/keha-n.m4a", vaim: "assets/vm/vaim-n.m4a", raha: "assets/vm/raha-n.m4a", suhted: "assets/vm/suhted-n.m4a" },
     mees:  { keha: "assets/vm/keha-m.m4a", vaim: "assets/vm/vaim-m.m4a", raha: "assets/vm/raha-m.m4a", suhted: "assets/vm/suhted-m.m4a" },
   };
+  // 13.11: women get Kaidi's VSL video instead of the voice note (YouTube ids + minutes). Men keep the VM.
+  const VID = { naine: { keha: "BSnd6F5doRE", vaim: "4EcixApNqeI", raha: "jlHmfAqejIM", suhted: "BqpTUnHknmk" } };
+  const VMIN = { keha: 11, vaim: 13, raha: 10, suhted: 10 };
   const MIN = { naine: { keha: 5, vaim: 4, raha: 4, suhted: 4 }, mees: { keha: 6, vaim: 10, raha: 9, suhted: 8 } };   // VM length in minutes, rounded
   const DM = { naine: "https://ig.me/m/kaidikarilaid", mees: "https://ig.me/m/hendrikoviir" };
   // 4 masterclasses (90 min, recorded + simple practices) = the 4 Deep Dive'i. Men's version by Hendrik, women's by Kaidi.
@@ -516,8 +513,6 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
   };
   const paintFocus = () => { const F = FOCUS[st.sex] || FOCUS.mees;
     document.querySelectorAll("[data-focus]").forEach(b => { b.textContent = F[b.dataset.focus][0]; b.setAttribute("aria-pressed", b.dataset.focus === st.focus); }); };   // Karjäär shares the money masterclass
-  const WA_NAINE = "3725299119";   // Kaidi's WhatsApp, digits only with country code (e.g. 3725xxxxxxx); empty = button hidden
-  const GROUP = "https://www.facebook.com/groups/ruuum";   // free Facebook group link ("RUUM", both men + women, 27.10); the card shows after the Deep Dive unlocks
 
   // ── The 8 areas · ring = which Deep Dive the area belongs to ──────────────
   const Q = [
@@ -631,9 +626,6 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
     $("r-focus").innerHTML = !F ? `Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`
       : st.focus === low[0].ring ? `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass kinnitab: just siit algab Sinu kurss.`
       : `Sulle on praegu kõige olulisem: <b>${FL[st.focus]}</b>.<br>Sinu kompass näitab, et ${POW} <b>${low[0].name}</b>.`;
-    $("r-group-btn").href = GROUP || "#";
-    // WhatsApp 1:1 with the host (women → Kaidi). Number set in WA_NAINE; button stays hidden until it is filled.
-    if (st.sex === "naine" && WA_NAINE) { const wa = $("r-wa-btn"); wa.href = "https://wa.me/" + WA_NAINE + "?text=" + encodeURIComponent("Tere Kaidi! Tegin just Elukompassi 🌿"); wa.classList.remove("hidden"); }
     // Offer: sell what they want (their own focus), give what they need (the lowest area is named in the result and lives inside the course), 39 €
     const payOf = k => { const p = MC[k] && MC[k].pay; return p && typeof p === "object" ? p[st.sex] : p; };
     const ready = k => !!payOf(k);
@@ -732,6 +724,16 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
     // After listening (or closing the focus view): thumbnail → simple player, photo → product box
     const settle = () => { $("vm-focus").classList.add("hidden"); $("r-audio-wait").classList.add("hidden"); $("r-player").classList.remove("hidden"); offer(); };
     st.settle = settle;
+    const vid = (VID[st.sex] || {})[st.mc];
+    if (vid) {   // clean video cover (only our play button), YouTube loads on tap
+      $("r-audio-wait").querySelector("small").textContent = `${VMIN[st.mc]} minutit`;
+      if (m.lastChild && m.lastChild.nodeType === 3) m.lastChild.textContent = m.lastChild.textContent.replace("Head kuulamist", "Head vaatamist");
+      $("r-listen").textContent = "Vaatan videot"; $("r-listen").classList.remove("hidden");
+      $("r-listen").onclick = () => { const w = $("r-audio-wait"); if (w.querySelector("iframe")) return;
+        $("r-listen").classList.add("hidden"); w.style.backgroundImage = "";
+        let shown = false; window.ytClean(w, vid, { onProgress: f => { if (f > 0.8 && !shown) { shown = true; offer(); } } }); };   // offer at 80%, like the VM
+      return;
+    }
     if (audio) {
       const a = $("r-audio"); a.src = audio;
       a.ontimeupdate = () => { paint(); if (a.duration && a.currentTime / a.duration > 0.9) offer(); };
@@ -775,5 +777,5 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
     const d = document.getElementById("legal"); d.showModal(); document.getElementById("legal-" + a.dataset.legal).scrollIntoView(); }));
   document.getElementById("legal-x").addEventListener("click", () => document.getElementById("legal").close());
 </script>
-</body>
+<script src="assets/ytclean.js"></script></body>
 </html>
