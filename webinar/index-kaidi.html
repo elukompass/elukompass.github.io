@@ -102,7 +102,7 @@ body::after{background:radial-gradient(30% 24% at 65% 25%,rgba(116,255,237,.08),
 <label class="cons"><input type="checkbox" id="ok1"><span>Jah, saada mulle kutse ja sellega seotud väärtust emailile.</span></label><p class="err" id="err"></p><button class="btn" id="go" type="button">Registreeru TASUTA kohtumisele</button><p class="fine">Saadan Sulle kutse ja meeldetuletuse.</p></div></div></section>
 <script>
 (function(){
-var RECEIVER_URL="https://script.google.com/macros/s/AKfycbzMiAnvUs-WQsE-cfSAFlNbcv0nwto0u8tTTS5JAAIDqrxYnxz--lGFgcg1o_6rDcdleQ/exec", GROUP="https://www.facebook.com/groups/ruuum", WEBINAR_WHEN="Kolmapäev 18.11 kell 19:00";   // WEBINAR_WHEN e.g. "Esmaspäev 16.11 kell 19:00" once confirmed; empty = "Kuupäev peagi"
+var RECEIVER_URL="https://script.google.com/macros/s/AKfycbzMiAnvUs-WQsE-cfSAFlNbcv0nwto0u8tTTS5JAAIDqrxYnxz--lGFgcg1o_6rDcdleQ/exec", GROUP="https://www.facebook.com/groups/ruuum", WEBINAR_WHEN="Kolmapäev 18.11 kell 19:00–20:00";   // WEBINAR_WHEN e.g. "Esmaspäev 16.11 kell 19:00" once confirmed; empty = "Kuupäev peagi"
 var $=function(x){return document.getElementById(x)},px=window.px||function(){};
 /* theme: light after sunrise, dark after sunset, Tallinn time (?theme=light|dark to preview) */
 function tallinn(){var p={};new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Tallinn",year:"numeric",month:"numeric",day:"numeric",hour:"numeric",minute:"numeric",hour12:false}).formatToParts(new Date()).forEach(function(o){p[o.type]=+o.value});return p}
