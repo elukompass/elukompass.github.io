@@ -80,6 +80,14 @@ body>section:nth-of-type(even){background:linear-gradient(180deg,rgba(116,255,23
 .host img{border-color:var(--touch,#74FFED)!important;box-shadow:0 0 34px -6px var(--touch,#74FFED)!important}
 .ft{display:flex;flex-direction:column;align-items:center;gap:8px}.ft .fb{font-family:"Marcellus",serif;font-size:17px;letter-spacing:.14em;color:var(--ink);opacity:.9}.ft .fl{display:flex;flex-wrap:wrap;justify-content:center;gap:0 10px}
 body>section:first-of-type{background:linear-gradient(180deg,#041019 0,rgba(4,16,25,.6) 60px,rgba(18,58,82,.42) 160px,rgba(18,58,82,.42) calc(100% - 90px),rgba(18,58,82,0))}
+</style><style>/* 13.11 smoke, desktop only */
+@media(min-width:960px) and (hover:hover) and (prefers-reduced-motion:no-preference){
+body::before,body::after{content:"";position:fixed;inset:-20%;z-index:0;pointer-events:none;filter:blur(60px);opacity:.55;will-change:transform}
+body::before{background:radial-gradient(28% 22% at 30% 35%,rgba(255,200,97,.16),transparent 70%),radial-gradient(34% 26% at 72% 62%,rgba(116,255,237,.10),transparent 70%),radial-gradient(40% 30% at 45% 85%,rgba(26,120,160,.16),transparent 70%);animation:smokeA 70s ease-in-out infinite alternate}
+body::after{background:radial-gradient(30% 24% at 65% 25%,rgba(116,255,237,.08),transparent 70%),radial-gradient(36% 28% at 25% 70%,rgba(255,200,97,.10),transparent 70%);animation:smokeB 95s ease-in-out infinite alternate}
+@keyframes smokeA{0%{transform:translate3d(-4%,-2%,0) rotate(0) scale(1)}100%{transform:translate3d(5%,3%,0) rotate(8deg) scale(1.12)}}
+@keyframes smokeB{0%{transform:translate3d(4%,2%,0) rotate(0) scale(1.08)}100%{transform:translate3d(-5%,-3%,0) rotate(-10deg) scale(1)}}
+.hero,body>section,.ft{position:relative;z-index:1}}
 </style></head><body><div id="sky"></div><div class="glow g1"></div><div class="glow g2"></div><main class="pg"><div class="symw" role="img" aria-label="Floreo"><img class="sym-o" src="symbol.png" alt=""><img class="sym-i" src="symbol.png" alt=""></div>
 <p class="kick">Veebikohtumine on järgi vaadatav 48 tunni jooksul.</p>
 <h1><span class="g">Õitsengu tee</span> · kordus</h1>
