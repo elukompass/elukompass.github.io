@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Floreo//Oitsengu tee//ET
+BEGIN:VEVENT
+UID:oitsengu-tee-20261118@floreo
+DTSTAMP:20261114T160000Z
+DTSTART:20261118T170000Z
+DTEND:20261118T180000Z
+SUMMARY:Õitsengu tee · veebikohtumine Kaidiga
+LOCATION:https://us02web.zoom.us/j/82836709138?pwd=E9ZWU85o5DW4cuA19gAk0ob0zT0cmW.1
+URL:https://us02web.zoom.us/j/82836709138?pwd=E9ZWU85o5DW4cuA19gAk0ob0zT0cmW.1
+DESCRIPTION:Zoom: https://us02web.zoom.us/j/82836709138?pwd=E9ZWU85o5DW4cuA19gAk0ob0zT0cmW.1\nVaikne koht\, tass sooja jooki. Kaidi ja Hendrik
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Õitsengu tee algab 15 min pärast
+END:VALARM
+END:VEVENT
+END:VCALENDAR
