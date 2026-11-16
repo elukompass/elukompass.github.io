@@ -94,10 +94,9 @@ body::after{background:radial-gradient(30% 24% at 65% 25%,rgba(116,255,237,.08),
 body>section:nth-of-type(odd){background:linear-gradient(180deg,rgba(14,28,48,0) 0,rgba(14,28,48,.38) 90px,rgba(14,28,48,.38) calc(100% - 90px),rgba(14,28,48,0))!important}
 body>section:first-of-type{background:linear-gradient(180deg,rgba(14,28,48,0) 0,rgba(14,28,48,.1) 60px,rgba(14,28,48,.38) 160px,rgba(14,28,48,.38) calc(100% - 90px),rgba(14,28,48,0))!important}
 body>section:nth-of-type(even){background:linear-gradient(180deg,rgba(60,30,90,0) 0,rgba(60,30,90,.10) 90px,rgba(60,30,90,.10) calc(100% - 90px),rgba(60,30,90,0))!important}
-</style><script>/* 16.11: source + sex without asking. src from ?src= / ?utm_source=, else the referring site (ref-facebook, ref-instagram…), else direct. Sex from the src prefix: k- prefix = Kaidi channels (naine), h- or ho- prefix = Hendrik men channels (mees). */
+</style><script>/* 16.11: source + sex without asking. src from ?src= / ?utm_source=, else the referring site (ref-facebook, ref-instagram…), else direct. Sex is never guessed here: an agent checks and fills Sugu in the Sheet. */
 function wTag(){var m=location.search.match(/[?&](?:src|utm_source)=([\w-]{1,30})/);if(m)return m[1];try{var h=document.referrer?new URL(document.referrer).hostname:"";if(h&&h!==location.hostname){h=h.replace(/^(www\.|l\.|lm\.|m\.)/,"").split(".")[0];return "ref-"+h}}catch(x){}return "direct"}
 function wSrc(){return "webinar-"+wTag()}
-function wSex(){var t=wTag();return /^k(-|aidi)/.test(t)?"naine":/^(h|ho)-/.test(t)?"mees":""}
 </script>
 </head><body>
 <div id="sky"></div><div class="glow g1"></div><div class="glow g2"></div>
@@ -133,7 +132,7 @@ function ok(nm){var c=$("card");c.className="card ok";c.innerHTML="";var h=docum
 $("go").onclick=function(){var n=$("n").value.trim(),e=$("e").value.trim(),t=$("t").value.trim(),err=$("err");[$("n"),$("e")].forEach(function(x){x.classList.remove("bad")});
  if(!n){$("n").classList.add("bad");err.textContent="Sisesta nimi.";return}if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e)){$("e").classList.add("bad");err.textContent="Sisesta korrektne email.";return}if(!$("ok1").checked){err.textContent="Palun kinnita linnukesega.";return}
  err.textContent="";if($("hp").value){ok(n.split(" ")[0]);return}this.disabled=true;px("track","CompleteRegistration");
- if(RECEIVER_URL){try{fetch(RECEIVER_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({name:n,email:e,phone:t,consent:new Date().toISOString(),sex:wSex(),src:wSrc(),offer:"webinar 18.11"})})}catch(x){}}try{var fd=new URLSearchParams();fd.append("first_name",n.split(" ")[0]);fd.append("email",e);fetch("https://sendfox.com/form/1yg70y/mnqz4x",{method:"POST",mode:"no-cors",body:fd})}catch(x){}
+ if(RECEIVER_URL){try{fetch(RECEIVER_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({name:n,email:e,phone:t,consent:new Date().toISOString(),sex:"",src:wSrc(),offer:"webinar 18.11"})})}catch(x){}}try{var fd=new URLSearchParams();fd.append("first_name",n.split(" ")[0]);fd.append("email",e);fetch("https://sendfox.com/form/1yg70y/mnqz4x",{method:"POST",mode:"no-cors",body:fd})}catch(x){}
  try{sessionStorage.setItem("wb_n",n.split(" ")[0])}catch(x){}setTimeout(function(){location.href="aitah.html"},350)};
 })();
 </script><footer class="ft"><span class="fb">Floreo</span><span class="fl"><a href="../tingimused.html#privaatsus">Privaatsus</a><span>·</span><a href="mailto:kaidi@kaidikarilaid.com">Kontakt</a></span></footer><script src="../assets/kontakt.js"></script></body></html>
