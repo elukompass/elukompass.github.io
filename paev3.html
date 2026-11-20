@@ -44,7 +44,7 @@
     <h2>Mida see distants oma SIHIST Sulle maksab?</h2>
     <p>Iga kuu, mil see vahe on alles, võtab ta Sult midagi.<br>Hinda, kui palju.</p>
     <div id="costs"></div>
-    <label class="q" for="f-lose">Kui järgmised 12 kuud jääb kõik samaks,<br>mis Sul siis kaotsi läheb?</label>
+    <label class="q" for="f-lose">Mis saab Sinu jaoks võimalikuks,<br>kui Sa seda teed?</label>
     <textarea id="f-lose" maxlength="300" rows="2"></textarea>
     <button class="btn" id="to-who" disabled>Edasi</button>
   </section>
@@ -86,7 +86,7 @@ $("to-who").onclick = () => {
   sendDay(3, { goal: st.goal, now: st.now, want: st.want, gap: st.gap, costs, lose: st.lose });
   const top = COSTS.slice().sort((a, b) => costs[b[0]] - costs[a[0]])[0];
   $("done-h").textContent = st.name ? `${st.name.split(" ")[0]}, nüüd Sa näed seda.` : "Nüüd Sa näed seda.";
-  $("coord").innerHTML = `<div class="lab">Vahe</div><div class="val">${st.gap} sammu</div><div class="lab">Maksab kõige rohkem</div><div class="val">${esc(top[1])}</div><div class="lab">Kui midagi ei muutu</div><div class="val">${esc(st.lose)}</div>`;
+  $("coord").innerHTML = `<div class="lab">Vahe</div><div class="val">${st.gap} sammu</div><div class="lab">Maksab kõige rohkem</div><div class="val">${esc(top[1])}</div><div class="lab">Mis saab võimalikuks</div><div class="val">${esc(st.lose)}</div>`;
   $("next").href = link("paev4.html"); show("s-done");
 };
 
