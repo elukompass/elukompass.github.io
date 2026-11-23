@@ -164,7 +164,7 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
         <h3 class="card-h" id="m-head"></h3>
         <p style="margin:0 0 14px" id="m-sub"></p>
         <ul id="m-list" style="list-style:none;padding:0;margin:14px 0 12px;text-align:left"></ul>
-        <p style="margin:0 0 12px"><b>39 €</b> <span style="font-size:.8em;opacity:.85">· 14 päeva raha tagasi garantii</span></p>
+        <p style="margin:0 0 12px" id="m-price"><b>39 €</b> <span style="font-size:.8em;opacity:.85">· 14 päeva raha tagasi garantii</span></p>
         <a class="btn" id="m-buy" href="#" target="_blank" rel="noopener">Jah, alustan TÄNA</a>
       </div>
     </div>
@@ -176,7 +176,7 @@ if (location.hash !== "#eelvaade") { fbq('init', '587447591933718'); fbq('track'
 <script>
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbzMiAnvUs-WQsE-cfSAFlNbcv0nwto0u8tTTS5JAAIDqrxYnxz--lGFgcg1o_6rDcdleQ/exec";   // same Apps Script as the Kompass; kind "siht" → tab "Siht"
   const GROUP = "https://www.facebook.com/groups/ruuum";
-  const PAY = { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/4gM28r59icIlauz1rE2kw08" };
+  const PAY = { mees: "https://buy.stripe.com/4gM3cvgS04bP1Y3eeq2kw07", naine: "https://buy.stripe.com/5kQaEX7hqdMp1Y3gmy2kw0q?prefilled_promo_code=ALUSTAJA" };
   const PREVIEW = location.hash === "#eelvaade";   // previews never write to the Sheet
 
   // Two boxes per area. vaim + suhted = energy (leave → step into); keha + raha = destination (siht → what changes)
@@ -232,6 +232,7 @@ $("back").onclick = () => show(trail.pop(), true);
     $("m-head").textContent = O.name; $("m-sub").textContent = O.sub;
     $("m-list").innerHTML = O.l.map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("m-buy").href = PAY[sex];
+    if (sex === "naine") $("m-price").innerHTML = `<s style="opacity:.6">55 €</s> <b>39 €</b> · Alustaja −30% eripakkumine<br><span style="font-size:.8em;opacity:.85">1. kuu · edasi 55 €/kuu · 14 päeva raha tagasi garantii</span>`;
     if (OFFERS[a]) $("m-img").src = `assets/bg/${a}-${sex === "naine" ? "n" : "m"}.jpg?v=0506b`; else $("m-img").style.display = "none";
   }
 
