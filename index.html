@@ -407,7 +407,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
       <p style="margin:0 0 14px" id="r-mc-sub"></p>
       <div class="vsl" id="r-vsl"><span>▶</span><small>Video tuleb peagi</small></div>
       <ul id="r-mc-list" style="list-style:none;padding:0;margin:14px 0 12px;text-align:left"></ul>
-      <p style="margin:0 0 12px" id="r-price"><b>39 €</b> <span style="font-size:.8em;opacity:.85">· 14 päeva raha tagasi garantii</span></p>
+      <p style="margin:0 0 12px" id="r-price"><b>39 €</b> <span style="font-size:.8em;opacity:.85">· ei mingit kohustust · 14 päeva raha tagasi garantii</span></p>
       <a class="btn buy" id="r-course-btn" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">Osta · 39 €</a>
       <p id="r-proof" class="small" style="margin:12px 0 0;text-align:center;opacity:.85;white-space:nowrap;font-size:13.5px"></p>
     </div>
@@ -642,7 +642,7 @@ if (location.hash !== "#paasterongas" && location.hash !== "#deepdive" && locati
     $("r-mc-sub").textContent = (st.sex === "naine" ? SUB_W[main] : SUB_M[main]) || head[1];
     $("r-mc-list").innerHTML = ((st.sex === "naine" && OFFER_W[main]) || OFFER[main] || []).map(([b, t]) => `<li style="margin:0 0 8px;font-size:14.5px;line-height:1.45">✓ <b>${b}</b>${t}</li>`).join("");
     $("r-course-btn").href = payOf(main) || "#";
-    if (st.sex === "naine") $("r-price").innerHTML = `<s style="opacity:.6">55 €</s> <b>39 €</b> · Alustaja −30% eripakkumine<br><span style="font-size:.8em;opacity:.85">1. kuu · edasi 55 €/kuu · 14 päeva raha tagasi garantii</span>`;   // 23.11: Aste 1 €55/kuu, 1. kuu €39 (ALUSTAJA)
+    if (st.sex === "naine") $("r-price").innerHTML = `<s style="opacity:.6">55 €</s> <b>39 €</b> · Alustaja −30% eripakkumine<br><span style="font-size:.8em;opacity:.85">1. kuu · edasi 55 €/kuu · tühista igal ajal, ei mingit kohustust · 14 päeva raha tagasi garantii</span>`;   // 23.11: Aste 1 €55/kuu, 1. kuu €39 (ALUSTAJA)
     const BTN_W = { keha: "Jah, valin ELUVÄE", vaim: "Jah, valin RAHU", raha: "Jah, valin ÕITSENGU", suhted: "Jah, valin ARMASTUSE" };
     $("r-course-btn").textContent = (st.sex === "naine" && BTN_W[main]) || "Jah, alustan TÄNA";
     $("r-practice").innerHTML = st.sex === "naine"
