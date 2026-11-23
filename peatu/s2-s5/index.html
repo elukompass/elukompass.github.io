@@ -5,16 +5,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
 <style>
 /* Floreo 2+1: deep sea + gold (main) + Aqua Jade touch */
-:root{--bg1:#1C1027;--bg2:#33204A;--ink:#eaf6f8;--muted:#c3d6dd;--gold:#F3C98F;--jade:#F5B8D2;--card:rgba(8,28,40,.62);--line:rgba(255,255,255,.14)}
+:root{--bg1:#1C1027;--bg2:#33204A;--ink:#eaf6f8;--muted:#c3d6dd;--gold:#E9B8E6;--jade:#F5B8D2;--card:rgba(8,28,40,.62);--line:rgba(255,255,255,.14)}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%}
 body{font:500 17px/1.5 Manrope,system-ui,sans-serif;color:var(--ink);background:var(--bg1);-webkit-font-smoothing:antialiased}
 .sea{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#1C1027 url(../../assets/sea.jpg) 55% center/cover no-repeat}
 .sea video{width:100%;height:100%;object-fit:cover;object-position:53% center;display:block}
-.sea-dim{position:absolute;inset:0;background:radial-gradient(60% 30% at 50% 8%,rgba(243,201,143,.10),transparent 70%),linear-gradient(180deg,rgba(28,16,39,.88) 0%,rgba(28,16,39,.72) 30%,rgba(28,16,39,.8) 60%,rgba(28,16,39,.94) 100%)}
+.sea-dim{position:absolute;inset:0;background:radial-gradient(60% 30% at 50% 8%,rgba(233,184,230,.10),transparent 70%),linear-gradient(180deg,rgba(28,16,39,.88) 0%,rgba(28,16,39,.72) 30%,rgba(28,16,39,.8) 60%,rgba(28,16,39,.94) 100%)}
 @media (prefers-reduced-motion:reduce){.sea video{display:none}}
 main{max-width:560px;margin:0 auto;padding:26px 16px 48px;min-height:100vh}
 .brand{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:18px}
-.brand img{width:64px;height:64px;filter:drop-shadow(0 0 18px rgba(243,201,143,.45))}
+.brand img{width:64px;height:64px;filter:drop-shadow(0 0 18px rgba(233,184,230,.45))}
 .brand span{font:400 14px Marcellus,serif;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
 /* stepper: 5 dots on a line, done = gold ✓, now = jade ring */
 .steps{position:relative;display:flex;justify-content:space-between;margin:6px 6px 26px}
@@ -48,10 +48,10 @@ input[type=range]{width:100%;accent-color:var(--gold);margin:8px 0 2px}
 .areas button,.opts button{background:rgba(28,16,39,.6);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:16px 14px;font:400 18px Marcellus,serif;cursor:pointer;text-align:center;transition:all .2s}
 .opts button{text-align:left}
 .areas button .e{display:block;font-size:26px;margin-bottom:4px}
-.areas button:hover,.opts button:hover{border-color:rgba(243,201,143,.6)}
-.areas button.on,.opts button.on{border-color:var(--gold);color:var(--gold);background:rgba(243,201,143,.1);box-shadow:0 0 18px rgba(243,201,143,.18)}
+.areas button:hover,.opts button:hover{border-color:rgba(233,184,230,.6)}
+.areas button.on,.opts button.on{border-color:var(--gold);color:var(--gold);background:rgba(233,184,230,.1);box-shadow:0 0 18px rgba(233,184,230,.18)}
 .nav{display:flex;gap:10px;margin-top:24px}
-.btn{flex:1;position:relative;overflow:hidden;padding:16px;border-radius:14px;border:0;cursor:pointer;font:800 16px Manrope;letter-spacing:.1em;text-transform:uppercase;color:#1b1206;background:linear-gradient(180deg,#FFE29A,#F3C98F 55%,#E8A63C);box-shadow:0 10px 26px rgba(243,201,143,.28)}
+.btn{flex:1;position:relative;overflow:hidden;padding:16px;border-radius:14px;border:0;cursor:pointer;font:800 16px Manrope;letter-spacing:.1em;text-transform:uppercase;color:#1b1206;background:linear-gradient(180deg,#FFE29A,#E9B8E6 55%,#E8A63C);box-shadow:0 10px 26px rgba(233,184,230,.28)}
 .btn:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
 @keyframes shine{0%,70%{left:-60%}100%{left:130%}}
 .btn:disabled{opacity:.45;cursor:default;box-shadow:none}.btn:disabled:after{display:none}
