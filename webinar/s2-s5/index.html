@@ -113,7 +113,7 @@ textarea{min-height:48px}
       <div class="meter"><div class="top"><label for="r-now">Kus oled täna?</label><b id="r-now-v">4</b></div><input type="range" id="r-now" min="1" max="10" value="4"><div class="ends"><span>kaugel</span><span>kohal</span></div></div>
       <div class="meter"><div class="top"><label for="r-want">Kus tahaksid olla?</label><b id="r-want-v">9</b></div><input type="range" id="r-want" min="1" max="10" value="9"><div class="ends"><span>kaugel</span><span>kohal</span></div></div>
       <div class="gap"><b id="gap-n">5</b><span>sammu vahet</span></div>
-      <label class="q" for="f-gap">Kui järgmised 12 kuud jääb kõik samaks, mis Sul siis kaotsi läheb?</label><textarea id="f-gap" maxlength="300"></textarea>
+      <label class="q" for="f-gap">Mis saab võimalikuks, kui Sa selle valid?<span class="hint">Millised võimalused avanevad, kui Sa selle ära teed?</span></label><textarea id="f-gap" maxlength="300"></textarea>
       <div class="nav"><button class="btn back" data-back>←</button><button class="btn" data-next>Edasi</button></div>
     </section>
 
@@ -128,8 +128,8 @@ textarea{min-height:48px}
     </section>
 
     <section class="step">
-      <div class="meter" style="margin-top:0"><div class="top"><label for="r-will">Minu tahe</label><b id="r-will-v">7</b></div><input type="range" id="r-will" min="1" max="10" value="7"><div class="ends"><span>proovin</span><span>teen ära</span></div></div>
-      <label class="q" for="f-ready">Mis Sa tunned, millal oled selleks valmis?</label><textarea id="f-ready" maxlength="300"></textarea>
+      <div class="meter" style="margin-top:0"><div class="top"><label for="r-will">Kui väga Sa seda päriselt tahad?</label><b id="r-will-v">7</b></div><input type="range" id="r-will" min="1" max="10" value="7"><div class="ends"><span>proovin</span><span>teen ära</span></div></div>
+      <label class="q" for="f-ready">Mida Sa tunned? Millal Sa selle valid?<span class="hint">Millal oled selleks valmis?</span></label><textarea id="f-ready" maxlength="300"></textarea>
       <label class="q" for="f-name">Eesnimi</label><input type="text" id="f-name" maxlength="60" autocomplete="given-name">
       <label class="q" for="f-email">E-post</label><input type="email" id="f-email" maxlength="120" autocomplete="email">
       <label class="q" for="f-phone">Telefon</label><input type="tel" id="f-phone" maxlength="30" autocomplete="tel">
