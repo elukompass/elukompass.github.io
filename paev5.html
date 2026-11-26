@@ -39,6 +39,8 @@
     <textarea id="f-stop" maxlength="300" rows="2"></textarea>
     <label class="q" for="f-step">Mis Sa tunned, millal oled selleks valmis?</label>
     <textarea id="f-step" maxlength="300" rows="2"></textarea>
+    <label class="q" for="f-phone5">Telefon (kui soovid, et helistame)</label>
+    <input type="tel" id="f-phone5" maxlength="30" autocomplete="tel">
     <label class="q">Kuidas soovid jätkata?</label>
     <div class="areas" id="c-next" style="grid-template-columns:1fr"><button data-n="kohe">Liitun kohe</button><button data-n="video">Videokõne</button><button data-n="telefon">Telefonikõne</button><button data-n="tekst">Tekst / e-kiri</button><button data-n="aeg">Vajan aega / FB grupp</button></div>
     <button class="btn" id="to-who" disabled>Kinnitan</button>
@@ -92,7 +94,7 @@ $("to-who").onclick = () => needWho(() => {
   if (st.gap === undefined) st.gap = +$("r-gap").value;
   st.will = +$("r-will").value;
   const pts = score(st.will), v = verdict(pts); st.verdict = v; st.score = pts;
-  sendDay(5, { goal: st.goal, gap: st.gap, cost: st.cost, hours: st.hours, energy: st.energy, money: st.money || "", will: st.will, stop: val("f-stop"), step: val("f-step"), lose: st.lose || "", jatka: NEXT[nextc] }, { qualified: v + ":" + pts, jatka: NEXT[nextc] });
+  sendDay(5, { goal: st.goal, gap: st.gap, cost: st.cost, hours: st.hours, energy: st.energy, money: st.money || "", will: st.will, stop: val("f-stop"), step: val("f-step"), lose: st.lose || "", jatka: NEXT[nextc], phone: val("f-phone5") }, { qualified: v + ":" + pts, jatka: NEXT[nextc], phone: val("f-phone5") });
   const row = (l, v) => v === undefined || v === "" ? "" : `<div class="lab">${l}</div><div class="val">${esc(v)}</div>`;
   const hrs = st.hours === undefined ? "" : st.hours === 0 ? "vähem kui 1 tund" : st.hours === 1 ? "1 tund" : st.hours + " tundi";
   const M = { jah: "vahendid on olemas", umber: "vahendid on piiratud", ei: "vahendeid praegu ei ole" }[st.money];
