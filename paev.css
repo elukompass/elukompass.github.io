@@ -143,3 +143,4 @@ a.vid-slot:hover { border-color: var(--gold); color: var(--gold); }
 
 /* phone: no sideways overflow, no iOS focus zoom */
 html, body { max-width: 100%; overflow-x: hidden; }
+#c-next button.on{border-color:var(--gold);color:var(--gold);background:rgba(255,200,97,.1)}
